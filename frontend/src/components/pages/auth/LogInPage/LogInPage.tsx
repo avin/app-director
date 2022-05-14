@@ -8,9 +8,10 @@ import type { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { setFormState } from '@/store/reducers/forms';
 import TextInput from '@/components/common/TextInput/TextInput';
-import { Button, Callout, Icon, Intent } from '@blueprintjs/core';
+import { Button, Icon, Intent } from '@blueprintjs/core';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMessage';
+import { wait } from '@/utils/wait';
 
 interface Props {}
 
@@ -45,9 +46,11 @@ const LogInPage = ({}: Props): JSX.Element => {
 
       setIsInProgress(true);
 
-      setErrorMessage('Запрос выполнен неуспешно, попробуйте еще раз');
-
       try {
+        await wait(500);
+
+        setErrorMessage('Вход не был выполнен успешно');
+
         // TODO
         // await dispatch(adminLogIn());
         // navigate(config.routes.client.orders);
@@ -89,44 +92,42 @@ const LogInPage = ({}: Props): JSX.Element => {
   );
 
   return (
-    <div>
-      <form onSubmit={handleFormSubmit}>
-        <FormErrorMessage message={errorMessage} />
+    <form onSubmit={handleFormSubmit} className={styles.form}>
+      <FormErrorMessage message={errorMessage} />
 
-        <InputContainer label="Email" error={isSubmitted && errors.email?.message}>
-          <TextInput
-            control={control}
-            rules={requiredRules}
-            name="email"
-            autoFocus
-            leftElement={<Icon icon="envelope" />}
-            placeholder="user@example.com"
-          />
-        </InputContainer>
+      <InputContainer label="Email" error={isSubmitted && errors.email?.message}>
+        <TextInput
+          control={control}
+          rules={requiredRules}
+          name="email"
+          autoFocus
+          leftElement={<Icon icon="envelope" />}
+          placeholder="user@example.com"
+        />
+      </InputContainer>
 
-        <InputContainer label="Пароль" error={isSubmitted && errors.password?.message}>
-          <TextInput
-            control={control}
-            rules={requiredRules}
-            name="password"
-            type="password"
-            leftElement={<Icon icon="key" />}
-            placeholder="********"
-          />
-        </InputContainer>
+      <InputContainer label="Пароль" error={isSubmitted && errors.password?.message}>
+        <TextInput
+          control={control}
+          rules={requiredRules}
+          name="password"
+          type="password"
+          leftElement={<Icon icon="key" />}
+          placeholder="********"
+        />
+      </InputContainer>
 
-        <div className={styles.controls}>
-          <div>
-            <Checkbox control={control} name="save" label="Запомнить меня" />
-          </div>
-          <div>
-            <Button type="submit" intent={Intent.PRIMARY} loading={isInProgress} icon="unlock">
-              <span>Войти</span>
-            </Button>
-          </div>
+      <div className={styles.controls}>
+        <div>
+          <Checkbox control={control} name="save" label="Запомнить меня" />
         </div>
-      </form>
-    </div>
+        <div>
+          <Button type="submit" intent={Intent.PRIMARY} loading={isInProgress} icon="unlock">
+            <span>Войти</span>
+          </Button>
+        </div>
+      </div>
+    </form>
   );
 };
 

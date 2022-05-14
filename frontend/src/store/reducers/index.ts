@@ -1,7 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import forms from './forms';
 
 const rootReducer = combineReducers({
-
+  forms,
 });
 
 const resettableRootReducer = (state, action) => {

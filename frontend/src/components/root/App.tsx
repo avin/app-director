@@ -4,7 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import config from '@/config';
 import NotFoundPage from '../pages/other/NotFoundPage/NotFoundPage';
-import LogInPage from '@/components/pages/login/LogInPage/LogInPage';
+import LogInPage from '@/components/pages/auth/LogInPage/LogInPage';
 import AuthLayout from '@/components/layouts/AuthLayout/AuthLayout';
 
 const { routes } = config;

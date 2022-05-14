@@ -1,6 +1,10 @@
 @import '~@/styles/variables';
 @import '~@/styles/mixins';
 
+.form{
+  // max-width: 320px;
+}
+
 .controls {
   display: flex;
   justify-content: space-between;
