@@ -1,6 +1,6 @@
 import cn from 'clsx';
 import { Label } from '@blueprintjs/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './InputContainer.module.scss';
 import WrappedUp from '../WrappedUp/WrappedUp';
 
@@ -12,6 +12,14 @@ export interface InputContainerProps extends React.PropsWithChildren<{}> {
 }
 
 const InputContainer = ({ label, error, subtext, className, children }: InputContainerProps): JSX.Element => {
+  const [errorToShow, setErrorToShow] = useState(error);
+
+  useEffect(() => {
+    if (error) {
+      setErrorToShow(error);
+    }
+  }, [error]);
+
   return (
     <div className={cn(styles.container, className, { withError: !!error })}>
       <Label>
@@ -26,7 +34,7 @@ const InputContainer = ({ label, error, subtext, className, children }: InputCon
 
         <WrappedUp open={!!error} duration={200} className={styles.errorWrapper}>
           <div className={styles.errorContainer}>
-            <div className={styles.error}>{error}</div>
+            <div className={styles.error}>{error || errorToShow}</div>
           </div>
         </WrappedUp>
       </Label>

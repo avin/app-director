@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './Checkbox.module.scss';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
 import { CheckboxProps, Checkbox as BlueprintCheckbox } from '@blueprintjs/core';
 

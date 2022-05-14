@@ -1,0 +1,9 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.navigation {
+  border-right: 1px solid black;
+  background: $dark-gray3;
+  width: 100%;
+  height: 100%;
+}

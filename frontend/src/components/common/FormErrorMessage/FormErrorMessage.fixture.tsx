@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FormErrorMessage from './FormErrorMessage';
 
 export default (): JSX.Element => {
+  const [show, setShow] = useState(false);
+
   return (
     <div className="content">
-      <FormErrorMessage/>
+      <button type="button" onClick={() => setShow((v) => !v)}>
+        Toggle
+      </button>
+      <hr />
+      <FormErrorMessage message={show ? 'Hello message' : undefined} />
     </div>
   );
 };

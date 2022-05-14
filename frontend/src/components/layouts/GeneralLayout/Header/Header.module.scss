@@ -1,0 +1,47 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+$height: 40px;
+
+.headerWrapper {
+  padding-top: $height;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  // border-bottom: 1px solid black;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.logoContainer {
+  width: 250px;
+  background: $dark-gray5;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-left: 10px solid $gold4;
+  border-right: 1px solid $dark-gray1;
+}
+
+.main {
+  background: $dark-gray5;
+  height: 100%;
+  padding: 0 7px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.controls {
+}
+
+.user {
+}

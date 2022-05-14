@@ -43,6 +43,7 @@ const LogInPage = ({}: Props): JSX.Element => {
     async (data) => {
       console.log(data);
       dispatch(setFormState({ formName: Form.LogIn, formState: data }));
+      setErrorMessage(null);
 
       setIsInProgress(true);
 
@@ -66,7 +67,7 @@ const LogInPage = ({}: Props): JSX.Element => {
         setIsInProgress(false);
       }
     },
-    [dispatch, navigate],
+    [dispatch],
   );
 
   const onSubmitError = useCallback((submitErrors) => {
@@ -102,7 +103,7 @@ const LogInPage = ({}: Props): JSX.Element => {
           name="email"
           autoFocus
           leftElement={<Icon icon="envelope" />}
-          placeholder="user@example.com"
+          placeholder="user@host.org"
         />
       </InputContainer>
 

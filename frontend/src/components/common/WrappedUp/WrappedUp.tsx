@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { CSSTransitionClassNames } from 'react-transition-group/CSSTransition';
 import styles from './WrappedUp.module.scss';
 import { blockFocus } from '@/utils/blockFocus';
@@ -74,19 +74,22 @@ const WrappedUp = ({
   }, [open]);
 
   return (
-    <CSSTransition
-      in={open}
-      timeout={duration}
-      unmountOnExit={unmountOnExit}
-      classNames={cssTransitionClassNames}
-      nodeRef={contentRef}
-    >
-      <div ref={contentRef} style={{ ...style, height: 0, overflow: 'hidden' }} {...props}>
-        <div ref={measureRef} className={styles.measure}>
-          {children}
-        </div>
-      </div>
-    </CSSTransition>
+    <TransitionGroup>
+      {open && (
+        <CSSTransition
+          timeout={duration}
+          unmountOnExit={unmountOnExit}
+          classNames={cssTransitionClassNames}
+          nodeRef={contentRef}
+        >
+          <div ref={contentRef} style={{ ...style, height: 0, overflow: 'hidden' }} {...props}>
+            <div ref={measureRef} className={styles.measure}>
+              {children}
+            </div>
+          </div>
+        </CSSTransition>
+      )}
+    </TransitionGroup>
   );
 };
 

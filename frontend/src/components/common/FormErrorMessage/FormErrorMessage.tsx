@@ -9,7 +9,12 @@ interface Props {
 
 const FormErrorMessage = ({ message }: Props): JSX.Element => {
   return (
-    <WrappedUp open={!!message} duration={200} className={styles.wrapper}>
+    <WrappedUp
+      open={!!message}
+      duration={200}
+      className={styles.wrapper}
+      // onExited={handleExited}
+    >
       <Callout icon="warning-sign" className={styles.callout} intent={Intent.DANGER}>
         {message}
       </Callout>
