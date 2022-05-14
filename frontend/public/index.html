@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <meta http-equiv="Cache-control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <base href="/" />
+
+    <title>AppInspector</title>
+
+    <script>
+      if (window.location.pathname.startsWith('/app-director')) {
+        document.querySelector('head base').setAttribute('href', '/app-director/');
+      }
+
+      document.addEventListener("DOMContentLoaded", function(){
+        const htmlTags = <%= JSON.stringify(htmlWebpackPlugin.tags) %>;
+
+        [htmlTags.headTags, htmlTags.bodyTags].forEach(function(tags) {
+          tags.forEach(function(tag) {
+            const tagEl = document.createElement( tag.tagName );
+            if(tag.attributes){
+              Object.keys(tag.attributes).forEach(function(attributeKey) {
+                tagEl.setAttribute( attributeKey, tag.attributes[attributeKey] );
+              })
+            }
+            if(tag.innerHTML){
+              tagEl.innerHTML = tag.innerHTML;
+            }
+
+            document.body.appendChild( tagEl );
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <noscript>Вам необходимо включить JavaScript, чтобы запустить это приложение.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

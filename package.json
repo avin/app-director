@@ -1,0 +1,17 @@
+{
+  "name": "app-director",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "husky install"
+  },
+  "dependencies": {
+    "husky": "7.0.4",
+    "lint-staged": "11.2.6",
+    "prettier": "2.5.1",
+    "suppress-exit-code": "1.0.0"
+  },
+  "volta": {
+    "node": "16.13.2"
+  }
+}

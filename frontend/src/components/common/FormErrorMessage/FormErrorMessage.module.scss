@@ -1,0 +1,11 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.wrapper {
+  overflow: hidden;
+  transition: height 0.2s ease-in-out;
+}
+
+.callout {
+  margin-bottom: 15px;
+}

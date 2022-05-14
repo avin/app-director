@@ -1,0 +1,15 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $light-gray5;
+}
+
+.content {
+  min-width: 360px;
+  max-width: 100%;
+}
