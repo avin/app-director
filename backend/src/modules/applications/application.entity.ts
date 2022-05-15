@@ -11,9 +11,6 @@ export class Application {
   @Column()
   description: string;
 
-  @Column()
-  foo: string;
-
   @Column({
     type: 'jsonb',
   })
