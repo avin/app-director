@@ -19,12 +19,6 @@ module.exports = {
         htmlWebpackPluginInstance.userOptions.inject = false;
       }
 
-      if (env === 'production') {
-        craco.addPlugins(webpackConfig, [
-          new FrontendVersionPlugin({ output: paths.appBuild }),
-        ]);
-      }
-
       return webpackConfig;
     },
   },

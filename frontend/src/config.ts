@@ -18,6 +18,14 @@ export class Config {
   // Внутренние роуты приложения
   routes = {
     login: '/login',
+    monitoring: '/monitoring',
+    applications: '/applications',
+    organizations: '/organizations',
+    stands: '/stands',
+    administration: {
+      users: '/administration/users',
+      log: '/administration/log',
+    },
   };
 
   // Пути для API запросов

@@ -6,7 +6,7 @@ import InputContainer from '@/components/common/InputContainer/InputContainer';
 import { useNavigate } from 'react-router-dom';
 import type { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
-import { setFormState } from '@/store/reducers/forms';
+import { setFormState } from '@/store/reducers/ui';
 import TextInput from '@/components/common/TextInput/TextInput';
 import { Button, Icon, Intent } from '@blueprintjs/core';
 import Checkbox from '@/components/common/Checkbox/Checkbox';

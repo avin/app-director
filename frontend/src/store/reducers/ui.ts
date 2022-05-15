@@ -2,11 +2,15 @@ import { Form, LogInFormInputs } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type UiSettingsState = {
-  [Form.LogIn]: LogInFormInputs | null;
+  forms: {
+    [Form.LogIn]: LogInFormInputs | null;
+  };
 };
 
 const initialState: UiSettingsState = {
-  [Form.LogIn]: null,
+  forms: {
+    [Form.LogIn]: null,
+  },
 };
 
 const slice = createSlice({

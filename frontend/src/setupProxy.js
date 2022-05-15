@@ -6,5 +6,5 @@ const path = require('path');
 const apiMocker = require('mocker-api');
 
 module.exports = (app) => {
-  apiMocker(app, path.resolve('./additional/apiMock/index.js'));
+  apiMocker(app, path.resolve('./apiMock/index.js'));
 };
