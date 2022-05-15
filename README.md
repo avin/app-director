@@ -15,14 +15,14 @@
 
 ## Сущности
 
-### Приложение (apps)
+### Приложение (application)
 
 - id
 - title
 - description
-- extended (JSON)
+- properties (JSON)
 
-### Стенд (stands)
+### Стенд (stand)
 
 - id
 - stand_category_id
@@ -30,42 +30,41 @@
 - title
 - description
 - org_id
-- extended (JSON)
+- properties (JSON)
 
-### Категория Стенда (stand_categories)
+### Категория Стенда (stand_category)
 
 - id
 - title
 - alias
 - description
-- extended (JSON)
+- properties (JSON)
 
-### Организация (orgs)
+### Организация (organization)
 
 - id
 - title
 - description
 - alias
-- extended (JSON)
+- properties (JSON)
 
-### Пользователь (users)
+### Пользователь (user)
 
 - id
 - email
 - password
 - full_name
 - description
-- avatar
 - role (VIEWER | MODERATOR | ADMINISTRATOR)
-- extended (JSON)
+- properties (JSON)
 
-### Проверяльщики (inspectors)
+### Проверяльщики (inspector)
 
 - id
 - stand_id
-- settings (JSON)
+- properties (JSON)
 
-### Результаты проверок (checks)
+### Результаты проверок (check)
 
 - id
 - inspector_id
