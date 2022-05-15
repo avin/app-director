@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "ConEmu -reuse -run \"cd frontend & npm run dev\" & ConEmu -reuse -run \"cd frontend & npm run cosmos\"",
     "postinstall": "husky install"
   },
   "dependencies": {
