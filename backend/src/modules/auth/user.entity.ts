@@ -5,16 +5,16 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   fullName: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
   @Column({ default: true })
@@ -22,6 +22,7 @@ export class User {
 
   @Column({
     type: 'jsonb',
+    nullable: true,
   })
   public properties: unknown;
 }

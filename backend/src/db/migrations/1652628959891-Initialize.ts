@@ -26,6 +26,7 @@ export class Initialize1652628959891 implements MigrationInterface {
       },
     ];
 
+
     /** application */
     await queryRunner.createTable(
       new Table({
@@ -92,6 +93,7 @@ export class Initialize1652628959891 implements MigrationInterface {
           {
             name: 'email',
             type: 'varchar',
+            isUnique: true,
             isNullable: false,
           },
           {
