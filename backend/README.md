@@ -1,11 +1,14 @@
-# Backend
+# Add-Director Backend
 
-## Dev migration
+## Dev migrations
 
 ```sh
-# Apply migrations
-npx dotenv -e ./.env.stage.dev typeorm migration:run
+## Create migration
+npm run typeorm:cli migration:create -- -n FooBar
 
-# Revert last migration
-npx dotenv -e ./.env.stage.dev typeorm migration:revert
+## Apply migrations
+npm run typeorm:cli migration:run
+
+## Revert last migration
+npm run typeorm:cli migration:revert
 ```

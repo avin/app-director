@@ -8,7 +8,11 @@ export class AddSomeData1657471757685 implements MigrationInterface {
       .createQueryBuilder()
       .insert()
       .into(Application)
-      .values([{ title: 'ApplicationName1', description: 'ApplicationDescription1', properties: { foo: 'bar' } }])
+      .values([
+        { title: 'ApplicationName1', description: 'ApplicationDescription1', properties: { foo: 'bar1' } },
+        { title: 'ApplicationName2', description: 'ApplicationDescription2', properties: { foo: 'bar2' } },
+        { title: 'ApplicationName3', description: 'ApplicationDescription3', properties: { foo: 'bar3' } },
+      ])
       .execute();
   }
 
