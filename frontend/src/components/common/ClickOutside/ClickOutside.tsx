@@ -13,7 +13,7 @@ const ClickOutside = ({
   children,
   onClickOutside,
   ...props
-}: React.PropsWithChildren<Props>): JSX.Element => {
+}: React.PropsWithChildren<Props>) => {
   // const container = useRef<HTMLElement>(null);
   const containerRef = useRef<React.ElementRef<typeof Container>>(null);
 

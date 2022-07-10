@@ -8,7 +8,7 @@ interface Props extends CheckboxProps {
   rules?: RegisterOptions;
 }
 
-const Checkbox = ({ name, control, rules, ...props }: Props): JSX.Element => {
+const Checkbox = ({ name, control, rules, ...props }: Props) => {
   const {
     field: { value, onChange },
   } = useController({

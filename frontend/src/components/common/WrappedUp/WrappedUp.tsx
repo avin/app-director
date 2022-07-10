@@ -25,7 +25,7 @@ const WrappedUp = ({
   cssTransitionClassNames,
   unmountOnExit = false,
   ...props
-}: Props): JSX.Element | null => {
+}: Props) => {
   const measureRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const changeHeightTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

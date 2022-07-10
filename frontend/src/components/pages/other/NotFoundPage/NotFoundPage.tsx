@@ -1,10 +1,18 @@
-import React from 'react';
-import styles from './NotFoundPage.module.scss';
+import { useEffect } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+import config from '@/config';
 
 interface Props {}
 
-const NotFoundPage = ({}: Props): JSX.Element => {
-  return <div>NotFoundPage</div>;
+const NotFoundPage = ({}: Props) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate(config.routes.monitoring);
+  }, [navigate]);
+
+  return null;
 };
 
 export default NotFoundPage;

@@ -1,7 +1,7 @@
 import React from 'react';
 import UserButton from './UserButton';
 
-export default (): JSX.Element => {
+export default () => {
   return (
     <div className="content">
       <UserButton/>

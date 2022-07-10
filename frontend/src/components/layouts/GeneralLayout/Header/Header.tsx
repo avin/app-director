@@ -7,7 +7,7 @@ import { Classes } from '@blueprintjs/core';
 
 interface Props {}
 
-const Header = ({}: Props): JSX.Element => {
+const Header = ({}: Props) => {
   return (
     <div className={styles.headerWrapper}>
       <div className={cn(styles.header, 'bp4-dark', Classes.ELEVATION_1)}>

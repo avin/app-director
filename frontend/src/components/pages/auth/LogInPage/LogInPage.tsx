@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import styles from './LogInPage.module.scss';
 import { useForm } from 'react-hook-form';
-import { Form, LogInFormInputs } from '@/types';
+import { LogInFormInputs } from '@/types';
 import InputContainer from '@/components/common/InputContainer/InputContainer';
 import { useNavigate } from 'react-router-dom';
 import type { AppThunkDispatch } from '@/store/configureStore';
@@ -11,11 +11,13 @@ import TextInput from '@/components/common/TextInput/TextInput';
 import { Button, Icon, Intent } from '@blueprintjs/core';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMessage';
-import { wait } from '@/utils/wait';
+import { logIn } from '@/store/reducers/data';
+import { Form } from '@/constants/form';
+import config from '@/config';
 
 interface Props {}
 
-const LogInPage = ({}: Props): JSX.Element => {
+const LogInPage = ({}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
   const navigate = useNavigate();
   const [isInProgress, setIsInProgress] = useState(false);
@@ -32,8 +34,8 @@ const LogInPage = ({}: Props): JSX.Element => {
       password: '',
 
       ...(process.env.NODE_ENV === 'development' && {
-        // email: 'admin@server.com',
-        // password: 'password',
+        email: 'admin@server.com',
+        password: 'password',
         save: false,
       }),
     },
@@ -41,21 +43,16 @@ const LogInPage = ({}: Props): JSX.Element => {
 
   const onSubmit = useCallback(
     async (data) => {
-      console.log(data);
-      dispatch(setFormState({ formName: Form.LogIn, formState: data }));
       setErrorMessage(null);
-
       setIsInProgress(true);
 
+      dispatch(setFormState({ formName: Form.LogIn, formState: data }));
+
       try {
-        await wait(500);
-
-        setErrorMessage('Вход не был выполнен успешно');
-
-        // TODO
-        // await dispatch(adminLogIn());
-        // navigate(config.routes.client.orders);
+        await dispatch(logIn());
+        navigate(config.routes.monitoring);
       } catch (e) {
+        console.warn(e);
         setErrorMessage('Запрос выполнен неуспешно, попробуйте еще раз');
         // const errData = (e as ApiError)?.data;
         // if (errData?.error?.code && errData?.error?.message) {
@@ -63,7 +60,6 @@ const LogInPage = ({}: Props): JSX.Element => {
         //   return;
         // }
         // setErrorMessage('Запрос выполнен неуспешно, попробуйте еще раз');
-      } finally {
         setIsInProgress(false);
       }
     },

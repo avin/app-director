@@ -5,7 +5,7 @@ import styles from './AuthLayout.module.scss';
 
 interface Props {}
 
-const AuthLayout = ({}: Props): JSX.Element => {
+const AuthLayout = ({}: Props) => {
   return (
     <div className={styles.layout}>
       <Card elevation={Elevation.TWO} className={styles.content}>

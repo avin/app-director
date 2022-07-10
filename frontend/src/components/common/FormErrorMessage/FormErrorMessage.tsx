@@ -7,7 +7,7 @@ interface Props {
   message?: React.ReactNode;
 }
 
-const FormErrorMessage = ({ message }: Props): JSX.Element => {
+const FormErrorMessage = ({ message }: Props) => {
   return (
     <WrappedUp
       open={!!message}

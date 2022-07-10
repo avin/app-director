@@ -26,6 +26,15 @@ if (process.env.REACT_APP_FAKE_MODE === 'true') {
     [`GET ${apiPrefix}/version`]: {
       version: '0.1.0',
     },
+
+    [`POST ${apiPrefix}/logIn`]: {
+      id: 'id1',
+      email: 'foo@bar.com',
+      fullName: 'Foo Bar',
+      description: 'description here',
+      role: 'ADMIN',
+      properties: {},
+    },
   });
 }
 

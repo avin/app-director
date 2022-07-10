@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {}
 
-const Navigation = ({}: Props): JSX.Element => {
+const Navigation = ({}: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,21 +32,21 @@ const Navigation = ({}: Props): JSX.Element => {
         },
       },
       {
-        id: 'organizations',
-        icon: 'office',
-        label: 'Организации',
-        isSelected: location.pathname === config.routes.organizations,
-        nodeData: {
-          route: config.routes.organizations,
-        },
-      },
-      {
         id: 'stands',
         icon: 'cloud',
         label: 'Стенды',
         isSelected: location.pathname === config.routes.stands,
         nodeData: {
           route: config.routes.stands,
+        },
+      },
+      {
+        id: 'organizations',
+        icon: 'office',
+        label: 'Организации',
+        isSelected: location.pathname === config.routes.organizations,
+        nodeData: {
+          route: config.routes.organizations,
         },
       },
       {

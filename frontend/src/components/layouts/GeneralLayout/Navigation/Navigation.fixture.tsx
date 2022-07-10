@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation';
 
-export default (): JSX.Element => {
+export default () => {
   return (
     <div className="content">
       <Navigation/>

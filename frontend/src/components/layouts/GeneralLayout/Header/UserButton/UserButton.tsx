@@ -1,13 +1,20 @@
 import React, { useCallback } from 'react';
 import { Button, Menu, MenuItem, Position } from '@blueprintjs/core';
 import { Popover2 } from '@blueprintjs/popover2';
+import { AppThunkDispatch } from '@/store/configureStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '@/store/reducers/data';
+import { userSelector } from '@/store/selectors';
 
 interface Props {}
 
-const UserButton = ({}: Props): JSX.Element => {
+const UserButton = ({}: Props) => {
+  const user = useSelector(userSelector);
+  const dispatch: AppThunkDispatch = useDispatch();
+
   const handleClickLogout = useCallback(() => {
-    // TODO
-  }, []);
+    dispatch(logOut());
+  }, [dispatch]);
 
   return (
     <Popover2
@@ -21,7 +28,7 @@ const UserButton = ({}: Props): JSX.Element => {
       position={Position.BOTTOM_LEFT}
     >
       <Button icon="user" minimal>
-        foo@asd.com
+        {user.email}
       </Button>
     </Popover2>
   );

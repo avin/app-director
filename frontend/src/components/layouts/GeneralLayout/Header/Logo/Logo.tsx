@@ -4,11 +4,11 @@ import { Icon } from '@blueprintjs/core';
 
 interface Props {}
 
-const Logo = ({}: Props): JSX.Element => {
+const Logo = ({}: Props) => {
   return (
     <div className={styles.logo}>
       <Icon icon="graph" />
-      <div className={styles.title}>AppInspector</div>
+      <div className={styles.title}>AppDirector</div>
     </div>
   );
 };

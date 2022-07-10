@@ -17,10 +17,5 @@ void (() => {
     window.location.pathname = config.basename;
   }
 
-  ReactDOM.render(
-    <React.StrictMode>
-      <App store={store} />
-    </React.StrictMode>,
-    document.getElementById('root'),
-  );
+  ReactDOM.render(<App store={store} />, document.getElementById('root'));
 })();

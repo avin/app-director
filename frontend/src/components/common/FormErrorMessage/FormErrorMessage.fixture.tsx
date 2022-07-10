@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FormErrorMessage from './FormErrorMessage';
 
-export default (): JSX.Element => {
+export default () => {
   const [show, setShow] = useState(false);
 
   return (

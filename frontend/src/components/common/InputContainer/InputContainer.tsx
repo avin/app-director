@@ -11,7 +11,7 @@ export interface InputContainerProps extends React.PropsWithChildren<{}> {
   className?: string;
 }
 
-const InputContainer = ({ label, error, subtext, className, children }: InputContainerProps): JSX.Element => {
+const InputContainer = ({ label, error, subtext, className, children }: InputContainerProps) => {
   const [errorToShow, setErrorToShow] = useState(error);
 
   useEffect(() => {

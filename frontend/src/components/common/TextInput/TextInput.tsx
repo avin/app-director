@@ -8,7 +8,7 @@ interface Props extends InputGroupProps2 {
   rules?: RegisterOptions;
 }
 
-const TextInput = ({ name, control, rules, ...props }: Props): JSX.Element => {
+const TextInput = ({ name, control, rules, ...props }: Props) => {
   const {
     field: { value, onChange },
   } = useController({

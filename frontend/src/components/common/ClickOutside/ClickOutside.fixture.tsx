@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ClickOutside from './ClickOutside';
 
-export default (): JSX.Element => {
+export default () => {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   return (

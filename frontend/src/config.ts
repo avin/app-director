@@ -17,7 +17,7 @@ export class Config {
 
   // Внутренние роуты приложения
   routes = {
-    login: '/login',
+    logIn: '/logIn',
     monitoring: '/monitoring',
     applications: '/applications',
     organizations: '/organizations',
@@ -30,14 +30,18 @@ export class Config {
 
   // Пути для API запросов
   get apiMethods(): {
-    [key: string]: { path: string; method: string };
+    [key: string]: { url: string; method: string };
   } {
     const { apiPrefix } = this;
 
     return {
       version: {
-        path: `${apiPrefix}/version`,
+        url: `${apiPrefix}/version`,
         method: 'GET',
+      },
+      logIn: {
+        url: `${apiPrefix}/logIn`,
+        method: 'POST',
       },
     };
   }

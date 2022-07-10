@@ -1,4 +1,5 @@
-import { Form, LogInFormInputs } from '@/types';
+import { Form } from '@/constants/form';
+import { LogInFormInputs } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type UiSettingsState = {
@@ -20,7 +21,7 @@ const slice = createSlice({
     setFormState: (state, action: PayloadAction<{ formName: string; formState: unknown }>) => {
       const { formName, formState } = action.payload;
 
-      state[formName] = formState;
+      state.forms[formName] = formState;
     },
     resetForms: () => {
       return initialState;

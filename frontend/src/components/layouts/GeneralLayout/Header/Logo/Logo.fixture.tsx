@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from './Logo';
 
-export default (): JSX.Element => {
+export default () => {
   return (
     <div className="content">
       <Logo/>

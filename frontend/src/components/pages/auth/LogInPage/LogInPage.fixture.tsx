@@ -3,7 +3,7 @@ import LogInPage from './LogInPage';
 import { Route, Routes } from 'react-router-dom';
 import AuthLayout from '@/components/layouts/AuthLayout/AuthLayout';
 
-export default (): JSX.Element => {
+export default () => {
   return (
     <Routes>
       <Route path="*" element={<AuthLayout />}>

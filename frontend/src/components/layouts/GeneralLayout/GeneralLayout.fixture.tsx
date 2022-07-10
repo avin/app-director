@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import React from 'react';
 import GeneralLayout from '@/components/layouts/GeneralLayout/GeneralLayout';
 
-export default (): JSX.Element => {
+export default () => {
   return (
     <Routes>
       <Route path="*" element={<GeneralLayout />}>

@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import WrappedUp from './WrappedUp';
 import styles from './WrappedUp.fixture.module.scss';
 
-export default (): JSX.Element => {
+export default () => {
   const [open, setOpen] = useState(false);
 
   const handleClickToggleVisible = useCallback(() => {
