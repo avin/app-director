@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-// import { TasksModule } from './tasks/tasks.module';
-// import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configValidationSchema } from './config.schema';
 import { ApplicationsModule } from './modules/applications/applications.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +26,7 @@ import { ApplicationsModule } from './modules/applications/applications.module';
       },
     }),
     ApplicationsModule,
+    AuthModule,
     // AuthModule,
   ],
 })

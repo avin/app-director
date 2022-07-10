@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { Application } from '../../modules/applications/application.entity';
 
 export class Initialize1652628959891 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -12,13 +13,13 @@ export class Initialize1652628959891 implements MigrationInterface {
         default: `uuid_generate_v4()`,
       },
       {
-        name: 'created_at',
+        name: 'createdAt',
         type: 'timestamptz',
         isNullable: false,
         default: 'now()',
       },
       {
-        name: 'updated_at',
+        name: 'updatedAt',
         type: 'timestamptz',
         isNullable: false,
         default: 'now()',
@@ -39,11 +40,12 @@ export class Initialize1652628959891 implements MigrationInterface {
           {
             name: 'description',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'properties',
             type: 'jsonb',
+            isNullable: true,
           },
         ],
       }),
@@ -64,16 +66,17 @@ export class Initialize1652628959891 implements MigrationInterface {
           {
             name: 'description',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'alias',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'properties',
             type: 'jsonb',
+            isNullable: true,
           },
         ],
       }),
@@ -97,23 +100,24 @@ export class Initialize1652628959891 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'full_name',
+            name: 'fullName',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'description',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'role',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'properties',
             type: 'jsonb',
+            isNullable: true,
           },
         ],
       }),
@@ -123,7 +127,7 @@ export class Initialize1652628959891 implements MigrationInterface {
     /** stand_category */
     await queryRunner.createTable(
       new Table({
-        name: 'stand_category',
+        name: 'standCategory',
         columns: [
           ...commonColumns,
           {
@@ -134,12 +138,12 @@ export class Initialize1652628959891 implements MigrationInterface {
           {
             name: 'description',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'alias',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'properties',
@@ -157,17 +161,17 @@ export class Initialize1652628959891 implements MigrationInterface {
         columns: [
           ...commonColumns,
           {
-            name: 'stand_category_id',
+            name: 'standCategoryId',
             type: 'uuid',
             isNullable: false,
           },
           {
-            name: 'application_id',
+            name: 'applicationId',
             type: 'uuid',
             isNullable: false,
           },
           {
-            name: 'organization_id',
+            name: 'organizationId',
             type: 'uuid',
             isNullable: false,
           },
@@ -179,11 +183,12 @@ export class Initialize1652628959891 implements MigrationInterface {
           {
             name: 'description',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'properties',
             type: 'jsonb',
+            isNullable: true,
           },
         ],
       }),
@@ -197,13 +202,14 @@ export class Initialize1652628959891 implements MigrationInterface {
         columns: [
           ...commonColumns,
           {
-            name: 'stand_id',
+            name: 'standId',
             type: 'uuid',
             isNullable: false,
           },
           {
             name: 'properties',
             type: 'jsonb',
+            isNullable: true,
           },
         ],
       }),
@@ -217,12 +223,12 @@ export class Initialize1652628959891 implements MigrationInterface {
         columns: [
           ...commonColumns,
           {
-            name: 'inspector_id',
+            name: 'inspectorId',
             type: 'uuid',
             isNullable: false,
           },
           {
-            name: 'checks_count',
+            name: 'checksCount',
             type: 'int4',
             default: 0,
             isNullable: false,
@@ -246,7 +252,7 @@ export class Initialize1652628959891 implements MigrationInterface {
     await queryRunner.dropTable('application');
     await queryRunner.dropTable('organization');
     await queryRunner.dropTable('user');
-    await queryRunner.dropTable('stand_category');
+    await queryRunner.dropTable('standCategory');
     await queryRunner.dropTable('stand');
     await queryRunner.dropTable('inspector');
     await queryRunner.dropTable('check');
