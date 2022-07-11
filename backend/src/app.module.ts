@@ -6,6 +6,7 @@ import { ApplicationsModule } from './modules/applications/applications.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { StandsModule } from './modules/stands/stands.module';
 import { OrganizationsModule } from './modules/organizations/organizations.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { OrganizationsModule } from './modules/organizations/organizations.modul
     ApplicationsModule,
     StandsModule,
     OrganizationsModule,
+    UsersModule,
     AuthModule,
   ],
 })

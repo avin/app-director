@@ -4,8 +4,6 @@ import { GetOrganizationsFilterDto } from './dto/get-organizations-filter.dto';
 import { OrganizationsRepository } from './organizations.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
-import pickBy from 'lodash/pickBy';
-import identity from 'lodash/identity';
 
 @Injectable()
 export class OrganizationsService {

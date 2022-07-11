@@ -2,9 +2,10 @@ import { EntityRepository, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { GetUsersFilterDto } from './dto/get-users-filter.dto';
 import { User } from './user.entity';
-import { ConflictException, InternalServerErrorException, Logger } from '@nestjs/common';
+import { BadRequestException, ConflictException, InternalServerErrorException, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import {PgErrors} from '../../constants/pgErrors';
+import { PgErrors } from '../../constants/pgErrors';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {
@@ -31,12 +32,12 @@ export class UsersRepository extends Repository<User> {
   }
 
   async createUser(createUserDto: CreateUserDto) {
-    const { email, password } = createUserDto;
-
     const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
 
-    const user = this.create({ email, password: hashedPassword });
+    createUserDto.password = hashedPassword;
+
+    const user = this.create(createUserDto);
 
     try {
       const { password, ...result } = await this.save(user);
@@ -44,6 +45,33 @@ export class UsersRepository extends Repository<User> {
     } catch (error) {
       if (error.code === PgErrors.UNIQUE_VIOLATION) {
         throw new ConflictException('Username already exists');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
+  }
+
+  async updateUser(id: string, updateUserDto: UpdateUserDto) {
+    if (updateUserDto.password) {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(updateUserDto.password, salt);
+
+      updateUserDto.password = hashedPassword;
+    }
+
+    try {
+      const result = await this.createQueryBuilder()
+        .update(updateUserDto)
+        .where({
+          id,
+        })
+        .returning('*')
+        .execute();
+
+      return result.raw[0];
+    } catch (error) {
+      if (error.code === PgErrors.INVALID_TEXT_REPRESENTATION) {
+        throw new BadRequestException('Invalid ID');
       } else {
         throw new InternalServerErrorException();
       }

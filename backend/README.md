@@ -15,3 +15,7 @@ npm run typeorm:cli migration:run
 ## Revert last migration
 npm run typeorm:cli migration:revert
 ```
+
+
+# ToDo
+* добавить защиту на изменение пользователей по ролям и принадлежности
