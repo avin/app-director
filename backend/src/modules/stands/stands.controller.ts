@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { GetStandsFilterDto } from './dto/get-stands-filter.dto';
 import { Logger } from '@nestjs/common';
 import { StandsService } from './stands.service';
 import { CreateStandDto } from './dto/create-stand.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { UpdateStandDto } from './dto/update-stand.dto';
 
 @Controller('stands')
 @UseGuards(AuthGuard())
@@ -26,6 +27,12 @@ export class StandsController {
   createStand(@Body() createStandDto: CreateStandDto) {
     this.logger.verbose(`Creating a new stand. Data: ${JSON.stringify(createStandDto)}`);
     return this.standsService.createStand(createStandDto);
+  }
+
+  @Patch('/:id')
+  updateStand(@Param('id') id: string, @Body() updateStandDto: UpdateStandDto) {
+    this.logger.verbose(`Update an stand. Data: ${JSON.stringify(updateStandDto)}`);
+    return this.standsService.updateStand(id, updateStandDto);
   }
 
   @Delete('/:id')

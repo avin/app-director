@@ -1,18 +1,15 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateStandDto {
+export class UpdateOrganizationDto {
   @IsString()
   @IsNotEmpty()
-  title: string;
+  @IsOptional()
+  title?: string;
 
   @IsString()
   @IsOptional()
   description?: string;
 
-  @IsString()
-  applicationId: string;
-
   @IsOptional()
-  @IsString()
-  organizationId: string;
+  properties?: Record<string, unknown>;
 }

@@ -2,8 +2,9 @@ import { EntityRepository, Repository } from 'typeorm';
 import { CreateStandDto } from './dto/create-stand.dto';
 import { GetStandsFilterDto } from './dto/get-stands-filter.dto';
 import { Stand } from './stand.entity';
-import { InternalServerErrorException, Logger } from '@nestjs/common';
-import { Application } from '../applications/application.entity';
+import { BadRequestException, InternalServerErrorException, Logger } from '@nestjs/common';
+import { UpdateStandDto } from './dto/update-stand.dto';
+import { PgErrors } from '../../constants/pgErrors';
 
 @EntityRepository(Stand)
 export class StandsRepository extends Repository<Stand> {
@@ -38,5 +39,25 @@ export class StandsRepository extends Repository<Stand> {
 
     await this.save(stand);
     return stand;
+  }
+
+  async updateStand(id: string, updateStandDto: UpdateStandDto) {
+    try {
+      const result = await this.createQueryBuilder()
+        .update(updateStandDto)
+        .where({
+          id,
+        })
+        .returning('*')
+        .execute();
+
+      return result.raw[0];
+    } catch (error) {
+      if (error.code === PgErrors.INVALID_TEXT_REPRESENTATION) {
+        throw new BadRequestException('Invalid ID');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
   }
 }

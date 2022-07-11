@@ -3,6 +3,7 @@ import { CreateStandDto } from './dto/create-stand.dto';
 import { GetStandsFilterDto } from './dto/get-stands-filter.dto';
 import { StandsRepository } from './stands.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UpdateStandDto } from './dto/update-stand.dto';
 
 @Injectable()
 export class StandsService {
@@ -27,6 +28,10 @@ export class StandsService {
 
   createStand(createStandDto: CreateStandDto) {
     return this.standsRepository.createStand(createStandDto);
+  }
+
+  async updateStand(id: string, updateStandDto: UpdateStandDto) {
+    return this.standsRepository.updateStand(id, updateStandDto);
   }
 
   async deleteStand(id: string) {

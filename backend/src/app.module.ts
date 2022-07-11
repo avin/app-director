@@ -4,7 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configValidationSchema } from './config.schema';
 import { ApplicationsModule } from './modules/applications/applications.module';
 import { AuthModule } from './modules/auth/auth.module';
-import {StandsModule} from './modules/stands/stands.module';
+import { StandsModule } from './modules/stands/stands.module';
+import { OrganizationsModule } from './modules/organizations/organizations.module';
 
 @Module({
   imports: [
@@ -28,8 +29,8 @@ import {StandsModule} from './modules/stands/stands.module';
     }),
     ApplicationsModule,
     StandsModule,
+    OrganizationsModule,
     AuthModule,
-    // AuthModule,
   ],
 })
 export class AppModule {}
