@@ -8,7 +8,7 @@ import { InternalServerErrorException, Logger } from '@nestjs/common';
 export class ApplicationsRepository extends Repository<Application> {
   private logger = new Logger('ApplicationsRepository');
 
-  async getApplications(filterDto: GetApplicationsFilterDto): Promise<Application[]> {
+  async getApplications(filterDto: GetApplicationsFilterDto) {
     const { search } = filterDto;
 
     const query = this.createQueryBuilder('application');
@@ -29,7 +29,7 @@ export class ApplicationsRepository extends Repository<Application> {
     }
   }
 
-  async createApplication(createApplicationDto: CreateApplicationDto): Promise<Application> {
+  async createApplication(createApplicationDto: CreateApplicationDto) {
     const { title, description } = createApplicationDto;
 
     const application = this.create({

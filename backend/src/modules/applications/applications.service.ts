@@ -3,7 +3,9 @@ import { CreateApplicationDto } from './dto/create-application.dto';
 import { GetApplicationsFilterDto } from './dto/get-applications-filter.dto';
 import { ApplicationsRepository } from './applications.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Application } from './application.entity';
+import { UpdateApplicationDto } from './dto/update-application.dto';
+import pickBy from 'lodash/pickBy';
+import identity from 'lodash/identity';
 
 @Injectable()
 export class ApplicationsService {
@@ -12,11 +14,11 @@ export class ApplicationsService {
     private applicationsRepository: ApplicationsRepository,
   ) {}
 
-  getApplications(filterDto: GetApplicationsFilterDto): Promise<Application[]> {
+  getApplications(filterDto: GetApplicationsFilterDto) {
     return this.applicationsRepository.getApplications(filterDto);
   }
 
-  async getApplicationById(id: string): Promise<Application> {
+  async getApplicationById(id: string) {
     const found = await this.applicationsRepository.findOne({ where: { id } });
 
     if (!found) {
@@ -26,11 +28,17 @@ export class ApplicationsService {
     return found;
   }
 
-  createApplication(createApplicationDto: CreateApplicationDto): Promise<Application> {
+  createApplication(createApplicationDto: CreateApplicationDto) {
     return this.applicationsRepository.createApplication(createApplicationDto);
   }
 
-  async deleteApplication(id: string): Promise<void> {
+  async updateApplication(id: string, updateApplicationDto: UpdateApplicationDto) {
+    await this.applicationsRepository.update({ id }, updateApplicationDto);
+
+    return this.getApplicationById(id);
+  }
+
+  async deleteApplication(id: string) {
     const result = await this.applicationsRepository.delete({ id });
 
     if (result.affected === 0) {
