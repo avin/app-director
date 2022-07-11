@@ -1,11 +1,14 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateStandDto {
+  @IsString()
   @IsNotEmpty()
   title: string;
 
-  description: string;
+  @IsString()
+  @IsOptional()
+  description?: string;
 
-  @IsNotEmpty()
+  @IsString()
   applicationId: string;
 }

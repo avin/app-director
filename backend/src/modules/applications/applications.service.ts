@@ -19,7 +19,7 @@ export class ApplicationsService {
   }
 
   async getApplicationById(id: string) {
-    const found = await this.applicationsRepository.findOne({ where: { id } });
+    const found = await this.applicationsRepository.findOne({ where: { id }, relations: ['stands'] });
 
     if (!found) {
       throw new NotFoundException(`Application with ID "${id}" not found`);
@@ -33,9 +33,7 @@ export class ApplicationsService {
   }
 
   async updateApplication(id: string, updateApplicationDto: UpdateApplicationDto) {
-    await this.applicationsRepository.update({ id }, updateApplicationDto);
-
-    return this.getApplicationById(id);
+    return this.applicationsRepository.updateApplication(id, updateApplicationDto);
   }
 
   async deleteApplication(id: string) {

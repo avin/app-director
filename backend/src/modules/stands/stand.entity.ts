@@ -18,6 +18,9 @@ export class Stand {
   })
   public properties: unknown;
 
-  @ManyToOne((_type) => Application, (application) => application.stands, { eager: true })
+  @Column({ nullable: false })
+  applicationId: string;
+
+  @ManyToOne((_type) => Application, (application) => application.stands, { eager: false })
   application: Application;
 }

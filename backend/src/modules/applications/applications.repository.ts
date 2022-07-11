@@ -2,7 +2,9 @@ import { EntityRepository, Repository } from 'typeorm';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { GetApplicationsFilterDto } from './dto/get-applications-filter.dto';
 import { Application } from './application.entity';
-import { InternalServerErrorException, Logger } from '@nestjs/common';
+import { BadRequestException, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { UpdateApplicationDto } from './dto/update-application.dto';
+import { PgErrors } from '../../constants/pgErrors';
 
 @EntityRepository(Application)
 export class ApplicationsRepository extends Repository<Application> {
@@ -39,5 +41,25 @@ export class ApplicationsRepository extends Repository<Application> {
 
     await this.save(application);
     return application;
+  }
+
+  async updateApplication(id: string, updateApplicationDto: UpdateApplicationDto) {
+    try {
+      const result = await this.createQueryBuilder()
+        .update(updateApplicationDto)
+        .where({
+          id,
+        })
+        .returning('*')
+        .execute();
+
+      return result.raw[0];
+    } catch (error) {
+      if (error.code === PgErrors.INVALID_TEXT_REPRESENTATION) {
+        throw new BadRequestException('Invalid ID');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
   }
 }

@@ -4,6 +4,7 @@ import { GetUsersFilterDto } from './dto/get-users-filter.dto';
 import { User } from './user.entity';
 import { ConflictException, InternalServerErrorException, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import {PgErrors} from '../../constants/pgErrors';
 
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {
@@ -41,7 +42,7 @@ export class UsersRepository extends Repository<User> {
       const { password, ...result } = await this.save(user);
       return result;
     } catch (error) {
-      if (error.code === '23505') {
+      if (error.code === PgErrors.UNIQUE_VIOLATION) {
         throw new ConflictException('Username already exists');
       } else {
         throw new InternalServerErrorException();
