@@ -6,6 +6,14 @@ import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import type { AppThunkAction } from '../configureStore';
 import { accessTokenSelector } from '@/store/selectors';
 
+type EntitiesCollection<T> = {
+  entities: Record<string, T>;
+  ids: string[];
+  page: number;
+  perPage: number;
+  total: number;
+};
+
 type DataState = {
   organizations: Record<string, Organization>;
   applications: Application[];

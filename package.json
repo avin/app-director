@@ -2,6 +2,11 @@
   "name": "app-director",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "backend",
+    "frontend",
+    "common"
+  ],
   "scripts": {
     "dev": "ConEmu -reuse -run \"cd frontend & npm run dev\" & ConEmu -reuse -run \"cd frontend & npm run cosmos\"",
     "postinstall": "husky install"
@@ -14,5 +19,6 @@
   },
   "volta": {
     "node": "16.13.2"
-  }
+  },
+  "lint-staged": {}
 }

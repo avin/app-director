@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "postinstall": "husky install",
     "dev": "craco start",
     "dev:fake": "cross-env REACT_APP_FAKE_MODE=true npm run dev",
     "build": "cross-env GENERATE_SOURCEMAP=false TSC_COMPILE_ON_ERROR=true craco build",
@@ -36,10 +35,8 @@
     "axios": "^0.27.2",
     "clsx": "1.1.1",
     "cross-env": "7.0.3",
-    "husky": "7.0.4",
     "imask": "6.4.2",
     "include-media": "1.4.10",
-    "lint-staged": "11.2.6",
     "lodash": "4.17.21",
     "react": "17.0.2",
     "react-cosmos": "5.7.0",
