@@ -1,12 +1,10 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { Role } from '../../constants/role';
+import { BaseEntity } from '../../utils/base-entity';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends BaseEntity {
   @Column({ unique: true })
   email: string;
 

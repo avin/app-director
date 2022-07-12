@@ -8,7 +8,7 @@ import { accessTokenSelector } from '@/store/selectors';
 
 type DataState = {
   organizations: Record<string, Organization>;
-  applications: Record<string, Application>;
+  applications: Application[];
   stands: Record<string, Stand>;
   user: User | null;
   accessToken: string | null;
@@ -16,7 +16,7 @@ type DataState = {
 
 const initialState: DataState = {
   organizations: {},
-  applications: {},
+  applications: [],
   stands: {},
   user: null,
   accessToken: null,
@@ -29,7 +29,7 @@ const slice = createSlice({
     setOrganizations: (state, action: PayloadAction<Record<string, Organization>>) => {
       state.organizations = action.payload;
     },
-    setApplications: (state, action: PayloadAction<Record<string, Application>>) => {
+    setApplications: (state, action: PayloadAction<Application[]>) => {
       state.applications = action.payload;
     },
     setStands: (state, action: PayloadAction<Record<string, Stand>>) => {
@@ -97,5 +97,17 @@ export function logIn(): AppThunkAction<Promise<void>> {
 export function logOut(): AppThunkAction<void> {
   return (dispatch, getState) => {
     dispatch(setUser(null));
+  };
+}
+
+export function getApplications(): AppThunkAction<Promise<void>> {
+  return async (dispatch, getState) => {
+    const { data } = await dispatch(
+      apiCall<Application[]>({
+        ...config.apiMethods.getApplications,
+        data: {},
+      }),
+    );
+    dispatch(setApplications(data));
   };
 }

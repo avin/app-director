@@ -35,7 +35,7 @@ export class OrganizationsService {
   }
 
   async deleteOrganization(id: string) {
-    const result = await this.organizationsRepository.delete({ id });
+    const result = await this.organizationsRepository.softDelete({ id });
 
     if (result.affected === 0) {
       throw new NotFoundException(`Organization with ID "${id}" not found`);

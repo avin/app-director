@@ -1,21 +1,13 @@
 /**
- * Конфигурация приложения.
- *
- * Для переопределении значений в production-сборке добавить в выходной после сборки файл
- * build/config.js по примеру build/config.example.js требуемые для перезаписи значения
- * (указывать только значения отличные от значений в текущем файле)
+ * App config
  */
 export class Config {
-  // Префикс сервиса BNPL (задается динамически)
   apiPrefix = '/api';
 
-  // Basename ссылки приложения
   basename = document.querySelector('head base')?.getAttribute('href') || '';
 
-  // ID элемента со спиннером который появляется до загрузки приложения
   pageLoadingElementId = 'page-loading';
 
-  // Внутренние роуты приложения
   routes = {
     logIn: '/logIn',
     monitoring: '/monitoring',
@@ -28,7 +20,6 @@ export class Config {
     },
   };
 
-  // Пути для API запросов
   get apiMethods(): {
     [key: string]: { url: string; method: string };
   } {
@@ -39,17 +30,45 @@ export class Config {
         url: `${apiPrefix}/version`,
         method: 'GET',
       },
+
+      // ------- Auth -------
+
       logIn: {
         url: `${apiPrefix}/auth/signin`,
         method: 'POST',
       },
+
+      // ------- Applications -------
+
+      getApplications: {
+        url: `${apiPrefix}/applications`,
+        method: 'GET',
+      },
+
+      getApplication: {
+        url: `${apiPrefix}/applications/:id`,
+        method: 'GET',
+      },
+
+      updateApplication: {
+        url: `${apiPrefix}/applications/:id`,
+        method: 'PATCH',
+      },
+
+      deleteApplication: {
+        url: `${apiPrefix}/applications/:id`,
+        method: 'DELETE',
+      },
+
+      // ------- Organizations -------
+
+      getOrganizations: {
+        url: `${apiPrefix}/organizations`,
+        method: 'GET',
+      },
     };
   }
 
-  /**
-   * Расширить параметры конфигурации
-   * @param newConfigParams
-   */
   extendConfig(newConfigParams: { [key: string]: string }): void {
     Object.assign(this, newConfigParams);
   }

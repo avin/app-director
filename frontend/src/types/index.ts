@@ -14,6 +14,9 @@ export type Organization = {
 
 export type Application = {
   id: string;
+  title: string;
+  description: string | null;
+  properties: Record<string, unknown> | null;
 };
 
 export type Stand = {

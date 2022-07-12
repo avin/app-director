@@ -1,12 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { Application } from '../applications/application.entity';
 import { Organization } from '../organizations/organization.entity';
+import { BaseEntity } from '../../utils/base-entity';
 
 @Entity()
-export class Stand {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Stand extends BaseEntity {
   @Column()
   title: string;
 

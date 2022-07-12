@@ -35,7 +35,7 @@ export class ApplicationsService {
   }
 
   async deleteApplication(id: string) {
-    const result = await this.applicationsRepository.delete({ id });
+    const result = await this.applicationsRepository.softDelete({ id });
 
     if (result.affected === 0) {
       throw new NotFoundException(`Application with ID "${id}" not found`);

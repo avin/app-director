@@ -35,7 +35,7 @@ export class StandsService {
   }
 
   async deleteStand(id: string) {
-    const result = await this.standsRepository.delete({ id });
+    const result = await this.standsRepository.softDelete({ id });
 
     if (result.affected === 0) {
       throw new NotFoundException(`Stand with ID "${id}" not found`);

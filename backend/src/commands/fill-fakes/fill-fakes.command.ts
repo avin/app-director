@@ -26,10 +26,12 @@ export class FillFakesCommand implements CommandRunner {
     await this.applicationsService.deleteAllApplications();
 
     await this.createAdminUser();
-    await this.createSome(10, this.createRandomUser);
+    await this.createSome(3, this.createRandomUser);
     const organizations = await this.createSome(20, this.createRandomOrganization);
     const applications = await this.createSome(20, this.createRandomApplication);
-    await this.createSome(20, this.createRandomStand, applications, organizations);
+    await this.createSome(100, this.createRandomStand, applications, organizations);
+
+    console.info('Done!');
   }
 
   async createSome<T extends (...args: any[]) => any>(count: number, createFunction: T, ...args: Parameters<T>) {
@@ -44,7 +46,7 @@ export class FillFakesCommand implements CommandRunner {
     return this.usersService.createUser({
       email: 'admin@admin.com',
       fullName: `The Admin`,
-      password: 'passpass',
+      password: 'secretpass',
     });
   }
 

@@ -1,16 +1,14 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { Stand } from '../stands/stand.entity';
+import { BaseEntity } from '../../utils/base-entity';
 
 @Entity()
-export class Application {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Application extends BaseEntity {
   @Column()
   title: string;
 
   @Column({ nullable: true })
-  description: string;
+  description?: string;
 
   @Column({
     type: 'jsonb',
