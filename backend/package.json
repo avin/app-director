@@ -95,5 +95,11 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx}": [
+      "prettier --write",
+      "suppress-exit-code eslint --fix"
+    ]
   }
 }

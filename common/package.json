@@ -9,5 +9,10 @@
   },
   "dependencies": {
     "typescript": "^4.7.4"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx}": [
+      "prettier --write"
+    ]
   }
 }
