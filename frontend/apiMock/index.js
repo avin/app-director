@@ -7,10 +7,10 @@ const apiServer = process.env.REACT_APP_API_SERVER || 'localhost:3000';
 const proxy = {
   _proxy: {
     proxy: {
-      [`${apiPrefix}/(.*)`]: `https://${apiServer}/`,
+      [`${apiPrefix}/(.*)`]: `http://${apiServer}/`,
     },
     pathRewrite: {
-      '^/cosmos/': '/',
+      '^/api/': '/',
     },
     changeHost: true,
     httpProxy: {
@@ -27,13 +27,17 @@ if (process.env.REACT_APP_FAKE_MODE === 'true') {
       version: '0.1.0',
     },
 
-    [`POST ${apiPrefix}/logIn`]: {
-      id: 'id1',
-      email: 'foo@bar.com',
-      fullName: 'Foo Bar',
-      description: 'description here',
-      role: 'ADMIN',
-      properties: {},
+    [`POST ${apiPrefix}/auth/signin`]: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiVVNFUiIsImlkIjoiODkxNThkMjctODU2OS00MjA4LWEzM2UtOTI2ODY1MTI1MzdhIiwiaWF0IjoxNjU3NTk4MTY1LCJleHAiOjE2NTc2MDE3NjV9.8WcRMGvHCjFkLdGlyikaWvV2NHcDPeW8JbI9ZKKQ9vE',
+      user: {
+        role: 'USER',
+        id: '89158d27-8569-4208-a33e-92686512537a',
+        email: 'foo@bar.com',
+        fullName: 'Avin Lambrero',
+        description: null,
+        properties: null,
+      },
     },
   });
 }

@@ -8,7 +8,7 @@ export default () => {
 
   return (
     <div className="content">
-      <Checkbox name="test" control={control} label="Checkbox"/>
+      <Checkbox name="test" control={control} label="Checkbox" />
       <hr />
       {String(val)}
     </div>

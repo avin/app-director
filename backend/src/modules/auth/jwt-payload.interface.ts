@@ -1,3 +1,6 @@
+import { Role } from '../../constants/role';
+
 export interface JwtPayload {
-  email: string;
+  role: Role;
+  id: string;
 }

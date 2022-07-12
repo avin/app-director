@@ -4,7 +4,7 @@ import Logo from './Logo';
 export default () => {
   return (
     <div className="content">
-      <Logo/>
+      <Logo />
     </div>
   );
 };

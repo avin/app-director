@@ -1,22 +1,25 @@
 import config from '@/config';
 import { Form } from '@/constants/form';
-import { Application, Organization, Stand, User } from '@/types';
+import { Application, LogInResponse, Organization, Stand, User } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import type { AppThunkAction } from '../configureStore';
+import { accessTokenSelector } from '@/store/selectors';
 
-type UiSettingsState = {
+type DataState = {
   organizations: Record<string, Organization>;
   applications: Record<string, Application>;
   stands: Record<string, Stand>;
   user: User | null;
+  accessToken: string | null;
 };
 
-const initialState: UiSettingsState = {
+const initialState: DataState = {
   organizations: {},
   applications: {},
   stands: {},
   user: null,
+  accessToken: null,
 };
 
 const slice = createSlice({
@@ -35,27 +38,30 @@ const slice = createSlice({
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
     },
+    setAccessToken: (state, action: PayloadAction<string | null>) => {
+      state.accessToken = action.payload;
+    },
     resetData: () => {
       return initialState;
     },
   },
 });
 
-export const { setOrganizations, setApplications, setStands, setUser } = slice.actions;
+export const { setOrganizations, setApplications, setStands, setUser, setAccessToken } = slice.actions;
 
 export default slice.reducer;
 
 export function apiCall<T>(params: AxiosRequestConfig): AppThunkAction<AxiosPromise<T>> {
-  const { headers, ...otherParams } = params;
-  const token = '123';
-
-  const reqHeaders = { ...headers };
-
-  if (token) {
-    reqHeaders.Authorization = `Bearer ${token}`;
-  }
-
   return async (dispatch, getState) => {
+    const { headers, ...otherParams } = params;
+    const token = accessTokenSelector(getState());
+
+    const reqHeaders = { ...headers };
+
+    if (token) {
+      reqHeaders.Authorization = `Bearer ${token}`;
+    }
+
     return axios({
       headers: reqHeaders,
       ...otherParams,
@@ -71,8 +77,10 @@ export function logIn(): AppThunkAction<Promise<void>> {
       throw new Error('logInForm is null');
     }
 
-    const { data } = await dispatch(
-      apiCall<User>({
+    const {
+      data: { user, accessToken },
+    } = await dispatch(
+      apiCall<LogInResponse>({
         ...config.apiMethods.logIn,
         data: {
           email: logInForm.email,
@@ -81,9 +89,8 @@ export function logIn(): AppThunkAction<Promise<void>> {
       }),
     );
 
-    console.log(data);
-
-    dispatch(setUser(data));
+    dispatch(setUser(user));
+    dispatch(setAccessToken(accessToken));
   };
 }
 

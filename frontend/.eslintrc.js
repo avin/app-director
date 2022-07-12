@@ -104,14 +104,17 @@ module.exports = {
       },
     ],
 
-    // Отключаем параноидальные правила TS
-    '@typescript-eslint/no-unsafe-assignment': 0,
-    '@typescript-eslint/no-unsafe-call': 0,
-    '@typescript-eslint/no-unsafe-member-access': 0,
+    '@typescript-eslint/no-shadow': 0,
     '@typescript-eslint/no-empty-interface': 0,
-    '@typescript-eslint/ban-ts-comment': 0,
-    '@typescript-eslint/no-unsafe-return': 0,
-    '@typescript-eslint/no-unsafe-argument': 0,
+
+    // Отключаем параноидальные правила TS
+    // '@typescript-eslint/no-unsafe-assignment': 0,
+    // '@typescript-eslint/no-unsafe-call': 0,
+    // '@typescript-eslint/no-unsafe-member-access': 0,
+
+    // '@typescript-eslint/ban-ts-comment': 0,
+    // '@typescript-eslint/no-unsafe-return': 0,
+    // '@typescript-eslint/no-unsafe-argument': 0,
 
     // не дружит в react-hook-form
     '@typescript-eslint/unbound-method': 0,

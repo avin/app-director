@@ -1,13 +1,10 @@
 import React from 'react';
 import styles from './ApplicationsPage.module.scss';
 
-interface Props {
-}
+interface Props {}
 
 const ApplicationsPage = ({}: Props) => {
-  return (
-    <div>ApplicationsPage</div>
-  );
+  return <div>ApplicationsPage</div>;
 };
 
 export default ApplicationsPage;

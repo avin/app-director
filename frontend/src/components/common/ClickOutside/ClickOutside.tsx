@@ -14,11 +14,10 @@ const ClickOutside = ({
   onClickOutside,
   ...props
 }: React.PropsWithChildren<Props>) => {
-  // const container = useRef<HTMLElement>(null);
   const containerRef = useRef<React.ElementRef<typeof Container>>(null);
 
   const handle = useCallback(
-    (e) => {
+    (e: MouseEvent | TouchEvent) => {
       if (e.type === 'touchend') {
         isTouch = true;
       }
@@ -29,7 +28,7 @@ const ClickOutside = ({
 
       const el = containerRef.current;
 
-      if (el && !(el as HTMLElement).contains(e.target)) {
+      if (el && !(el as HTMLElement).contains(e.target as Node)) {
         onClickOutside(e);
       }
     },

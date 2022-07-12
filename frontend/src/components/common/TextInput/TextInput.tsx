@@ -1,14 +1,15 @@
 import { InputGroup, InputGroupProps2 } from '@blueprintjs/core';
 import React from 'react';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
+import { FieldValues, Path } from 'react-hook-form/dist/types';
 
-interface Props extends InputGroupProps2 {
-  name: string;
-  control: Control<any>;
+interface Props<TFieldValues extends FieldValues> extends InputGroupProps2 {
+  name: Path<TFieldValues>;
+  control: Control<TFieldValues>;
   rules?: RegisterOptions;
 }
 
-const TextInput = ({ name, control, rules, ...props }: Props) => {
+const TextInput = <T,>({ name, control, rules, ...props }: Props<T>) => {
   const {
     field: { value, onChange },
   } = useController({
@@ -17,7 +18,7 @@ const TextInput = ({ name, control, rules, ...props }: Props) => {
     rules,
   });
 
-  return <InputGroup type="text" {...props} onChange={onChange} value={value || ''} />;
+  return <InputGroup type="text" {...props} onChange={onChange} value={String(value || '')} />;
 };
 
 export default TextInput;

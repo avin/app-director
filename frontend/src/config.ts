@@ -40,7 +40,7 @@ export class Config {
         method: 'GET',
       },
       logIn: {
-        url: `${apiPrefix}/logIn`,
+        url: `${apiPrefix}/auth/signin`,
         method: 'POST',
       },
     };

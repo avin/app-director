@@ -5,7 +5,6 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt-payload.interface';
 import { UsersRepository } from '../users/users.repository';
-import { User } from '../users/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -25,10 +24,11 @@ export class AuthService {
     const user = await this.usersRepository.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload: JwtPayload = { email };
+      const payload: JwtPayload = { role: user.role, id: user.id };
       const accessToken = await this.jwtService.sign(payload);
       return {
         accessToken,
+        user,
       };
     } else {
       throw new UnauthorizedException('Please check login credentials');

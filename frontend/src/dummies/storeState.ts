@@ -1,5 +1,6 @@
 import type { RootState } from '@/store/reducers';
 import { Form } from '@/constants/form';
+import { Role } from '@/constants/role';
 
 export const storeState: RootState = {
   data: {
@@ -11,9 +12,10 @@ export const storeState: RootState = {
       email: 'test@test.com',
       fullName: 'Foo Bar',
       description: 'description here',
-      role: 'ADMIN',
+      role: Role.Admin,
       properties: {},
     },
+    accessToken: null,
   },
   ui: {
     forms: {

@@ -4,7 +4,7 @@ import UserButton from './UserButton';
 export default () => {
   return (
     <div className="content">
-      <UserButton/>
+      <UserButton />
     </div>
   );
 };

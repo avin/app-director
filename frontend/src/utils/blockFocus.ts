@@ -4,7 +4,7 @@
  */
 export const blockFocus = (element: HTMLElement): (() => void) => {
   const focusableEls: NodeListOf<HTMLInputElement> = element.querySelectorAll(
-    'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
+    'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]',
   );
 
   focusableEls.forEach((el) => {

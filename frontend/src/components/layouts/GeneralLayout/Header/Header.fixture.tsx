@@ -4,7 +4,7 @@ import Header from './Header';
 export default () => {
   return (
     <div className="content">
-      <Header/>
+      <Header />
     </div>
   );
 };

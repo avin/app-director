@@ -59,7 +59,7 @@ const WrappedUp = ({
   }, [open, duration]);
 
   useEffect(() => {
-    let blockFocusDispose;
+    let blockFocusDispose: () => void;
     if (!open) {
       if (contentRef.current) {
         blockFocusDispose = blockFocus(contentRef.current);

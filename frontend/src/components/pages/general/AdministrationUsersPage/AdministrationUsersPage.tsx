@@ -1,13 +1,10 @@
 import React from 'react';
 import styles from './AdministrationUsersPage.module.scss';
 
-interface Props {
-}
+interface Props {}
 
 const AdministrationUsersPage = ({}: Props) => {
-  return (
-    <div>AdministrationUsersPage</div>
-  );
+  return <div>AdministrationUsersPage</div>;
 };
 
 export default AdministrationUsersPage;

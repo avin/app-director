@@ -15,6 +15,7 @@ export const hideTsErrorsInConsole = (): void => {
     if (typeof args[0] === 'string' && args[0].indexOf('TypeScript error') !== -1) {
       return;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     oWarn(...args);
   };
 };

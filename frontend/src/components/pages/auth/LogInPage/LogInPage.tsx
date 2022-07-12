@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import styles from './LogInPage.module.scss';
 import { useForm } from 'react-hook-form';
-import { LogInFormInputs } from '@/types';
+import { ApiError, LogInFormInputs } from '@/types';
 import InputContainer from '@/components/common/InputContainer/InputContainer';
 import { useNavigate } from 'react-router-dom';
 import type { AppThunkDispatch } from '@/store/configureStore';
@@ -14,6 +14,7 @@ import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMess
 import { logIn } from '@/store/reducers/data';
 import { Form } from '@/constants/form';
 import config from '@/config';
+import axios from 'axios';
 
 interface Props {}
 
@@ -51,19 +52,19 @@ const LogInPage = ({}: Props) => {
       try {
         await dispatch(logIn());
         navigate(config.routes.monitoring);
-      } catch (e) {
-        console.warn(e);
-        setErrorMessage('Запрос выполнен неуспешно, попробуйте еще раз');
-        // const errData = (e as ApiError)?.data;
-        // if (errData?.error?.code && errData?.error?.message) {
-        //   setErrorMessage(errData.error.message);
-        //   return;
-        // }
-        // setErrorMessage('Запрос выполнен неуспешно, попробуйте еще раз');
+      } catch (error) {
+        let errorMessage = 'Запрос выполнен неуспешно, попробуйте еще раз';
+        if (axios.isAxiosError(error)) {
+          if ((error.response?.data as ApiError)?.statusCode === 401) {
+            errorMessage = 'Неверные учетные данные';
+          }
+        }
+
+        setErrorMessage(errorMessage);
         setIsInProgress(false);
       }
     },
-    [dispatch],
+    [dispatch, navigate],
   );
 
   const onSubmitError = useCallback((submitErrors) => {
