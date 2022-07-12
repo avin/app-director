@@ -14,5 +14,5 @@ export class CreateStandDto {
 
   @IsOptional()
   @IsString()
-  organizationId: string;
+  organizationId?: string;
 }

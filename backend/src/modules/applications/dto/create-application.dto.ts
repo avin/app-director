@@ -1,8 +1,9 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateApplicationDto {
   @IsNotEmpty()
   title: string;
 
-  description: string;
+  @IsOptional()
+  description?: string;
 }

@@ -35,8 +35,8 @@ const LogInPage = ({}: Props) => {
       password: '',
 
       ...(process.env.NODE_ENV === 'development' && {
-        email: 'admin@server.com',
-        password: 'password',
+        email: 'foo@bar.com',
+        password: 'passpass',
         save: false,
       }),
     },

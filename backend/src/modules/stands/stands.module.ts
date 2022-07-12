@@ -9,5 +9,6 @@ import { StandsService } from './stands.service';
   imports: [TypeOrmModule.forFeature([StandsRepository]), AuthModule],
   controllers: [StandsController],
   providers: [StandsService],
+  exports: [StandsService],
 })
 export class StandsModule {}

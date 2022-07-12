@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { StandsModule } from './modules/stands/stands.module';
 import { OrganizationsModule } from './modules/organizations/organizations.module';
 import { UsersModule } from './modules/users/users.module';
+import { FillFakesCommand } from './commands/fill-fakes/fill-fakes.command';
 
 @Module({
   imports: [
@@ -34,5 +35,6 @@ import { UsersModule } from './modules/users/users.module';
     UsersModule,
     AuthModule,
   ],
+  providers: [FillFakesCommand],
 })
 export class AppModule {}

@@ -41,4 +41,8 @@ export class OrganizationsService {
       throw new NotFoundException(`Organization with ID "${id}" not found`);
     }
   }
+
+  async deleteAllOrganizations() {
+    await this.organizationsRepository.delete({});
+  }
 }

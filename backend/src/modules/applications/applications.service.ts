@@ -4,8 +4,6 @@ import { GetApplicationsFilterDto } from './dto/get-applications-filter.dto';
 import { ApplicationsRepository } from './applications.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateApplicationDto } from './dto/update-application.dto';
-import pickBy from 'lodash/pickBy';
-import identity from 'lodash/identity';
 
 @Injectable()
 export class ApplicationsService {
@@ -42,5 +40,9 @@ export class ApplicationsService {
     if (result.affected === 0) {
       throw new NotFoundException(`Application with ID "${id}" not found`);
     }
+  }
+
+  async deleteAllApplications() {
+    await this.applicationsRepository.delete({});
   }
 }

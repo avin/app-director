@@ -11,7 +11,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersRepository extends Repository<User> {
   private logger = new Logger('UsersRepository');
 
-  async getUsers(filterDto: GetUsersFilterDto) {
+  async getUsers(filterDto: GetUsersFilterDto = {}) {
     const { search } = filterDto;
 
     const query = this.createQueryBuilder('user');

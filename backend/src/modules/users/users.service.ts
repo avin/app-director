@@ -4,7 +4,7 @@ import { GetUsersFilterDto } from './dto/get-users-filter.dto';
 import { UsersRepository } from './users.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import {UpdateUserDto} from '../users/dto/update-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -13,7 +13,7 @@ export class UsersService {
     private usersRepository: UsersRepository,
   ) {}
 
-  getUsers(filterDto: GetUsersFilterDto) {
+  getUsers(filterDto: GetUsersFilterDto = {}) {
     return this.usersRepository.getUsers(filterDto);
   }
 
@@ -41,5 +41,9 @@ export class UsersService {
     if (result.affected === 0) {
       throw new NotFoundException(`User with ID "${id}" not found`);
     }
+  }
+
+  async deleteAllUsers() {
+    await this.usersRepository.delete({});
   }
 }

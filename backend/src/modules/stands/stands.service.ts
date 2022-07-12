@@ -41,4 +41,8 @@ export class StandsService {
       throw new NotFoundException(`Stand with ID "${id}" not found`);
     }
   }
+
+  async deleteAllStands() {
+    await this.standsRepository.delete({});
+  }
 }
