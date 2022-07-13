@@ -29,8 +29,7 @@ export class OrganizationsService {
     }
 
     try {
-      const organizations = await query.getMany();
-      return organizations;
+      return await query.getMany();
     } catch (error) {
       this.logger.error(`Failed to get organizations". Filters: ${JSON.stringify(filterDto)}`, error.stack);
       throw new InternalServerErrorException();
@@ -61,13 +60,13 @@ export class OrganizationsService {
 
   async updateOrganization(id: string, updateOrganizationDto: UpdateOrganizationDto) {
     await this.organizationsRepository.update(id, updateOrganizationDto);
-    const updatedPost = await this.organizationsRepository.findOne({
+    const updatedOrganization = await this.organizationsRepository.findOne({
       where: {
         id,
       },
     });
-    if (updatedPost) {
-      return updatedPost;
+    if (updatedOrganization) {
+      return updatedOrganization;
     }
     throw new OrganizationNotFoundException(id);
   }

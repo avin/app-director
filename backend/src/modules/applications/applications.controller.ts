@@ -9,7 +9,7 @@ import { UpdateApplicationDto } from './dto/update-application.dto';
 @Controller('applications')
 @UseGuards(AuthGuard())
 export class ApplicationsController {
-  private logger = new Logger('ApplicationsController');
+  private logger = new Logger(ApplicationsController.name);
 
   constructor(private applicationsService: ApplicationsService) {}
 

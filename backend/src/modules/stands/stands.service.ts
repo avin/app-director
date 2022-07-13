@@ -1,16 +1,11 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { CreateStandDto } from './dto/create-stand.dto';
 import { GetStandsFilterDto } from './dto/get-stands-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateStandDto } from './dto/update-stand.dto';
 import { Repository } from 'typeorm';
 import { Stand } from './stand.entity';
+import StandNotFoundException from './exceptions/standNotFound.exception';
 
 @Injectable()
 export class StandsService {
@@ -24,7 +19,7 @@ export class StandsService {
   async getStands(filterDto: GetStandsFilterDto) {
     const { search } = filterDto;
 
-    const query = this.standsRepository.createQueryBuilder('user');
+    const query = this.standsRepository.createQueryBuilder('stand');
 
     if (search) {
       query.andWhere('(LOWER(user.title) LIKE LOWER(:search) OR LOWER(user.description) LIKE LOWER(:search))', {
@@ -33,8 +28,7 @@ export class StandsService {
     }
 
     try {
-      const users = await query.getMany();
-      return users;
+      return await query.getMany();
     } catch (error) {
       this.logger.error(`Failed to get stands. Filters: ${JSON.stringify(filterDto)}`, error.stack);
       throw new InternalServerErrorException();
@@ -45,7 +39,7 @@ export class StandsService {
     const found = await this.standsRepository.findOne({ where: { id } });
 
     if (!found) {
-      throw new NotFoundException(`Stand with ID "${id}" not found`);
+      throw new StandNotFoundException(id);
     }
 
     return found;
@@ -60,13 +54,13 @@ export class StandsService {
 
   async updateStand(id: string, updateStandDto: UpdateStandDto) {
     await this.standsRepository.update(id, updateStandDto);
-    const updatedPost = await this.standsRepository.findOne({
+    const updatedStand = await this.standsRepository.findOne({
       where: {
         id,
       },
     });
-    if (updatedPost) {
-      return updatedPost;
+    if (updatedStand) {
+      return updatedStand;
     }
     throw new BadRequestException('Invalid ID');
   }
@@ -75,7 +69,7 @@ export class StandsService {
     const result = await this.standsRepository.softDelete({ id });
 
     if (result.affected === 0) {
-      throw new NotFoundException(`Stand with ID "${id}" not found`);
+      throw new StandNotFoundException(id);
     }
   }
 

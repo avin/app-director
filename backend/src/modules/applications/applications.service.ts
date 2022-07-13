@@ -1,18 +1,11 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { GetApplicationsFilterDto } from './dto/get-applications-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateApplicationDto } from './dto/update-application.dto';
-import { User } from '../users/user.entity';
 import { Repository } from 'typeorm';
 import { Application } from './application.entity';
-import { PgErrors } from '../../constants/pgErrors';
+import ApplicationNotFoundException from './exceptions/applicationNotFound.exception';
 
 @Injectable()
 export class ApplicationsService {
@@ -36,8 +29,7 @@ export class ApplicationsService {
     }
 
     try {
-      const applications = await query.getMany();
-      return applications;
+      return await query.getMany();
     } catch (error) {
       this.logger.error(`Failed to get applications". Filters: ${JSON.stringify(filterDto)}`, error.stack);
       throw new InternalServerErrorException();
@@ -48,7 +40,7 @@ export class ApplicationsService {
     const found = await this.applicationsRepository.findOne({ where: { id }, relations: ['stands'] });
 
     if (!found) {
-      throw new NotFoundException(`Application with ID "${id}" not found`);
+      throw new ApplicationNotFoundException(id);
     }
 
     return found;
@@ -62,31 +54,23 @@ export class ApplicationsService {
   }
 
   async updateApplication(id: string, updateApplicationDto: UpdateApplicationDto) {
-    try {
-      const result = await this.applicationsRepository
-        .createQueryBuilder()
-        .update(updateApplicationDto)
-        .where({
-          id,
-        })
-        .returning('*')
-        .execute();
-
-      return result.raw[0];
-    } catch (error) {
-      if (error.code === PgErrors.INVALID_TEXT_REPRESENTATION) {
-        throw new BadRequestException('Invalid ID');
-      } else {
-        throw new InternalServerErrorException();
-      }
+    await this.applicationsRepository.update(id, updateApplicationDto);
+    const updatedApplication = await this.applicationsRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (updatedApplication) {
+      return updatedApplication;
     }
+    throw new ApplicationNotFoundException(id);
   }
 
   async deleteApplication(id: string) {
     const result = await this.applicationsRepository.softDelete({ id });
 
     if (result.affected === 0) {
-      throw new NotFoundException(`Application with ID "${id}" not found`);
+      throw new ApplicationNotFoundException(id);
     }
   }
 

@@ -9,7 +9,7 @@ import { UpdateStandDto } from './dto/update-stand.dto';
 @Controller('stands')
 @UseGuards(AuthGuard())
 export class StandsController {
-  private logger = new Logger('StandsController');
+  private logger = new Logger(StandsController.name);
 
   constructor(private standsService: StandsService) {}
 

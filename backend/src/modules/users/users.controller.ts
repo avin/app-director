@@ -10,7 +10,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Controller('users')
 @UseGuards(AuthGuard())
 export class UsersController {
-  private logger = new Logger('UsersController');
+  private logger = new Logger(UsersController.name);
 
   constructor(private usersService: UsersService) {}
 

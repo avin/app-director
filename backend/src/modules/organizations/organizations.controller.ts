@@ -9,7 +9,7 @@ import { UpdateOrganizationDto } from './dto/update-organization.dto';
 @Controller('organizations')
 @UseGuards(AuthGuard())
 export class OrganizationsController {
-  private logger = new Logger('OrganizationsController');
+  private logger = new Logger(OrganizationsController.name);
 
   constructor(private organizationsService: OrganizationsService) {}
 
