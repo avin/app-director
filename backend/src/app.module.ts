@@ -7,7 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { StandsModule } from './modules/stands/stands.module';
 import { OrganizationsModule } from './modules/organizations/organizations.module';
 import { UsersModule } from './modules/users/users.module';
-import { FillFakesCommand } from './commands/fill-fakes/fill-fakes.command';
+// import { FillFakesCommand } from './commands/fill-fakes/fill-fakes.command.ts__';
 import { User } from './modules/users/user.entity';
 import { Application } from './modules/applications/application.entity';
 import { Organization } from './modules/organizations/organization.entity';
@@ -30,7 +30,11 @@ import { Stand } from './modules/stands/stand.entity';
         synchronize: configService.get('TYPEORM_SYNCHRONIZE'),
         logging: true,
         // ...
-        entities: [Application, Organization, Stand, User],
+        entities: [
+          //  Organization, Stand,
+          Application,
+          User,
+        ],
         autoLoadEntities: true,
       }),
 
@@ -43,6 +47,8 @@ import { Stand } from './modules/stands/stand.entity';
     UsersModule,
     AuthModule,
   ],
-  providers: [FillFakesCommand],
+  providers: [
+    // FillFakesCommand
+  ],
 })
 export class AppModule {}

@@ -1,44 +1,82 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { GetOrganizationsFilterDto } from './dto/get-organizations-filter.dto';
-import { OrganizationsRepository } from './organizations.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
+import { Repository } from 'typeorm';
+import { Organization } from './organization.entity';
+import OrganizationNotFoundException from './exceptions/organizationNotFound.exception';
 
 @Injectable()
 export class OrganizationsService {
+  private logger = new Logger(OrganizationsService.name);
+
   constructor(
-    @InjectRepository(OrganizationsRepository)
-    private organizationsRepository: OrganizationsRepository,
+    @InjectRepository(Organization)
+    public organizationsRepository: Repository<Organization>,
   ) {}
 
-  getOrganizations(filterDto: GetOrganizationsFilterDto) {
-    return this.organizationsRepository.getOrganizations(filterDto);
+  async getOrganizations(filterDto: GetOrganizationsFilterDto) {
+    const { search } = filterDto;
+
+    const query = this.organizationsRepository.createQueryBuilder('organization');
+
+    if (search) {
+      query.andWhere(
+        '(LOWER(organization.title) LIKE LOWER(:search) OR LOWER(organization.description) LIKE LOWER(:search))',
+        { search: `%${search}%` },
+      );
+    }
+
+    try {
+      const organizations = await query.getMany();
+      return organizations;
+    } catch (error) {
+      this.logger.error(`Failed to get organizations". Filters: ${JSON.stringify(filterDto)}`, error.stack);
+      throw new InternalServerErrorException();
+    }
   }
 
   async getOrganizationById(id: string) {
     const found = await this.organizationsRepository.findOne({ where: { id }, relations: ['stands'] });
 
     if (!found) {
-      throw new NotFoundException(`Organization with ID "${id}" not found`);
+      throw new OrganizationNotFoundException(id);
     }
 
     return found;
   }
 
-  createOrganization(createOrganizationDto: CreateOrganizationDto) {
-    return this.organizationsRepository.createOrganization(createOrganizationDto);
+  async createOrganization(createOrganizationDto: CreateOrganizationDto) {
+    const { title, description } = createOrganizationDto;
+
+    const organization = this.organizationsRepository.create({
+      title,
+      description,
+    });
+
+    await this.organizationsRepository.save(organization);
+    return organization;
   }
 
   async updateOrganization(id: string, updateOrganizationDto: UpdateOrganizationDto) {
-    return this.organizationsRepository.updateOrganization(id, updateOrganizationDto);
+    await this.organizationsRepository.update(id, updateOrganizationDto);
+    const updatedPost = await this.organizationsRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (updatedPost) {
+      return updatedPost;
+    }
+    throw new OrganizationNotFoundException(id);
   }
 
   async deleteOrganization(id: string) {
     const result = await this.organizationsRepository.softDelete({ id });
 
     if (result.affected === 0) {
-      throw new NotFoundException(`Organization with ID "${id}" not found`);
+      throw new OrganizationNotFoundException(id);
     }
   }
 

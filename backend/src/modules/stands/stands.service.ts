@@ -1,19 +1,44 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateStandDto } from './dto/create-stand.dto';
 import { GetStandsFilterDto } from './dto/get-stands-filter.dto';
-import { StandsRepository } from './stands.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateStandDto } from './dto/update-stand.dto';
+import { Repository } from 'typeorm';
+import { Stand } from './stand.entity';
 
 @Injectable()
 export class StandsService {
+  private logger = new Logger(StandsService.name);
+
   constructor(
-    @InjectRepository(StandsRepository)
-    private standsRepository: StandsRepository,
+    @InjectRepository(Stand)
+    public standsRepository: Repository<Stand>,
   ) {}
 
-  getStands(filterDto: GetStandsFilterDto) {
-    return this.standsRepository.getStands(filterDto);
+  async getStands(filterDto: GetStandsFilterDto) {
+    const { search } = filterDto;
+
+    const query = this.standsRepository.createQueryBuilder('user');
+
+    if (search) {
+      query.andWhere('(LOWER(user.title) LIKE LOWER(:search) OR LOWER(user.description) LIKE LOWER(:search))', {
+        search: `%${search}%`,
+      });
+    }
+
+    try {
+      const users = await query.getMany();
+      return users;
+    } catch (error) {
+      this.logger.error(`Failed to get stands. Filters: ${JSON.stringify(filterDto)}`, error.stack);
+      throw new InternalServerErrorException();
+    }
   }
 
   async getStandById(id: string) {
@@ -26,12 +51,24 @@ export class StandsService {
     return found;
   }
 
-  createStand(createStandDto: CreateStandDto) {
-    return this.standsRepository.createStand(createStandDto);
+  async createStand(createStandDto: CreateStandDto) {
+    const application = this.standsRepository.create(createStandDto);
+
+    await this.standsRepository.save(application);
+    return application;
   }
 
   async updateStand(id: string, updateStandDto: UpdateStandDto) {
-    return this.standsRepository.updateStand(id, updateStandDto);
+    await this.standsRepository.update(id, updateStandDto);
+    const updatedPost = await this.standsRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (updatedPost) {
+      return updatedPost;
+    }
+    throw new BadRequestException('Invalid ID');
   }
 
   async deleteStand(id: string) {
