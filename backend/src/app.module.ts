@@ -8,6 +8,10 @@ import { StandsModule } from './modules/stands/stands.module';
 import { OrganizationsModule } from './modules/organizations/organizations.module';
 import { UsersModule } from './modules/users/users.module';
 import { FillFakesCommand } from './commands/fill-fakes/fill-fakes.command';
+import { User } from './modules/users/user.entity';
+import { Application } from './modules/applications/application.entity';
+import { Organization } from './modules/organizations/organization.entity';
+import { Stand } from './modules/stands/stand.entity';
 
 @Module({
   imports: [
@@ -16,18 +20,22 @@ import { FillFakesCommand } from './commands/fill-fakes/fill-fakes.command';
       validationSchema: configValidationSchema,
     }),
     TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('TYPEORM_HOST'),
+        port: configService.get('TYPEORM_PORT'),
+        username: configService.get('TYPEORM_USERNAME'),
+        password: configService.get('TYPEORM_PASSWORD'),
+        database: configService.get('TYPEORM_DATABASE'),
+        synchronize: configService.get('TYPEORM_SYNCHRONIZE'),
+        logging: true,
+        // ...
+        entities: [Application, Organization, Stand, User],
+        autoLoadEntities: true,
+      }),
+
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
-        const isProduction = configService.get('STAGE') === 'prod';
-
-        return {
-          ssl: isProduction,
-          extra: {
-            ssl: isProduction ? { rejectUnauthorized: false } : null,
-          },
-        };
-      },
     }),
     ApplicationsModule,
     StandsModule,
