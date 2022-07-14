@@ -8,7 +8,7 @@ import { accessTokenSelector } from '@/store/selectors';
 import { entitiesArrayToMap } from '@/utils/entitiesArrayToMap';
 import { getIdsFromEntitiesArray } from '@/utils/getIdsFromEntitiesArray';
 
-type DataState = {
+export type DataState = {
   organizations: Record<string, Organization>;
   applications: Record<string, Application>;
   stands: Record<string, Stand>;
@@ -109,7 +109,7 @@ export function logOut(): AppThunkAction<void> {
   };
 }
 
-export function getApplications(): AppThunkAction<Promise<{ ids: string[]; count }>> {
+export function getApplications(): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },

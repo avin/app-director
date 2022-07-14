@@ -4,56 +4,58 @@ import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { getApplications } from '@/store/reducers/data';
 import { applicationsSelector } from '@/store/selectors';
+import { Card, Elevation, HTMLTable } from '@blueprintjs/core';
 
 interface Props {}
 
 const ApplicationsPage = ({}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
-  const [isDataReady, setIsDataReady] = useState(false);
   const [isDataFetchFailed, setIsDataFetchFailed] = useState(false);
   const applications = useSelector(applicationsSelector);
+
+  const [applicationsIds, setApplicationsIds] = useState<string[]>([]);
+  const [applicationsCount, setApplicationsCount] = useState<null | number>(null);
 
   useEffect(() => {
     void (async () => {
       try {
-        await dispatch(getApplications());
-        setIsDataReady(true);
+        const { ids, count } = await dispatch(getApplications());
+        setApplicationsIds(ids);
+        setApplicationsCount(count);
       } catch (error) {
         setIsDataFetchFailed(true);
       }
     })();
   }, [dispatch]);
 
-  if (!isDataReady) {
-    return <div>loading...</div>;
-  }
-
   if (isDataFetchFailed) {
-    return <div>fetch failed</div>;
+    return <div>something wrong</div>;
   }
 
-  if (!applications) {
-    return <div>no applications array!</div>;
+  if (applicationsCount === null) {
+    return <div>loading...</div>;
   }
 
   return (
     <div>
-      <table>
+      <HTMLTable striped bordered className={styles.table}>
         <thead>
           <tr>
             <th>Title</th>
             <th>Description</th>
+            <th>Stands</th>
           </tr>
         </thead>
         <tbody>
-          {applications.map((application) => (
-            <tr>
-              <td>{application.title}</td>
-              <td>{application.description}</td>
+          {applicationsIds.map((id) => (
+            <tr key={id}>
+              <td>{applications[id].title}</td>
+              <td>{applications[id].description}</td>
+              <td>{applications[id].stands.length}</td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </HTMLTable>
     </div>
   );
 };

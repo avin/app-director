@@ -4,13 +4,13 @@ import styles from './GeneralLayout.module.scss';
 import Header from './Header/Header';
 import Navigation from './Navigation/Navigation';
 import { useSelector } from 'react-redux';
-import { userSelector } from '@/store/selectors';
+import { currentUserSelector } from '@/store/selectors';
 import config from '@/config';
 
 interface Props {}
 
 const GeneralLayout = ({}: Props) => {
-  const user = useSelector(userSelector);
+  const user = useSelector(currentUserSelector);
   const navigate = useNavigate();
 
   useEffect(() => {

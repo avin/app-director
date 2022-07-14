@@ -7,7 +7,8 @@ export const storeState: RootState = {
     organizations: {},
     applications: {},
     stands: {},
-    user: {
+    users: {},
+    currentUser: {
       id: 'id1',
       email: 'test@test.com',
       fullName: 'Foo Bar',

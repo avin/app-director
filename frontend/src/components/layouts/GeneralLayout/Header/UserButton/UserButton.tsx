@@ -4,12 +4,12 @@ import { Popover2 } from '@blueprintjs/popover2';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '@/store/reducers/data';
-import { userSelector } from '@/store/selectors';
+import { currentUserSelector } from '@/store/selectors';
 
 interface Props {}
 
 const UserButton = ({}: Props) => {
-  const user = useSelector(userSelector);
+  const user = useSelector(currentUserSelector);
   const dispatch: AppThunkDispatch = useDispatch();
 
   const handleClickLogout = useCallback(() => {

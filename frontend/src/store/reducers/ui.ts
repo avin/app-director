@@ -2,7 +2,7 @@ import { Form } from '@/constants/form';
 import { LogInFormInputs } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type UiSettingsState = {
+export type UiSettingsState = {
   forms: {
     [Form.LogIn]: LogInFormInputs | null;
   };

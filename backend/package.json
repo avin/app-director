@@ -12,7 +12,7 @@
     "start": "rimraf ./dist && nest start",
     "start:dev": "cross-env STAGE=dev npm run start -- --watch",
     "start:debug": "cross-env STAGE=dev npm run start -- --debug --watch",
-    "start:prod": "cross-env STAGE=prod node dist/src/main",
+    "start:prod": "cross-env STAGE=prod node dist/main",
     "dev": "npm run start:dev",
     "cli:dev": "nest build && cross-env STAGE=dev node ./dist/main-cli.js",
     "cli:prod": "cross-env STAGE=prod node ./dist/main-cli.js",
