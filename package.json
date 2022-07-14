@@ -8,14 +8,15 @@
     "common"
   ],
   "scripts": {
-    "build-common": "npm run build --prefix ./common",
-    "build-backend": "npm run build --prefix ./backend",
-    "build-frontend": "npm run build --prefix ./frontend",
+    "build-common": "nr -C ./common build",
+    "build-backend": "nr -C ./backend build",
+    "build-frontend": "nr -C ./frontend build",
     "build": "npm-run-all build-common build-backend build-frontend",
     "dev": "ConEmu -reuse -run \"cd frontend & npm run dev\" & ConEmu -reuse -run \"cd frontend & npm run cosmos\"",
     "postinstall": "husky install"
   },
   "dependencies": {
+    "@antfu/ni": "^0.16.3",
     "husky": "7.0.4",
     "lint-staged": "^13.0.3",
     "npm-run-all": "^4.1.5",

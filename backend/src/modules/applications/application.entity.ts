@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { Stand } from '../stands/stand.entity';
-import { BaseEntity } from '../../utils/base-entity';
+import { BaseEntity } from '../../utils/types/baseEntity';
 
 @Entity()
 export class Application extends BaseEntity {

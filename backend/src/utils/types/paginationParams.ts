@@ -5,12 +5,6 @@ export class PaginationParams {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  @Min(1)
-  startId?: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber()
   @Min(0)
   offset?: number;
 

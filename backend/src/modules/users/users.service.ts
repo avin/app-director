@@ -14,6 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { PgErrors } from '../../constants/pgErrors';
+import { getEntities } from '../../utils/getEntities';
 
 @Injectable()
 export class UsersService {
@@ -24,24 +25,8 @@ export class UsersService {
     public usersRepository: Repository<User>,
   ) {}
 
-  async getUsers(filterDto: GetUsersFilterDto = {}) {
-    const { search } = filterDto;
-
-    const query = this.usersRepository.createQueryBuilder('user');
-
-    if (search) {
-      query.andWhere('(LOWER(user.title) LIKE LOWER(:search) OR LOWER(user.description) LIKE LOWER(:search))', {
-        search: `%${search}%`,
-      });
-    }
-
-    try {
-      const users = await query.getMany();
-      return users;
-    } catch (error) {
-      this.logger.error(`Failed to get users". Filters: ${JSON.stringify(filterDto)}`, error.stack);
-      throw new InternalServerErrorException();
-    }
+  async getUsers(filterDto: GetUsersFilterDto) {
+    return getEntities(this.usersRepository, filterDto);
   }
 
   async getUserById(id: string) {

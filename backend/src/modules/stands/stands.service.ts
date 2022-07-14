@@ -6,6 +6,7 @@ import { UpdateStandDto } from './dto/update-stand.dto';
 import { Repository } from 'typeorm';
 import { Stand } from './stand.entity';
 import StandNotFoundException from './exceptions/standNotFound.exception';
+import { getEntities } from '../../utils/getEntities';
 
 @Injectable()
 export class StandsService {
@@ -17,22 +18,7 @@ export class StandsService {
   ) {}
 
   async getStands(filterDto: GetStandsFilterDto) {
-    const { search } = filterDto;
-
-    const query = this.standsRepository.createQueryBuilder('stand');
-
-    if (search) {
-      query.andWhere('(LOWER(user.title) LIKE LOWER(:search) OR LOWER(user.description) LIKE LOWER(:search))', {
-        search: `%${search}%`,
-      });
-    }
-
-    try {
-      return await query.getMany();
-    } catch (error) {
-      this.logger.error(`Failed to get stands. Filters: ${JSON.stringify(filterDto)}`, error.stack);
-      throw new InternalServerErrorException();
-    }
+    return getEntities(this.standsRepository, filterDto);
   }
 
   async getStandById(id: string) {

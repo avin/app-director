@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { GetOrganizationsFilterDto } from './dto/get-organizations-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,7 @@ import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { Repository } from 'typeorm';
 import { Organization } from './organization.entity';
 import OrganizationNotFoundException from './exceptions/organizationNotFound.exception';
+import { getEntities } from '../../utils/getEntities';
 
 @Injectable()
 export class OrganizationsService {
@@ -17,23 +18,7 @@ export class OrganizationsService {
   ) {}
 
   async getOrganizations(filterDto: GetOrganizationsFilterDto) {
-    const { search } = filterDto;
-
-    const query = this.organizationsRepository.createQueryBuilder('organization');
-
-    if (search) {
-      query.andWhere(
-        '(LOWER(organization.title) LIKE LOWER(:search) OR LOWER(organization.description) LIKE LOWER(:search))',
-        { search: `%${search}%` },
-      );
-    }
-
-    try {
-      return await query.getMany();
-    } catch (error) {
-      this.logger.error(`Failed to get organizations". Filters: ${JSON.stringify(filterDto)}`, error.stack);
-      throw new InternalServerErrorException();
-    }
+    return getEntities(this.organizationsRepository, filterDto);
   }
 
   async getOrganizationById(id: string) {

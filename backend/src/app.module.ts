@@ -7,16 +7,13 @@ import { AuthModule } from './modules/auth/auth.module';
 import { StandsModule } from './modules/stands/stands.module';
 import { OrganizationsModule } from './modules/organizations/organizations.module';
 import { UsersModule } from './modules/users/users.module';
-// import { FillFakesCommand } from './commands/fill-fakes/fill-fakes.command.ts__';
-import { User } from './modules/users/user.entity';
-import { Application } from './modules/applications/application.entity';
-import { Organization } from './modules/organizations/organization.entity';
-import { Stand } from './modules/stands/stand.entity';
+import { CommandModule } from 'nestjs-command';
+import { FakesCommand } from './commands/fill-fakes/fakes.command';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [`.env.stage.${process.env.STAGE}`],
+      envFilePath: [`.env.stage.${process.env.STAGE || 'dev'}`],
       validationSchema: configValidationSchema,
     }),
     TypeOrmModule.forRootAsync({
@@ -28,13 +25,7 @@ import { Stand } from './modules/stands/stand.entity';
         password: configService.get('TYPEORM_PASSWORD'),
         database: configService.get('TYPEORM_DATABASE'),
         synchronize: configService.get('TYPEORM_SYNCHRONIZE'),
-        logging: true,
-        // ...
-        entities: [
-          //  Organization, Stand,
-          Application,
-          User,
-        ],
+        logging: configService.get('STAGE') === 'dev',
         autoLoadEntities: true,
       }),
 
@@ -46,9 +37,8 @@ import { Stand } from './modules/stands/stand.entity';
     OrganizationsModule,
     UsersModule,
     AuthModule,
+    CommandModule,
   ],
-  providers: [
-    // FillFakesCommand
-  ],
+  providers: [FakesCommand],
 })
 export class AppModule {}

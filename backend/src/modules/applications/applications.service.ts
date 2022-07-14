@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { GetApplicationsFilterDto } from './dto/get-applications-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,7 @@ import { UpdateApplicationDto } from './dto/update-application.dto';
 import { Repository } from 'typeorm';
 import { Application } from './application.entity';
 import ApplicationNotFoundException from './exceptions/applicationNotFound.exception';
+import { getEntities } from '../../utils/getEntities';
 
 @Injectable()
 export class ApplicationsService {
@@ -17,27 +18,11 @@ export class ApplicationsService {
   ) {}
 
   async getApplications(filterDto: GetApplicationsFilterDto) {
-    const { search } = filterDto;
-
-    const query = this.applicationsRepository.createQueryBuilder('application');
-
-    if (search) {
-      query.andWhere(
-        '(LOWER(application.title) LIKE LOWER(:search) OR LOWER(application.description) LIKE LOWER(:search))',
-        { search: `%${search}%` },
-      );
-    }
-
-    try {
-      return await query.getMany();
-    } catch (error) {
-      this.logger.error(`Failed to get applications". Filters: ${JSON.stringify(filterDto)}`, error.stack);
-      throw new InternalServerErrorException();
-    }
+    return getEntities(this.applicationsRepository, filterDto);
   }
 
   async getApplicationById(id: string) {
-    const found = await this.applicationsRepository.findOne({ where: { id }, relations: ['stands'] });
+    const found = await this.applicationsRepository.createQueryBuilder('application').loadAllRelationIds().getOne();
 
     if (!found) {
       throw new ApplicationNotFoundException(id);

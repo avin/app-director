@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { Application } from '../applications/application.entity';
 import { Organization } from '../organizations/organization.entity';
-import { BaseEntity } from '../../utils/base-entity';
+import { BaseEntity } from '../../utils/types/baseEntity';
 
 @Entity()
 export class Stand extends BaseEntity {

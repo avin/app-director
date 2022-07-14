@@ -1,17 +1,16 @@
-import { Command, CommandRunner } from 'nest-commander';
+import { Command } from 'nestjs-command';
+import { Injectable } from '@nestjs/common';
 import { UsersService } from '../../modules/users/users.service';
-import { faker } from '@faker-js/faker';
 import { OrganizationsService } from '../../modules/organizations/organizations.service';
 import { ApplicationsService } from '../../modules/applications/applications.service';
+import { StandsService } from '../../modules/stands/stands.service';
+import { faker } from '@faker-js/faker';
 import { Application } from '../../modules/applications/application.entity';
 import { Organization } from '../../modules/organizations/organization.entity';
-import { StandsService } from '../../modules/stands/stands.service';
 import { sample } from '../../utils/sample';
 
-interface FillFakesCommandOptions {}
-
-@Command({ name: 'fill-fakes', description: 'Fill DB with fake data' })
-export class FillFakesCommand implements CommandRunner {
+@Injectable()
+export class FakesCommand {
   constructor(
     private readonly usersService: UsersService,
     private readonly organizationsService: OrganizationsService,
@@ -19,7 +18,11 @@ export class FillFakesCommand implements CommandRunner {
     private readonly standsService: StandsService,
   ) {}
 
-  async run(passedParam: string[], options?: FillFakesCommandOptions): Promise<void> {
+  @Command({
+    command: 'fakes:fill',
+    describe: 'Fill DB With fake data',
+  })
+  async create() {
     await this.usersService.deleteAllUsers();
     await this.standsService.deleteAllStands();
     await this.organizationsService.deleteAllOrganizations();
