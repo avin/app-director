@@ -8,11 +8,14 @@
     "common"
   ],
   "scripts": {
-    "build-common": "nr -C ./common build",
-    "build-backend": "nr -C ./backend build",
-    "build-frontend": "nr -C ./frontend build",
-    "build": "npm-run-all build-common build-backend build-frontend",
-    "dev": "ConEmu -reuse -run \"cd frontend & npm run dev\" & ConEmu -reuse -run \"cd frontend & npm run cosmos\"",
+    "build:common": "nr -C ./common build",
+    "build:backend": "nr -C ./backend build",
+    "build:frontend": "nr -C ./frontend build",
+    "dev:frontend": "nr -C ./frontend dev",
+    "dev:common": "nr -C ./common dev",
+    "dev:backend": "nr -C ./backend dev",
+    "build": "npm-run-all build:common build:backend build:frontend",
+    "dev": "npm-run-all -l -p dev:common dev:backend dev:frontend",
     "postinstall": "husky install"
   },
   "dependencies": {
@@ -24,6 +27,7 @@
     "suppress-exit-code": "1.0.0"
   },
   "volta": {
-    "node": "16.13.2"
+    "node": "16.13.2",
+    "npm": "8.1.2"
   }
 }

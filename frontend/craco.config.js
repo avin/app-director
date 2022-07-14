@@ -24,8 +24,8 @@ module.exports = {
   },
   devServer: (devServerConfig, { env, paths, proxy, allowedHost }) => {
     devServerConfig.https = {
-      key: fs.readFileSync('./node_modules/localhost-certs/files/server.key', 'utf8'),
-      cert: fs.readFileSync('./node_modules/localhost-certs/files/server.crt', 'utf8'),
+      key: fs.readFileSync('../node_modules/localhost-certs/files/server.key', 'utf8'),
+      cert: fs.readFileSync('../node_modules/localhost-certs/files/server.crt', 'utf8'),
     };
     return devServerConfig;
   },

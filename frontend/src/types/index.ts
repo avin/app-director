@@ -36,3 +36,8 @@ export type LogInResponse = {
   accessToken: string;
   user: User;
 };
+
+export type GetApplicationsResponse = {
+  items: Application[];
+  count: number;
+};
