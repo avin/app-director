@@ -1,0 +1,40 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background-color: $light-gray1;
+  border-bottom: 1px solid $gray3;
+  // box-shadow: 0 0 0 1px $gray3;
+}
+
+.title {
+  // font-size: 18px;
+  // font-weight: bold;
+  display: flex;
+  align-items: center;
+
+  & > * + * {
+    margin-left: 8px;
+  }
+
+  h4 {
+    padding: 0;
+    margin-bottom: 0;
+  }
+}
+
+.controls {
+  display: flex;
+  & > * + * {
+    margin-left: 8px;
+  }
+}
+
+.content {
+  background-color: $light-gray4;
+  padding: 8px;
+}

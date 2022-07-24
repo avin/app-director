@@ -12,6 +12,7 @@ export class Config {
     logIn: '/logIn',
     monitoring: '/monitoring',
     applications: '/applications',
+    application: '/applications/:id',
     organizations: '/organizations',
     stands: '/stands',
     administration: {

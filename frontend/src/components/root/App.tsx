@@ -13,6 +13,7 @@ import OrganizationsPage from '../pages/general/OrganizationsPage/OrganizationsP
 import StandsPage from '../pages/general/StandsPage/StandsPage';
 import AdministrationUsersPage from '../pages/general/AdministrationUsersPage/AdministrationUsersPage';
 import AdministrationLogPage from '../pages/general/AdministrationLogPage/AdministrationLogPage';
+import ApplicationPage from '../pages/general/ApplicationPage/ApplicationPage';
 
 const { routes } = config;
 
@@ -33,6 +34,7 @@ const App = ({ store }: RootProps) => (
         <Route element={<GeneralLayout />}>
           <Route path={routes.monitoring} element={<MonitoringPage />} />
           <Route path={routes.applications} element={<ApplicationsPage />} />
+          <Route path={routes.application} element={<ApplicationPage />} />
           <Route path={routes.organizations} element={<OrganizationsPage />} />
           <Route path={routes.stands} element={<StandsPage />} />
           <Route path={routes.administration.users} element={<AdministrationUsersPage />} />

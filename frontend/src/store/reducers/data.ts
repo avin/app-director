@@ -2,7 +2,7 @@ import config from '@/config';
 import { Form } from '@/constants/form';
 import { Application, GetApplicationsResponse, LogInResponse, Organization, Stand, User } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { AppThunkAction } from '../configureStore';
 import { accessTokenSelector } from '@/store/selectors';
 import { entitiesArrayToMap } from '@/utils/entitiesArrayToMap';
@@ -59,7 +59,7 @@ export const { setOrganizations, setApplications, setStands, setUsers, setCurren
 
 export default slice.reducer;
 
-export function apiCall<T>(params: AxiosRequestConfig): AppThunkAction<AxiosPromise<T>> {
+export function apiCall<T>(params: AxiosRequestConfig): AppThunkAction<Promise<AxiosResponse<T>>> {
   return async (dispatch, getState) => {
     const { headers, ...otherParams } = params;
     const token = accessTokenSelector(getState());
@@ -70,10 +70,21 @@ export function apiCall<T>(params: AxiosRequestConfig): AppThunkAction<AxiosProm
       reqHeaders.Authorization = `Bearer ${token}`;
     }
 
-    return axios({
-      headers: reqHeaders,
-      ...otherParams,
-    });
+    let result: AxiosResponse<T>;
+    try {
+      result = (await axios({
+        headers: reqHeaders,
+        ...otherParams,
+      })) as AxiosResponse<T>;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          // TODO попробовать обновить токен и выполнить запрос еще раз
+        }
+      }
+      throw error;
+    }
+    return result;
   };
 }
 

@@ -3,3 +3,8 @@ export type LogInFormInputs = {
   password: string;
   save: boolean;
 };
+
+export type EditApplicationFormInputs = {
+  title: string;
+  description: string;
+};

@@ -70,6 +70,7 @@ export class FakesCommand {
   createRandomApplication() {
     return this.applicationsService.createApplication({
       title: faker.company.companyName(),
+      description: faker.lorem.sentence(Math.round(Math.random() * 10)),
     });
   }
 

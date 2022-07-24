@@ -1,0 +1,9 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.relations {
+  :global(.bp4-tab-list) {
+    user-select: none;
+    padding: 0 8px;
+  }
+}
