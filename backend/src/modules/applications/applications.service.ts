@@ -22,7 +22,7 @@ export class ApplicationsService {
   }
 
   async getApplicationById(id: string) {
-    const found = await this.applicationsRepository.createQueryBuilder('application').loadAllRelationIds().getOne();
+    const found = await this.applicationsRepository.findOne({ where: { id }, loadRelationIds: true });
 
     if (!found) {
       throw new ApplicationNotFoundException(id);

@@ -8,8 +8,7 @@ export const accessTokenSelector = (state: RootState) => state.data.accessToken;
 
 export const applicationsSelector = (state: RootState) => state.data.applications;
 
-export const applicationByIdSelector = (state: RootState, id: string): Application | undefined =>
-  state.data.applications[id];
+export const applicationByIdSelector = (state: RootState, id: string): Application => state.data.applications[id];
 
 export const redirectLinkAfterLogInSelector = (state: RootState): string =>
   state.ui.redirectLinkAfterLogIn || config.routes.monitoring;

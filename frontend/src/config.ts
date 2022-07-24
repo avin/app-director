@@ -52,6 +52,11 @@ export class Config {
         method: 'GET',
       },
 
+      getApplication: {
+        url: `${apiPrefix}/applications/:id`,
+        method: 'GET',
+      },
+
       createApplication: {
         url: `${apiPrefix}/applications`,
         method: 'POST',

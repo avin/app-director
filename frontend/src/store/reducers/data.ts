@@ -43,6 +43,10 @@ const slice = createSlice({
         ...action.payload,
       };
     },
+    setApplication: (state, action: PayloadAction<Application>) => {
+      const application = action.payload;
+      state.applications[application.id] = application;
+    },
     setStands: (state, action: PayloadAction<Record<string, Stand>>) => {
       state.stands = {
         ...state.stands,
@@ -67,8 +71,16 @@ const slice = createSlice({
   },
 });
 
-export const { setOrganizations, setApplications, setStands, setUsers, setCurrentUser, setAccessToken, resetData } =
-  slice.actions;
+export const {
+  setOrganizations,
+  setApplications,
+  setApplication,
+  setStands,
+  setUsers,
+  setCurrentUser,
+  setAccessToken,
+  resetData,
+} = slice.actions;
 
 export default slice.reducer;
 
@@ -164,8 +176,23 @@ export function getApplications(): AppThunkAction<Promise<{ ids: string[]; count
     };
   };
 }
+export function getApplication(applicationId: string): AppThunkAction<Promise<Application>> {
+  return async (dispatch, getState) => {
+    const { data } = await dispatch(
+      apiCall<Application>({
+        ...config.apiMethods.getApplication,
+        urlReplacements: {
+          id: applicationId,
+        },
+      }),
+    );
+    dispatch(setApplication(data));
 
-export function updateApplication(applicationId: string): AppThunkAction<Promise<void>> {
+    return data;
+  };
+}
+
+export function updateApplication(applicationId: string): AppThunkAction<Promise<Application>> {
   return async (dispatch, getState) => {
     const editApplicationForm = getState().ui.forms[Form.EditApplication];
 
@@ -181,12 +208,9 @@ export function updateApplication(applicationId: string): AppThunkAction<Promise
       }),
     );
 
-    dispatch(
-      setApplications({
-        ...getState().data.applications,
-        [applicationId]: data,
-      }),
-    );
+    dispatch(setApplication(data));
+
+    return data;
   };
 }
 
@@ -203,12 +227,7 @@ export function createApplication(): AppThunkAction<Promise<Application>> {
       }),
     );
 
-    dispatch(
-      setApplications({
-        ...getState().data.applications,
-        [data.id]: data,
-      }),
-    );
+    dispatch(setApplication(data));
 
     return data;
   };
