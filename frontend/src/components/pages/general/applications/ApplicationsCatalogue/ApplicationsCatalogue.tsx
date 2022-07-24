@@ -1,16 +1,17 @@
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react';
-import styles from './ApplicationsPage.module.scss';
+import styles from './ApplicationsCatalogue.module.scss';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { getApplications } from '@/store/reducers/data';
 import { applicationsSelector } from '@/store/selectors';
-import { HTMLTable } from '@blueprintjs/core';
-import { useNavigate } from 'react-router-dom';
+import { AnchorButton, Button, HTMLTable, Intent } from '@blueprintjs/core';
+import { useNavigate, Link } from 'react-router-dom';
 import config from '@/config';
+import PageHeader from '@/components/common/PageHeader/PageHeader';
 
 interface Props {}
 
-const ApplicationsPage = ({}: Props) => {
+const ApplicationsCatalogue = ({}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
   const [isDataFetchFailed, setIsDataFetchFailed] = useState(false);
   const applications = useSelector(applicationsSelector);
@@ -34,7 +35,7 @@ const ApplicationsPage = ({}: Props) => {
   const handleClickApplicationRow = useCallback(
     (e: SyntheticEvent<HTMLTableRowElement>) => {
       const applicationId = e.currentTarget.dataset.id as string;
-      navigate(`${config.routes.applications}/${applicationId}`);
+      navigate(config.routes.applications.view.replace(':id', applicationId));
     },
     [navigate],
   );
@@ -49,12 +50,23 @@ const ApplicationsPage = ({}: Props) => {
 
   return (
     <div>
-      <HTMLTable striped bordered interactive className={styles.table}>
+      <PageHeader
+        title="Приложения"
+        controls={
+          <Link to="/applications/create">
+            <Button intent={Intent.NONE} icon="plus">
+              Добавить
+            </Button>
+          </Link>
+        }
+      />
+
+      <HTMLTable striped bordered interactive condensed className={styles.table}>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Stands</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Стенды</th>
           </tr>
         </thead>
         <tbody>
@@ -71,4 +83,4 @@ const ApplicationsPage = ({}: Props) => {
   );
 };
 
-export default ApplicationsPage;
+export default ApplicationsCatalogue;

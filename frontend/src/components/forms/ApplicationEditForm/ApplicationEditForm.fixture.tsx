@@ -1,10 +1,10 @@
 import React from 'react';
-import ApplicationView from './ApplicationView';
+import ApplicationEditForm from './ApplicationEditForm';
 
 export default () => {
   return (
     <div className="content">
-      <ApplicationView />
+      <ApplicationEditForm />
     </div>
   );
 };

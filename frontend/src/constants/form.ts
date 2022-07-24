@@ -1,3 +1,4 @@
 export enum Form {
-  LogIn = 'logIn',
+  LogIn = 'LogIn',
+  EditApplication = 'EditApplication',
 }

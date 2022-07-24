@@ -1,10 +1,10 @@
 import React from 'react';
-import ApplicationEdit from './ApplicationEdit';
+import PageHeader from './PageHeader';
 
 export default () => {
   return (
     <div className="content">
-      <ApplicationEdit />
+      <PageHeader />
     </div>
   );
 };

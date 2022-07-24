@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import TextInput from './TextInput';
+import ControlledTextArea from './ControlledTextArea';
 
 export default () => {
   const { control, watch } = useForm({ defaultValues: { test: 'foo' } });
@@ -8,7 +8,7 @@ export default () => {
 
   return (
     <div className="content">
-      <TextInput name="test" control={control} />
+      <ControlledTextArea name="test" control={control} />
       <hr />
       {val}
     </div>

@@ -1,15 +1,15 @@
-import { InputGroup, InputGroupProps2 } from '@blueprintjs/core';
 import React from 'react';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
+import { CheckboxProps, Checkbox } from '@blueprintjs/core';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 
-interface Props<TFieldValues extends FieldValues> extends InputGroupProps2 {
+interface Props<TFieldValues extends FieldValues> extends CheckboxProps {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
 }
 
-const TextInput = <T,>({ name, control, rules, ...props }: Props<T>) => {
+const ControlledCheckbox = <T,>({ name, control, rules, ...props }: Props<T>) => {
   const {
     field: { value, onChange },
   } = useController({
@@ -18,7 +18,7 @@ const TextInput = <T,>({ name, control, rules, ...props }: Props<T>) => {
     rules,
   });
 
-  return <InputGroup type="text" {...props} onChange={onChange} value={String(value || '')} />;
+  return <Checkbox {...props} checked={Boolean(value)} onChange={onChange} />;
 };
 
-export default TextInput;
+export default ControlledCheckbox;

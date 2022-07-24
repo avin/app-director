@@ -17,7 +17,7 @@ const Navigation = ({}: Props) => {
         id: 'monitoring',
         icon: 'desktop',
         label: 'Мониторинг',
-        isSelected: location.pathname === config.routes.monitoring,
+        isSelected: location.pathname.startsWith(config.routes.monitoring),
         nodeData: {
           route: config.routes.monitoring,
         },
@@ -26,16 +26,16 @@ const Navigation = ({}: Props) => {
         id: 'applications',
         icon: 'application',
         label: 'Приложения',
-        isSelected: location.pathname === config.routes.applications,
+        isSelected: location.pathname.startsWith(config.routes.applications.$),
         nodeData: {
-          route: config.routes.applications,
+          route: config.routes.applications.$,
         },
       },
       {
         id: 'stands',
         icon: 'cloud',
         label: 'Стенды',
-        isSelected: location.pathname === config.routes.stands,
+        isSelected: location.pathname.startsWith(config.routes.stands),
         nodeData: {
           route: config.routes.stands,
         },
@@ -44,7 +44,7 @@ const Navigation = ({}: Props) => {
         id: 'organizations',
         icon: 'office',
         label: 'Организации',
-        isSelected: location.pathname === config.routes.organizations,
+        isSelected: location.pathname.startsWith(config.routes.organizations),
         nodeData: {
           route: config.routes.organizations,
         },
@@ -60,7 +60,7 @@ const Navigation = ({}: Props) => {
             id: 'users',
             icon: 'people',
             label: 'Пользователи',
-            isSelected: location.pathname === config.routes.administration.users,
+            isSelected: location.pathname.startsWith(config.routes.administration.users),
             nodeData: {
               route: config.routes.administration.users,
             },
@@ -69,7 +69,7 @@ const Navigation = ({}: Props) => {
             id: 'history',
             icon: 'history',
             label: 'История действий',
-            isSelected: location.pathname === config.routes.administration.log,
+            isSelected: location.pathname.startsWith(config.routes.administration.log),
             nodeData: {
               route: config.routes.administration.log,
             },

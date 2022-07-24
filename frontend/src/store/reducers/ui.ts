@@ -1,16 +1,18 @@
 import { Form } from '@/constants/form';
-import { LogInFormInputs } from '@/types';
+import { EditApplicationFormInputs, LogInFormInputs } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type UiSettingsState = {
   forms: {
     [Form.LogIn]: LogInFormInputs | null;
+    [Form.EditApplication]: EditApplicationFormInputs | null;
   };
 };
 
 const initialState: UiSettingsState = {
   forms: {
     [Form.LogIn]: null,
+    [Form.EditApplication]: null,
   },
 };
 

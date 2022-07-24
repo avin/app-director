@@ -1,5 +1,7 @@
-import { TextArea as BlueprintTextArea, TextAreaProps } from '@blueprintjs/core';
+import { TextArea, TextAreaProps } from '@blueprintjs/core';
+import cn from 'clsx';
 import React from 'react';
+import styles from './ControlledTextArea.module.scss';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 
@@ -9,7 +11,7 @@ interface Props<TFieldValues extends FieldValues> extends TextAreaProps {
   rules?: RegisterOptions;
 }
 
-const TextArea = <T,>({ name, control, rules, ...props }: Props<T>) => {
+const ControlledTextArea = <T,>({ name, control, rules, className, ...props }: Props<T>) => {
   const {
     field: { value, onChange },
   } = useController({
@@ -18,7 +20,9 @@ const TextArea = <T,>({ name, control, rules, ...props }: Props<T>) => {
     rules,
   });
 
-  return <BlueprintTextArea {...props} onChange={onChange} value={String(value || '')} />;
+  return (
+    <TextArea {...props} className={cn(className, styles.textArea)} onChange={onChange} value={String(value || '')} />
+  );
 };
 
-export default TextArea;
+export default ControlledTextArea;

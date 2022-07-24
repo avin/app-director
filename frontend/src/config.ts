@@ -11,8 +11,14 @@ export class Config {
   routes = {
     logIn: '/logIn',
     monitoring: '/monitoring',
-    applications: '/applications',
-    application: '/applications/:id',
+    applications: {
+      $: '/applications',
+      create: '/applications/create',
+      view: '/applications/:id',
+      edit: '/applications/:id/edit',
+    },
+    // application: '/applications/:id',
+    newApplication: '/applications/new',
     organizations: '/organizations',
     stands: '/stands',
     administration: {
@@ -46,9 +52,9 @@ export class Config {
         method: 'GET',
       },
 
-      getApplication: {
-        url: `${apiPrefix}/applications/:id`,
-        method: 'GET',
+      createApplication: {
+        url: `${apiPrefix}/applications`,
+        method: 'POST',
       },
 
       updateApplication: {

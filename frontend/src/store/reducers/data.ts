@@ -2,11 +2,12 @@ import config from '@/config';
 import { Form } from '@/constants/form';
 import { Application, GetApplicationsResponse, LogInResponse, Organization, Stand, User } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosError, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { AppThunkAction } from '../configureStore';
 import { accessTokenSelector } from '@/store/selectors';
 import { entitiesArrayToMap } from '@/utils/entitiesArrayToMap';
 import { getIdsFromEntitiesArray } from '@/utils/getIdsFromEntitiesArray';
+import escapeRegExp from 'lodash/escapeRegExp';
 
 export type DataState = {
   organizations: Record<string, Organization>;
@@ -31,16 +32,28 @@ const slice = createSlice({
   initialState,
   reducers: {
     setOrganizations: (state, action: PayloadAction<Record<string, Organization>>) => {
-      state.organizations = action.payload;
+      state.organizations = {
+        ...state.organizations,
+        ...action.payload,
+      };
     },
     setApplications: (state, action: PayloadAction<Record<string, Application>>) => {
-      state.applications = action.payload;
+      state.applications = {
+        ...state.applications,
+        ...action.payload,
+      };
     },
     setStands: (state, action: PayloadAction<Record<string, Stand>>) => {
-      state.stands = action.payload;
+      state.stands = {
+        ...state.stands,
+        ...action.payload,
+      };
     },
     setUsers: (state, action: PayloadAction<Record<string, User>>) => {
-      state.users = action.payload;
+      state.users = {
+        ...state.users,
+        ...action.payload,
+      };
     },
     setCurrentUser: (state, action: PayloadAction<User | null>) => {
       state.currentUser = action.payload;
@@ -59,9 +72,11 @@ export const { setOrganizations, setApplications, setStands, setUsers, setCurren
 
 export default slice.reducer;
 
-export function apiCall<T>(params: AxiosRequestConfig): AppThunkAction<Promise<AxiosResponse<T>>> {
+export function apiCall<T>(
+  params: AxiosRequestConfig & { urlReplacements?: Record<string, string> },
+): AppThunkAction<Promise<AxiosResponse<T>>> {
   return async (dispatch, getState) => {
-    const { headers, ...otherParams } = params;
+    const { headers, urlReplacements, url, ...otherParams } = params;
     const token = accessTokenSelector(getState());
 
     const reqHeaders = { ...headers };
@@ -70,9 +85,20 @@ export function apiCall<T>(params: AxiosRequestConfig): AppThunkAction<Promise<A
       reqHeaders.Authorization = `Bearer ${token}`;
     }
 
+    const processedUrl = (() => {
+      let result = url as string;
+      if (urlReplacements) {
+        Object.entries(urlReplacements).forEach(([key, value]) => {
+          result = result.replace(new RegExp(escapeRegExp(`:${key}`), 'g'), value);
+        });
+      }
+      return result;
+    })();
+
     let result: AxiosResponse<T>;
     try {
       result = (await axios({
+        url: processedUrl,
         headers: reqHeaders,
         ...otherParams,
       })) as AxiosResponse<T>;
@@ -136,5 +162,54 @@ export function getApplications(): AppThunkAction<Promise<{ ids: string[]; count
       ids: getIdsFromEntitiesArray(items),
       count,
     };
+  };
+}
+
+export function updateApplication(applicationId: string): AppThunkAction<Promise<void>> {
+  return async (dispatch, getState) => {
+    const editApplicationForm = getState().ui.forms[Form.EditApplication];
+
+    const { data } = await dispatch(
+      apiCall<Application>({
+        ...config.apiMethods.updateApplication,
+        urlReplacements: {
+          id: applicationId,
+        },
+        data: {
+          ...editApplicationForm,
+        },
+      }),
+    );
+
+    dispatch(
+      setApplications({
+        ...getState().data.applications,
+        [applicationId]: data,
+      }),
+    );
+  };
+}
+
+export function createApplication(): AppThunkAction<Promise<Application>> {
+  return async (dispatch, getState) => {
+    const editApplicationForm = getState().ui.forms[Form.EditApplication];
+
+    const { data } = await dispatch(
+      apiCall<Application>({
+        ...config.apiMethods.createApplication,
+        data: {
+          ...editApplicationForm,
+        },
+      }),
+    );
+
+    dispatch(
+      setApplications({
+        ...getState().data.applications,
+        [data.id]: data,
+      }),
+    );
+
+    return data;
   };
 }

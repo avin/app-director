@@ -1,10 +1,10 @@
 import React from 'react';
-import ApplicationPage from './ApplicationPage';
+import ViewApplication from './ViewApplication';
 
 export default () => {
   return (
     <div className="content">
-      <ApplicationPage />
+      <ViewApplication />
     </div>
   );
 };

@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import type { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { setFormState } from '@/store/reducers/ui';
-import TextInput from '@/components/common/TextInput/TextInput';
+import ControlledTextInput from '@/components/common/ControlledTextInput/ControlledTextInput';
 import { Button, Icon, Intent } from '@blueprintjs/core';
-import Checkbox from '@/components/common/Checkbox/Checkbox';
+import ControlledCheckbox from '@/components/common/ControlledCheckbox/ControlledCheckbox';
 import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMessage';
 import { logIn } from '@/store/reducers/data';
 import { Form } from '@/constants/form';
@@ -53,6 +53,8 @@ const LogInPage = ({}: Props) => {
         await dispatch(logIn());
         navigate(config.routes.monitoring);
       } catch (error) {
+        console.warn(error);
+
         let errorMessage = 'Запрос выполнен неуспешно, попробуйте еще раз';
         if (axios.isAxiosError(error)) {
           if ((error.response?.data as ApiError)?.statusCode === 401) {
@@ -94,7 +96,7 @@ const LogInPage = ({}: Props) => {
       <FormErrorMessage message={errorMessage} />
 
       <InputContainer label="Email" error={isSubmitted && errors.email?.message}>
-        <TextInput
+        <ControlledTextInput
           control={control}
           rules={requiredRules}
           name="email"
@@ -105,7 +107,7 @@ const LogInPage = ({}: Props) => {
       </InputContainer>
 
       <InputContainer label="Пароль" error={isSubmitted && errors.password?.message}>
-        <TextInput
+        <ControlledTextInput
           control={control}
           rules={requiredRules}
           name="password"
@@ -117,7 +119,7 @@ const LogInPage = ({}: Props) => {
 
       <div className={styles.controls}>
         <div>
-          <Checkbox control={control} name="save" label="Запомнить меня" />
+          <ControlledCheckbox control={control} name="save" label="Запомнить меня" />
         </div>
         <div>
           <Button type="submit" intent={Intent.PRIMARY} loading={isInProgress} icon="unlock">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import Checkbox from './Checkbox';
+import ControlledCheckbox from './ControlledCheckbox';
 
 export default () => {
   const { control, watch } = useForm({ defaultValues: { test: false } });
@@ -8,7 +8,7 @@ export default () => {
 
   return (
     <div className="content">
-      <Checkbox name="test" control={control} label="Checkbox" />
+      <ControlledCheckbox name="test" control={control} label="Checkbox" />
       <hr />
       {String(val)}
     </div>

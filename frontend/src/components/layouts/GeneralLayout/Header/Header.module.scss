@@ -1,10 +1,8 @@
 @import '~@/styles/variables';
 @import '~@/styles/mixins';
 
-$height: 40px;
-
 .headerWrapper {
-  padding-top: $height;
+  padding-top: $headerHeight;
 }
 
 .header {
@@ -13,8 +11,7 @@ $height: 40px;
   left: 0;
   width: 100%;
   z-index: 1;
-  // border-bottom: 1px solid black;
-  height: 40px;
+  height: $headerHeight;
   display: flex;
   align-items: center;
 }
@@ -33,7 +30,7 @@ $height: 40px;
 .main {
   background: $dark-gray5;
   height: 100%;
-  padding: 0 8px;
+  padding: 0 15px;
   flex: 1;
   display: flex;
   align-items: center;

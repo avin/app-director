@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.scss';
 import configureStore from '@/store/configureStore';
-import App from '@/components/root/App';
+import Root from '@/components/root/Root';
 import { hideTsErrorsInConsole, prepareBrowser } from '@/utils/browser';
 import config from '@/config';
 
@@ -17,5 +17,5 @@ void (() => {
     window.location.pathname = config.basename;
   }
 
-  ReactDOM.render(<App store={store} />, document.getElementById('root'));
+  ReactDOM.render(<Root store={store} />, document.getElementById('root'));
 })();

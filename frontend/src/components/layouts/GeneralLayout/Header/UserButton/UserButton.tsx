@@ -18,8 +18,8 @@ const UserButton = ({}: Props) => {
 
   return (
     <Popover2
-      minimal
-      modifiers={{ offset: { enabled: true, options: { offset: [0, 10] } } }}
+      // minimal
+      // modifiers={{ offset: { enabled: true, options: { offset: [0, 15] } } }}
       content={
         <Menu>
           <MenuItem icon="log-out" onClick={handleClickLogout} text="Выйти" />
