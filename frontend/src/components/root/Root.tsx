@@ -16,6 +16,7 @@ import AdministrationLogPage from '../pages/general/AdministrationLogPage/Admini
 import ViewApplication from '@/components/pages/general/applications/ViewApplication/ViewApplication';
 import CreateApplication from '@/components/pages/general/applications/CreateApplication/CreateApplication';
 import EditApplication from '@/components/pages/general/applications/EditApplication/EditApplication';
+import ApplicationFetcher from '../pages/general/applications/ApplicationFetcher/ApplicationFetcher';
 
 const { routes } = config;
 
@@ -37,9 +38,12 @@ const Root = ({ store }: RootProps) => (
           <Route path={routes.monitoring} element={<MonitoringPage />} />
 
           <Route path={routes.applications.$} element={<ApplicationsCatalogue />} />
-          <Route path={routes.applications.view} element={<ViewApplication />} />
           <Route path={routes.applications.create} element={<CreateApplication />} />
-          <Route path={routes.applications.edit} element={<EditApplication />} />
+
+          <Route element={<ApplicationFetcher />}>
+            <Route path={routes.applications.view} element={<ViewApplication />} />
+            <Route path={routes.applications.edit} element={<EditApplication />} />
+          </Route>
 
           <Route path={routes.organizations} element={<OrganizationsPage />} />
           <Route path={routes.stands} element={<StandsPage />} />

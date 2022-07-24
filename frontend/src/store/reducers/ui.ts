@@ -3,6 +3,7 @@ import { EditApplicationFormInputs, LogInFormInputs } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type UiSettingsState = {
+  redirectLinkAfterLogIn: string | null;
   forms: {
     [Form.LogIn]: LogInFormInputs | null;
     [Form.EditApplication]: EditApplicationFormInputs | null;
@@ -10,6 +11,7 @@ export type UiSettingsState = {
 };
 
 const initialState: UiSettingsState = {
+  redirectLinkAfterLogIn: null,
   forms: {
     [Form.LogIn]: null,
     [Form.EditApplication]: null,
@@ -25,12 +27,15 @@ const slice = createSlice({
 
       state.forms[formName] = formState;
     },
+    setRedirectLinkAfterLogIn: (state, action: PayloadAction<string | null>) => {
+      state.redirectLinkAfterLogIn = action.payload;
+    },
     resetForms: () => {
       return initialState;
     },
   },
 });
 
-export const { setFormState, resetForms } = slice.actions;
+export const { setFormState, resetForms, setRedirectLinkAfterLogIn } = slice.actions;
 
 export default slice.reducer;

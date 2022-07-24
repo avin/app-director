@@ -12,13 +12,20 @@ export interface InputContainerProps extends React.PropsWithChildren<{}> {
 }
 
 const InputContainer = ({ label, error, subtext, className, children }: InputContainerProps) => {
-  const [errorToShow, setErrorToShow] = useState(error);
+  // const [errorToShow, setErrorToShow] = useState(error);
 
-  useEffect(() => {
-    if (error) {
-      setErrorToShow(error);
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   if (error) {
+  //     const errorLabel =
+  //       {
+  //         fieldRequired: 'Требуется заполнить поле',
+  //       }[error as string] || error;
+  //
+  //     console.log('error=', error);
+  //
+  //     setErrorToShow(errorLabel);
+  //   }
+  // }, [error]);
 
   return (
     <div className={cn(styles.container, className, { withError: !!error })}>
@@ -34,7 +41,7 @@ const InputContainer = ({ label, error, subtext, className, children }: InputCon
 
         <WrappedUp open={!!error} duration={200} className={styles.errorWrapper}>
           <div className={styles.errorContainer}>
-            <div className={styles.error}>{error || errorToShow}</div>
+            <div className={styles.error}>{error}</div>
           </div>
         </WrappedUp>
       </Label>

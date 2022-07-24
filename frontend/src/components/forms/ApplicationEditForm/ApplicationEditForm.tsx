@@ -12,6 +12,7 @@ import InputContainer from '@/components/common/InputContainer/InputContainer';
 import { Button, Intent } from '@blueprintjs/core';
 import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMessage';
 import styles from './ApplicationEditForm.module.scss';
+import { useDefaultRequiredRules } from '@/utils/hooks/useDefaultRequiredRules';
 
 interface Props {
   id?: string;
@@ -69,12 +70,14 @@ const ApplicationEditForm = ({ id = 'application-edit-form', onSubmit }: Props) 
     [handleSubmit, processSubmit, processSubmitError],
   );
 
+  const requiredRules = useDefaultRequiredRules();
+
   return (
     <form id={id} onSubmit={handleFormSubmit}>
       <FormErrorMessage message={errorMessage} />
 
       <InputContainer label="Название" error={isSubmitted && errors.title?.message}>
-        <ControlledTextInput name="title" control={control} />
+        <ControlledTextInput name="title" control={control} rules={requiredRules} />
       </InputContainer>
 
       <InputContainer label="Описание" error={isSubmitted && errors.description?.message}>

@@ -5,7 +5,7 @@ import { ApiError, LogInFormInputs } from '@/types';
 import InputContainer from '@/components/common/InputContainer/InputContainer';
 import { useNavigate } from 'react-router-dom';
 import type { AppThunkDispatch } from '@/store/configureStore';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setFormState } from '@/store/reducers/ui';
 import ControlledTextInput from '@/components/common/ControlledTextInput/ControlledTextInput';
 import { Button, Icon, Intent } from '@blueprintjs/core';
@@ -13,8 +13,9 @@ import ControlledCheckbox from '@/components/common/ControlledCheckbox/Controlle
 import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMessage';
 import { logIn } from '@/store/reducers/data';
 import { Form } from '@/constants/form';
-import config from '@/config';
 import axios from 'axios';
+import { useDefaultRequiredRules } from '@/utils/hooks/useDefaultRequiredRules';
+import { redirectLinkAfterLogInSelector } from '@/store/selectors';
 
 interface Props {}
 
@@ -23,6 +24,7 @@ const LogInPage = ({}: Props) => {
   const navigate = useNavigate();
   const [isInProgress, setIsInProgress] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const redirectLinkAfterLogIn = useSelector(redirectLinkAfterLogInSelector);
 
   const {
     handleSubmit,
@@ -51,7 +53,7 @@ const LogInPage = ({}: Props) => {
 
       try {
         await dispatch(logIn());
-        navigate(config.routes.monitoring);
+        navigate(redirectLinkAfterLogIn);
       } catch (error) {
         console.warn(error);
 
@@ -78,18 +80,7 @@ const LogInPage = ({}: Props) => {
     [handleSubmit, onSubmit, onSubmitError],
   );
 
-  const requiredRules = useMemo(
-    () => ({
-      validate: (val) => {
-        if (!val) {
-          return 'Требуется заполнить поле';
-        }
-
-        return undefined;
-      },
-    }),
-    [],
-  );
+  const requiredRules = useDefaultRequiredRules();
 
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
