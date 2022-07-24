@@ -4,7 +4,7 @@ import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { getApplications } from '@/store/reducers/data';
 import { applicationsSelector } from '@/store/selectors';
-import { AnchorButton, Button, HTMLTable, Intent } from '@blueprintjs/core';
+import { Button, HTMLTable, Intent } from '@blueprintjs/core';
 import { useNavigate, Link } from 'react-router-dom';
 import config from '@/config';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
@@ -53,7 +53,7 @@ const ApplicationsCatalogue = ({}: Props) => {
       <PageHeader
         title="Приложения"
         controls={
-          <Link to="/applications/create">
+          <Link to="/applications/create" tabIndex={-1}>
             <Button intent={Intent.NONE} icon="plus">
               Добавить
             </Button>

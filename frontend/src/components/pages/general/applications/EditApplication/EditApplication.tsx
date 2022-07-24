@@ -25,7 +25,7 @@ const EditApplication = ({}: Props) => {
   return (
     <div>
       <PageHeader title={application.title} />
-      <div className={styles.content}>
+      <div className="page-content">
         <ApplicationEditForm onSubmit={handleSubmitForm} />
       </div>
     </div>

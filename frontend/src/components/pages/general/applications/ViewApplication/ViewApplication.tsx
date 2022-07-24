@@ -20,7 +20,7 @@ const ViewApplication = ({}: Props) => {
         title={application.title}
         controls={
           <>
-            <Link to={`/applications/${application.id}/edit`}>
+            <Link to={`/applications/${application.id}/edit`} tabIndex={-1}>
               <Button intent={Intent.PRIMARY} icon="edit">
                 Редактировать
               </Button>
@@ -33,7 +33,7 @@ const ViewApplication = ({}: Props) => {
         }
       />
 
-      <div className={styles.content}>
+      <div className="page-content">
         <div className={styles.row}>
           <div className={styles.rowTitle}>
             <h4>Название</h4>

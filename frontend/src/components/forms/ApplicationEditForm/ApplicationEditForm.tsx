@@ -11,6 +11,7 @@ import ControlledTextArea from '@/components/common/ControlledTextArea/Controlle
 import InputContainer from '@/components/common/InputContainer/InputContainer';
 import { Button, Intent } from '@blueprintjs/core';
 import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMessage';
+import styles from './ApplicationEditForm.module.scss';
 
 interface Props {
   id?: string;
@@ -80,9 +81,11 @@ const ApplicationEditForm = ({ id = 'application-edit-form', onSubmit }: Props) 
         <ControlledTextArea growVertically name="description" control={control} />
       </InputContainer>
 
-      <Button type="submit" loading={isInProgress} intent={Intent.SUCCESS} icon="floppy-disk">
-        Сохранить
-      </Button>
+      <div className={styles.controls}>
+        <Button type="submit" loading={isInProgress} intent={Intent.SUCCESS} icon="floppy-disk">
+          Сохранить
+        </Button>
+      </div>
     </form>
   );
 };

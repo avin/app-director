@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { createApplication } from '@/store/reducers/data';
 import config from '@/config';
 import ApplicationEditForm from '@/components/forms/ApplicationEditForm/ApplicationEditForm';
+import PageHeader from '@/components/common/PageHeader/PageHeader';
 
 interface Props {}
 
@@ -19,7 +20,10 @@ const CreateApplication = ({}: Props) => {
 
   return (
     <div>
-      <ApplicationEditForm onSubmit={handleSubmitForm} />
+      <PageHeader title="Добавление приложения" />
+      <div className="page-content">
+        <ApplicationEditForm onSubmit={handleSubmitForm} />
+      </div>
     </div>
   );
 };
