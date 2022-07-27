@@ -45,6 +45,11 @@ export class Config {
         method: 'POST',
       },
 
+      refresh: {
+        url: `${apiPrefix}/auth/refresh`,
+        method: 'GET',
+      },
+
       // ------- Applications -------
 
       getApplications: {

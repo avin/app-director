@@ -65,6 +65,10 @@ const slice = createSlice({
     setAccessToken: (state, action: PayloadAction<string | null>) => {
       state.accessToken = action.payload;
     },
+    resetAuthData: (state) => {
+      state.currentUser = null;
+      state.accessToken = null;
+    },
     resetData: () => {
       return initialState;
     },
@@ -80,15 +84,30 @@ export const {
   setCurrentUser,
   setAccessToken,
   resetData,
+  resetAuthData,
 } = slice.actions;
 
 export default slice.reducer;
 
+export function refreshTokens(): AppThunkAction<Promise<void>> {
+  return async (dispatch, getState) => {
+    const {
+      data: { user, accessToken },
+    } = await axios.request<LogInResponse>({
+      url: config.apiMethods.refresh.url,
+      method: config.apiMethods.refresh.method,
+    });
+
+    dispatch(setCurrentUser(user));
+    dispatch(setAccessToken(accessToken));
+  };
+}
+
 export function apiCall<T>(
-  params: AxiosRequestConfig & { urlReplacements?: Record<string, string> },
+  params: AxiosRequestConfig & { urlReplacements?: Record<string, string>; isAfterRefreshToken?: boolean },
 ): AppThunkAction<Promise<AxiosResponse<T>>> {
   return async (dispatch, getState) => {
-    const { headers, urlReplacements, url, ...otherParams } = params;
+    const { headers, urlReplacements, url, isAfterRefreshToken, ...otherParams } = params;
     const token = accessTokenSelector(getState());
 
     const reqHeaders = { ...headers };
@@ -109,15 +128,27 @@ export function apiCall<T>(
 
     let result: AxiosResponse<T>;
     try {
-      result = (await axios({
+      result = await axios.request<T>({
         url: processedUrl,
         headers: reqHeaders,
         ...otherParams,
-      })) as AxiosResponse<T>;
+      });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          // TODO попробовать обновить токен и выполнить запрос еще раз
+          if (isAfterRefreshToken) {
+            dispatch(resetAuthData());
+          } else {
+            // попробовать обновить токен и выполнить запрос еще раз
+            await dispatch(refreshTokens());
+
+            return dispatch(
+              apiCall({
+                ...params,
+                isAfterRefreshToken: true,
+              }),
+            );
+          }
         }
       }
       throw error;
@@ -153,8 +184,7 @@ export function logIn(): AppThunkAction<Promise<void>> {
 
 export function logOut(): AppThunkAction<void> {
   return (dispatch, getState) => {
-    dispatch(setCurrentUser(null));
-    dispatch(setAccessToken(null));
+    dispatch(resetAuthData());
   };
 }
 

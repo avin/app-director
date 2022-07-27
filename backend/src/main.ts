@@ -1,4 +1,5 @@
 import { ValidationPipe } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
 import { TransformInterceptor } from './transform.interceptor';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
@@ -13,6 +14,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.use(cookieParser());
   app.useGlobalInterceptors(new TransformInterceptor());
   const port = process.env.PORT || 3000;
   await app.listen(port);

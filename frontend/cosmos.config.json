@@ -13,7 +13,7 @@
   "port": 8889,
   "https": true,
   "httpsOptions": {
-    "certPath": "./node_modules/localhost-certs/files/server.crt",
-    "keyPath": "./node_modules/localhost-certs/files/server.key"
+    "certPath": "../node_modules/localhost-certs/files/server.crt",
+    "keyPath": "../node_modules/localhost-certs/files/server.key"
   }
 }

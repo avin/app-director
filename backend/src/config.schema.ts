@@ -14,5 +14,6 @@ export const configValidationSchema = Joi.object({
   TYPEORM_ENTITIES: Joi.string().required(),
   TYPEORM_MIGRATIONS: Joi.string().required(),
   TYPEORM_LOGGING: Joi.string().default('false'),
-  JWT_SECRET: Joi.string().required(),
+  JWT_ACCESS_TOKEN_SECRET: Joi.string().required(),
+  JWT_REFRESH_TOKEN_SECRET: Joi.string().required(),
 });

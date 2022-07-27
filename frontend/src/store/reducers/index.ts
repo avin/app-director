@@ -1,15 +1,15 @@
-import { AnyAction, combineReducers } from '@reduxjs/toolkit';
-import ui from './ui';
-import data from './data';
-import type { UiSettingsState } from './ui';
-import type { DataState } from './data';
+import { AnyAction, CombinedState, combineReducers, Reducer } from '@reduxjs/toolkit';
+import data, { DataState } from './data';
+import ui, { UiState } from './ui';
+
+export type RootState = CombinedState<{ data: DataState; ui: UiState }>;
 
 const rootReducer = combineReducers({
-  ui,
   data,
+  ui,
 });
 
-const resettableRootReducer = (state: { ui: UiSettingsState; data: DataState } | undefined, action: AnyAction) => {
+const resettableRootReducer: Reducer = (state: RootState, action: AnyAction) => {
   if (action.type === 'store/reset') {
     return rootReducer(undefined, action);
   }
@@ -17,5 +17,3 @@ const resettableRootReducer = (state: { ui: UiSettingsState; data: DataState } |
 };
 
 export default resettableRootReducer;
-
-export type RootState = ReturnType<typeof resettableRootReducer>;

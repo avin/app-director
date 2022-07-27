@@ -2,7 +2,7 @@ import { Form } from '@/constants/form';
 import { EditApplicationFormInputs, LogInFormInputs } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type UiSettingsState = {
+export type UiState = {
   redirectLinkAfterLogIn: string | null;
   forms: {
     [Form.LogIn]: LogInFormInputs | null;
@@ -10,7 +10,7 @@ export type UiSettingsState = {
   };
 };
 
-const initialState: UiSettingsState = {
+const initialState: UiState = {
   redirectLinkAfterLogIn: null,
   forms: {
     [Form.LogIn]: null,
