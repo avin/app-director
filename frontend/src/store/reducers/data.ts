@@ -91,15 +91,21 @@ export default slice.reducer;
 
 export function refreshTokens(): AppThunkAction<Promise<void>> {
   return async (dispatch, getState) => {
-    const {
-      data: { user, accessToken },
-    } = await axios.request<LogInResponse>({
-      url: config.apiMethods.refresh.url,
-      method: config.apiMethods.refresh.method,
-    });
+    try {
+      const {
+        data: { user, accessToken },
+      } = await axios.request<LogInResponse>({
+        url: config.apiMethods.refresh.url,
+        method: config.apiMethods.refresh.method,
+      });
 
-    dispatch(setCurrentUser(user));
-    dispatch(setAccessToken(accessToken));
+      dispatch(setCurrentUser(user));
+      dispatch(setAccessToken(accessToken));
+    } catch (e) {
+      dispatch(resetAuthData());
+
+      throw e;
+    }
   };
 }
 
@@ -135,20 +141,16 @@ export function apiCall<T>(
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.response?.status === 401) {
-          if (isAfterRefreshToken) {
-            dispatch(resetAuthData());
-          } else {
-            // попробовать обновить токен и выполнить запрос еще раз
-            await dispatch(refreshTokens());
+        if (error.response?.status === 401 && !isAfterRefreshToken) {
+          // попробовать обновить токен и выполнить запрос еще раз
+          await dispatch(refreshTokens());
 
-            return dispatch(
-              apiCall({
-                ...params,
-                isAfterRefreshToken: true,
-              }),
-            );
-          }
+          return dispatch(
+            apiCall({
+              ...params,
+              isAfterRefreshToken: true,
+            }),
+          );
         }
       }
       throw error;
