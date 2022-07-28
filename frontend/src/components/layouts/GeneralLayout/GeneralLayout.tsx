@@ -22,12 +22,15 @@ const GeneralLayout = ({}: Props) => {
   useEffect(() => {
     void (async () => {
       try {
-        await dispatch(refreshTokens());
+        if (!user) {
+          await dispatch(refreshTokens());
+        }
       } finally {
         setIsUserFetched(true);
       }
     })();
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!user && isUserFetched) {

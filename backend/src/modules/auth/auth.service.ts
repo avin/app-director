@@ -5,6 +5,7 @@ import { JwtPayload } from './jwt-payload.interface';
 import { UsersService } from '../users/users.service';
 import { ConfigService } from '@nestjs/config';
 import { User } from '../users/user.entity';
+import { CookieOptions } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -34,16 +35,26 @@ export class AuthService {
 
     return this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
-      expiresIn: `10s`,
+      expiresIn: `${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}s`,
     });
   }
 
-  async getRefreshTokenForUser(user: User, expiresIn = 3600) {
-    const payload: JwtPayload = { userId: user.id };
+  getRefreshTokenCookieOptions = (isLongLive = false): CookieOptions => {
+    return {
+      httpOnly: true,
+      path: '/',
+      secure: true,
+      sameSite: 'strict',
+      maxAge: isLongLive ? Number(this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME')) : undefined,
+    };
+  };
+
+  async getRefreshTokenForUser(user: User, { isLongLive = false } = {}) {
+    const payload: JwtPayload = { userId: user.id, isLongLive };
 
     return this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
-      expiresIn: `${expiresIn}s`,
+      expiresIn: `${this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME')}s`,
     });
   }
 }

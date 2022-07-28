@@ -17,6 +17,11 @@ const proxy = {
       options: {
         ignorePath: false,
       },
+      listeners: {
+        error: (e) => {
+          console.log(e);
+        },
+      },
     },
   },
 };

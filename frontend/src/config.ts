@@ -50,6 +50,11 @@ export class Config {
         method: 'GET',
       },
 
+      logout: {
+        url: `${apiPrefix}/auth/logout`,
+        method: 'GET',
+      },
+
       // ------- Applications -------
 
       getApplications: {

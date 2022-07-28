@@ -68,7 +68,7 @@ const LogInPage = ({}: Props) => {
         setIsInProgress(false);
       }
     },
-    [dispatch, navigate],
+    [dispatch, navigate, redirectLinkAfterLogIn],
   );
 
   const onSubmitError = useCallback((submitErrors) => {
@@ -110,7 +110,7 @@ const LogInPage = ({}: Props) => {
 
       <div className={styles.controls}>
         <div>
-          <ControlledCheckbox control={control} name="save" label="Запомнить меня" />
+          <ControlledCheckbox control={control} name="remember" label="Запомнить меня" />
         </div>
         <div>
           <Button type="submit" intent={Intent.PRIMARY} loading={isInProgress} icon="unlock">

@@ -175,6 +175,7 @@ export function logIn(): AppThunkAction<Promise<void>> {
         data: {
           email: logInForm.email,
           password: logInForm.password,
+          remember: logInForm.remember,
         },
       }),
     );
@@ -184,8 +185,13 @@ export function logIn(): AppThunkAction<Promise<void>> {
   };
 }
 
-export function logOut(): AppThunkAction<void> {
-  return (dispatch, getState) => {
+export function logOut(): AppThunkAction<Promise<void>> {
+  return async (dispatch, getState) => {
+    await axios.request({
+      url: config.apiMethods.logout.url,
+      method: config.apiMethods.logout.method,
+    });
+
     dispatch(resetAuthData());
   };
 }

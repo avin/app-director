@@ -30,6 +30,10 @@ export class UsersService {
   }
 
   async getUserById(id: string) {
+    if (!id) {
+      throw new BadRequestException('Invalid ID');
+    }
+
     const found = await this.usersRepository.findOne({ where: { id } });
 
     if (!found) {

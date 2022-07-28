@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { User } from '../users/user.entity';
 import JwtRefreshGuard from './jwt-refresh.guard';
 import { GetUser } from './get-user.decorator';
+import { JwtPayload } from './jwt-payload.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -20,9 +21,15 @@ export class AuthController {
     const user = await this.authService.getUserByEmailAndPassword(authCredentialsDto);
 
     const accessToken = await this.authService.getAccessTokenForUser(user);
-    const refreshToken = await this.authService.getRefreshTokenForUser(user);
+    const refreshToken = await this.authService.getRefreshTokenForUser(user, {
+      isLongLive: authCredentialsDto.remember,
+    });
 
-    response.cookie('Refresh', refreshToken);
+    response.cookie(
+      'Refresh',
+      refreshToken,
+      this.authService.getRefreshTokenCookieOptions(authCredentialsDto.remember),
+    );
 
     return {
       user,
@@ -32,15 +39,25 @@ export class AuthController {
 
   @Get('/refresh')
   @UseGuards(JwtRefreshGuard)
-  async refresh(@GetUser() user: User, @Res({ passthrough: true }) response: Response) {
-    const accessToken = await this.authService.getAccessTokenForUser(user);
-    const refreshToken = await this.authService.getRefreshTokenForUser(user);
+  async refresh(@GetUser() jwtPayload: JwtPayload & { user: User }, @Res({ passthrough: true }) response: Response) {
+    const { user } = jwtPayload;
 
-    response.cookie('Refresh', refreshToken);
+    const accessToken = await this.authService.getAccessTokenForUser(user);
+    const refreshToken = await this.authService.getRefreshTokenForUser(user, { isLongLive: jwtPayload.isLongLive });
+
+    response.cookie('Refresh', refreshToken, this.authService.getRefreshTokenCookieOptions(jwtPayload.isLongLive));
 
     return {
       accessToken,
       user,
     };
+  }
+
+  @Get('/logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.cookie('Refresh', '', {
+      ...this.authService.getRefreshTokenCookieOptions(),
+      maxAge: 0,
+    });
   }
 }
