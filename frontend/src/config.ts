@@ -17,10 +17,15 @@ export class Config {
       view: '/applications/:id',
       edit: '/applications/:id/edit',
     },
+    stands: {
+      $: '/stands',
+      create: '/stands/create',
+      view: '/stands/:id',
+      edit: '/stands/:id/edit',
+    },
     // application: '/applications/:id',
     newApplication: '/applications/new',
     organizations: '/organizations',
-    stands: '/stands',
     administration: {
       users: '/administration/users',
       log: '/administration/log',
@@ -79,6 +84,33 @@ export class Config {
 
       deleteApplication: {
         url: `${apiPrefix}/applications/:id`,
+        method: 'DELETE',
+      },
+
+      // ------- Stands -------
+
+      getStands: {
+        url: `${apiPrefix}/stands`,
+        method: 'GET',
+      },
+
+      getStand: {
+        url: `${apiPrefix}/stands/:id`,
+        method: 'GET',
+      },
+
+      createStand: {
+        url: `${apiPrefix}/stands`,
+        method: 'POST',
+      },
+
+      updateStand: {
+        url: `${apiPrefix}/stands/:id`,
+        method: 'PATCH',
+      },
+
+      deleteStand: {
+        url: `${apiPrefix}/stands/:id`,
         method: 'DELETE',
       },
 

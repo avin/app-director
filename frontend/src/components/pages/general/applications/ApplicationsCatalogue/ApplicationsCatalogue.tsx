@@ -1,52 +1,55 @@
-import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import React, { SyntheticEvent, useCallback } from 'react';
 import styles from './ApplicationsCatalogue.module.scss';
 import { AppThunkDispatch } from '@/store/configureStore';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getApplications } from '@/store/reducers/data';
 import { applicationsSelector } from '@/store/selectors';
-import { Button, HTMLTable, Intent } from '@blueprintjs/core';
-import { useNavigate, Link } from 'react-router-dom';
+import { Button, Intent } from '@blueprintjs/core';
+import { Link, useNavigate } from 'react-router-dom';
 import config from '@/config';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
+import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
+import { Application } from '@/types';
 
 interface Props {}
 
 const ApplicationsCatalogue = ({}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
-  const [isDataFetchFailed, setIsDataFetchFailed] = useState(false);
-  const applications = useSelector(applicationsSelector);
   const navigate = useNavigate();
 
-  const [applicationsIds, setApplicationsIds] = useState<string[]>([]);
-  const [applicationsCount, setApplicationsCount] = useState<null | number>(null);
+  const headBuilder = useCallback(
+    () => (
+      <tr>
+        <th>Название</th>
+        <th>Описание</th>
+        <th>Стенды</th>
+      </tr>
+    ),
+    [],
+  );
 
-  useEffect(() => {
-    void (async () => {
-      try {
-        const { ids, count } = await dispatch(getApplications());
-        setApplicationsIds(ids);
-        setApplicationsCount(count);
-      } catch (error) {
-        setIsDataFetchFailed(true);
-      }
-    })();
-  }, [dispatch]);
-
-  const handleClickApplicationRow = useCallback(
+  const handleClickRow = useCallback(
     (e: SyntheticEvent<HTMLTableRowElement>) => {
-      const applicationId = e.currentTarget.dataset.id as string;
-      navigate(config.routes.applications.view.replace(':id', applicationId));
+      const entityId = e.currentTarget.dataset.id as string;
+      navigate(config.routes.applications.view.replace(':id', entityId));
     },
     [navigate],
   );
 
-  if (isDataFetchFailed) {
-    return <div>something wrong</div>;
-  }
+  const rowBuilder = useCallback(
+    ({ id, entity }: RowBuilderParams<Application>) => (
+      <tr key={id} onClick={handleClickRow} data-id={id}>
+        <td>{entity.title}</td>
+        <td>{entity.description}</td>
+        <td>{entity.stands.length}</td>
+      </tr>
+    ),
+    [handleClickRow],
+  );
 
-  if (applicationsCount === null) {
-    return <div>loading...</div>;
-  }
+  const getEntities = useCallback(async () => {
+    return await dispatch(getApplications());
+  }, [dispatch]);
 
   return (
     <div>
@@ -60,25 +63,12 @@ const ApplicationsCatalogue = ({}: Props) => {
           </Link>
         }
       />
-
-      <HTMLTable striped bordered interactive condensed className={styles.table}>
-        <thead>
-          <tr>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>Стенды</th>
-          </tr>
-        </thead>
-        <tbody>
-          {applicationsIds.map((id) => (
-            <tr key={id} onClick={handleClickApplicationRow} data-id={id}>
-              <td>{applications[id].title}</td>
-              <td>{applications[id].description}</td>
-              <td>{applications[id].stands.length}</td>
-            </tr>
-          ))}
-        </tbody>
-      </HTMLTable>
+      <EntitiesCatalogue
+        headBuilder={headBuilder}
+        rowBuilder={rowBuilder}
+        getEntities={getEntities}
+        entitiesSelector={applicationsSelector}
+      />
     </div>
   );
 };

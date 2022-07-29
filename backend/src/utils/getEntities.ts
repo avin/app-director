@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 
 export const getEntities = async <
   TEntity,
@@ -12,16 +12,20 @@ export const getEntities = async <
 >(
   repository: Repository<TEntity>,
   filterDto: TFilterDto,
+  query?: (qb: SelectQueryBuilder<TEntity>) => void,
 ) => {
-  const qb = repository.createQueryBuilder('application');
+  const qb = repository.createQueryBuilder('entity');
 
-  qb.orderBy(`application.${filterDto.orderBy}`, filterDto.orderDirection);
+  qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
 
   if (filterDto.search) {
-    qb.andWhere(
-      '(LOWER(application.title) LIKE LOWER(:search) OR LOWER(application.description) LIKE LOWER(:search))',
-      { search: `%${filterDto.search}%` },
-    );
+    qb.andWhere('(LOWER(entity.title) LIKE LOWER(:search) OR LOWER(entity.description) LIKE LOWER(:search))', {
+      search: `%${filterDto.search}%`,
+    });
+  }
+
+  if (query) {
+    query(qb);
   }
 
   const itemsCount = await qb.getCount();

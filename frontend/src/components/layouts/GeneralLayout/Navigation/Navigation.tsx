@@ -7,11 +7,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {}
 
+type NodeData = {
+  route: string;
+};
+
 const Navigation = ({}: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const nodes = useMemo<TreeNodeInfo[]>(
+  const nodes = useMemo<TreeNodeInfo<NodeData>[]>(
     () => [
       {
         id: 'monitoring',
@@ -81,7 +85,7 @@ const Navigation = ({}: Props) => {
   );
 
   const handleNodeClick = useCallback(
-    (node) => {
+    (node: TreeNodeInfo<NodeData>) => {
       if (node.nodeData?.route) {
         navigate(node.nodeData.route);
       }

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { CreateStandDto } from './dto/create-stand.dto';
 import { GetStandsFilterDto } from './dto/get-stands-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -18,7 +18,14 @@ export class StandsService {
   ) {}
 
   async getStands(filterDto: GetStandsFilterDto) {
-    return getEntities(this.standsRepository, filterDto);
+    return getEntities(this.standsRepository, filterDto, (qb) => {
+      if (filterDto.applicationId) {
+        qb.andWhere('entity.applicationId = :id', { id: filterDto.applicationId });
+      }
+      if (filterDto.organizationId) {
+        qb.andWhere('entity.organizationId = :id', { id: filterDto.organizationId });
+      }
+    });
   }
 
   async getStandById(id: string) {

@@ -6,6 +6,14 @@ export class GetStandsFilterDto {
   search?: string;
 
   @IsOptional()
+  @IsString()
+  applicationId?: string;
+
+  @IsOptional()
+  @IsString()
+  organizationId?: string;
+
+  @IsOptional()
   @IsIn(['title', 'description', 'createdAt', 'updatedAt'])
   orderBy: 'title' | 'description' | 'createdAt' | 'updatedAt' = 'title';
 

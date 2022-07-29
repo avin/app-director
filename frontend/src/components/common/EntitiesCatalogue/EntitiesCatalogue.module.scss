@@ -1,0 +1,24 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.table {
+  width: 100%;
+  background: $white;
+  border-bottom: 1px solid $gray3;
+}
+
+.loadingTdContent {
+  text-align: center;
+  opacity: 0.5;
+}
+
+.noItemsTdContent {
+  text-align: center;
+  opacity: 0.5;
+}
+
+tr.notInteractive {
+  td {
+    background: none !important;
+  }
+}

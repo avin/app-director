@@ -1,6 +1,14 @@
 import config from '@/config';
 import { Form } from '@/constants/form';
-import { Application, GetApplicationsResponse, LogInResponse, Organization, Stand, User } from '@/types';
+import {
+  Application,
+  GetApplicationsResponse,
+  GetStandsResponse,
+  LogInResponse,
+  Organization,
+  Stand,
+  User,
+} from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { AppThunkAction } from '../configureStore';
@@ -196,6 +204,10 @@ export function logOut(): AppThunkAction<Promise<void>> {
   };
 }
 
+// -------------------
+// Applications
+// -------------------
+
 export function getApplications(): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
@@ -268,5 +280,28 @@ export function createApplication(): AppThunkAction<Promise<Application>> {
     dispatch(setApplication(data));
 
     return data;
+  };
+}
+
+// -------------------
+// Stands
+// -------------------
+
+export function getStands(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+  return async (dispatch, getState) => {
+    const {
+      data: { items, count },
+    } = await dispatch(
+      apiCall<GetStandsResponse>({
+        ...config.apiMethods.getStands,
+        params: filters,
+      }),
+    );
+    dispatch(setStands(entitiesArrayToMap(items)));
+
+    return {
+      ids: getIdsFromEntitiesArray(items),
+      count,
+    };
   };
 }

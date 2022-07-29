@@ -54,3 +54,8 @@ export type GetApplicationsResponse = {
   items: Application[];
   count: number;
 };
+
+export type GetStandsResponse = {
+  items: Stand[];
+  count: number;
+};

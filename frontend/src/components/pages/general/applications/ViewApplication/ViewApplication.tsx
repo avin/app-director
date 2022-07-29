@@ -4,6 +4,7 @@ import { useApplicationByUrlParams } from '@/utils/hooks/useApplicationByUrlPara
 import { Link } from 'react-router-dom';
 import { Button, Intent } from '@blueprintjs/core';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ApplicationRelations from './ApplicationRelations/ApplicationRelations';
 
 interface Props {}
 
@@ -48,6 +49,8 @@ const ViewApplication = ({}: Props) => {
           <div className={styles.rowValue}>{application.description}</div>
         </div>
       </div>
+
+      <ApplicationRelations />
     </div>
   );
 };

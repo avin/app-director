@@ -46,7 +46,7 @@ const Root = ({ store }: RootProps) => (
           </Route>
 
           <Route path={routes.organizations} element={<OrganizationsPage />} />
-          <Route path={routes.stands} element={<StandsPage />} />
+          {/* <Route path={routes.stands} element={<StandsPage />} />*/}
           <Route path={routes.administration.users} element={<AdministrationUsersPage />} />
           <Route path={routes.administration.log} element={<AdministrationLogPage />} />
         </Route>

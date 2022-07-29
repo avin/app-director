@@ -75,6 +75,7 @@ module.exports = {
     // 'react/jsx-one-expression-per-line': 0,
     'react/jsx-props-no-spreading': 0,
     'react/prop-types': 0,
+    'react/no-unused-prop-types': 0,
     'react/function-component-definition': 0,
 
     'css-modules/no-unused-class': [
