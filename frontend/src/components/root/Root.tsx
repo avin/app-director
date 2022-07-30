@@ -9,8 +9,6 @@ import AuthLayout from '@/components/layouts/AuthLayout/AuthLayout';
 import GeneralLayout from '../layouts/GeneralLayout/GeneralLayout';
 import NavigateApplications from '../pages/applications/NavigateApplications/NavigateApplications';
 import MonitoringPage from '../pages/general/MonitoringPage/MonitoringPage';
-import AdministrationUsersPage from '../pages/general/AdministrationUsersPage/AdministrationUsersPage';
-import AdministrationLogPage from '../pages/general/AdministrationLogPage/AdministrationLogPage';
 import ViewApplication from '@/components/pages/applications/ViewApplication/ViewApplication';
 import CreateApplication from '@/components/pages/applications/CreateApplication/CreateApplication';
 import EditApplication from '@/components/pages/applications/EditApplication/EditApplication';
@@ -21,6 +19,10 @@ import StandsCatalogue from '@/components/pages/stands/StandsCatalogue/StandsCat
 import CreateStand from '@/components/pages/stands/CreateStand/CreateStand';
 import ViewStand from '@/components/pages/stands/ViewStand/ViewStand';
 import EditStand from '@/components/pages/stands/EditStand/EditStand';
+import NavigateOrganizations from '@/components/pages/organizations/NavigateOrganizations/NavigateOrganizations';
+import CreateOrganization from '@/components/pages/organizations/CreateOrganization/CreateOrganization';
+import ViewOrganization from '@/components/pages/organizations/ViewOrganization/ViewOrganization';
+import EditOrganization from '@/components/pages/organizations/EditOrganization/EditOrganization';
 
 const { routes } = config;
 
@@ -60,16 +62,16 @@ const Root = ({ store }: RootProps) => (
           </Route>
 
           {/* -------- Organizations -------- */}
-          <Route path={routes.organizations.$} element={<div />} />
-          <Route path={routes.organizations.create} element={<div />} />
+          <Route path={routes.organizations.$} element={<NavigateOrganizations />} />
+          <Route path={routes.organizations.create} element={<CreateOrganization />} />
 
           <Route element={<OrganizationFetcherLayout />}>
-            <Route path={routes.organizations.view} element={<div />} />
-            <Route path={routes.organizations.edit} element={<div />} />
+            <Route path={routes.organizations.view} element={<ViewOrganization />} />
+            <Route path={routes.organizations.edit} element={<EditOrganization />} />
           </Route>
 
-          <Route path={routes.administration.users} element={<AdministrationUsersPage />} />
-          <Route path={routes.administration.log} element={<AdministrationLogPage />} />
+          <Route path={routes.administration.users} element={<div />} />
+          <Route path={routes.administration.log} element={<div />} />
         </Route>
       </Routes>
     </Router>

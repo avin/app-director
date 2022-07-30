@@ -1,15 +1,14 @@
 import React, { SyntheticEvent, useCallback, useMemo } from 'react';
-import styles from './ApplicationsCatalogue.module.scss';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
-import { getApplications } from '@/store/reducers/applications';
-import { applicationsSelector } from '@/store/selectors';
+import { organizationsSelector } from '@/store/selectors';
 import { Button, Intent } from '@blueprintjs/core';
 import { Link } from 'react-router-dom';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
-import { Application } from '@/types';
+import { Organization } from '@/types';
 import config from '@/config';
+import { getOrganizations } from '@/store/reducers/organizations';
 
 interface Props {
   columns: ('title' | 'description' | 'standsCount')[];
@@ -17,7 +16,7 @@ interface Props {
   title?: React.ReactNode;
 }
 
-const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
+const OrganizationsCatalogue = ({ title, columns, onClickRow }: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -46,7 +45,7 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
   );
 
   const rowBuilder = useCallback(
-    ({ id, entity }: RowBuilderParams<Application>) => (
+    ({ id, entity }: RowBuilderParams<Organization>) => (
       <tr key={id} onClick={handleClickRow} data-id={id}>
         {columns.map((column) => {
           switch (column) {
@@ -66,15 +65,15 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
   );
 
   const getEntities = useCallback(async () => {
-    return dispatch(getApplications());
+    return dispatch(getOrganizations());
   }, [dispatch]);
 
   return (
     <>
       <PageHeader
-        title="Приложения"
+        title="Организации"
         controls={
-          <Link to={config.routes.applications.create} tabIndex={-1}>
+          <Link to={config.routes.organizations.create} tabIndex={-1}>
             <Button intent={Intent.NONE} icon="plus">
               Добавить
             </Button>
@@ -85,10 +84,10 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
         headColumns={headColumns}
         rowBuilder={rowBuilder}
         getEntities={getEntities}
-        entitiesSelector={applicationsSelector}
+        entitiesSelector={organizationsSelector}
       />
     </>
   );
 };
 
-export default ApplicationsCatalogue;
+export default OrganizationsCatalogue;

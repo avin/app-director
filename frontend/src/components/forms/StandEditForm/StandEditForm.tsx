@@ -14,6 +14,7 @@ import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMess
 import styles from './StandEditForm.module.scss';
 import { useDefaultRequiredRules } from '@/utils/hooks/useDefaultRequiredRules';
 import ApplicationSelect from '@/components/common/ApplicationSelect/ApplicationSelect';
+import OrganizationSelect from '@/components/common/OrganizationSelect/OrganizationSelect';
 
 interface Props {
   id?: string;
@@ -36,6 +37,7 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
       title: stand?.title || '',
       description: stand?.description || '',
       applicationId: stand?.applicationId || '',
+      organizationId: stand?.organizationId || '',
     },
   });
 
@@ -88,6 +90,10 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
 
       <InputContainer label="Приложение" error={isSubmitted && errors.applicationId?.message}>
         <ApplicationSelect name="applicationId" control={control} rules={requiredRules} />
+      </InputContainer>
+
+      <InputContainer label="Организация" error={isSubmitted && errors.organizationId?.message}>
+        <OrganizationSelect name="organizationId" control={control} rules={requiredRules} />
       </InputContainer>
 
       <div className={styles.controls}>

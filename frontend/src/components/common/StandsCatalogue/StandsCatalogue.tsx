@@ -1,23 +1,22 @@
 import React, { SyntheticEvent, useCallback, useMemo } from 'react';
-import styles from './ApplicationsCatalogue.module.scss';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
-import { getApplications } from '@/store/reducers/applications';
-import { applicationsSelector } from '@/store/selectors';
+import { standsSelector } from '@/store/selectors';
 import { Button, Intent } from '@blueprintjs/core';
 import { Link } from 'react-router-dom';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
-import { Application } from '@/types';
+import { Stand } from '@/types';
 import config from '@/config';
+import { getStands } from '@/store/reducers/stands';
 
 interface Props {
-  columns: ('title' | 'description' | 'standsCount')[];
+  columns: ('title' | 'description')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
   title?: React.ReactNode;
 }
 
-const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
+const StandsCatalogue = ({ title, columns, onClickRow }: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -27,8 +26,6 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
           return { id: 'title', label: 'Название' };
         case 'description':
           return { id: 'description', label: 'Описание' };
-        case 'standsCount':
-          return { id: 'standsCount', label: 'Стенды' };
         default:
           throw new Error(`unknown column`);
       }
@@ -46,7 +43,7 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
   );
 
   const rowBuilder = useCallback(
-    ({ id, entity }: RowBuilderParams<Application>) => (
+    ({ id, entity }: RowBuilderParams<Stand>) => (
       <tr key={id} onClick={handleClickRow} data-id={id}>
         {columns.map((column) => {
           switch (column) {
@@ -54,8 +51,6 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
               return <td key="title">{entity.title}</td>;
             case 'description':
               return <td key="description">{entity.description}</td>;
-            case 'standsCount':
-              return <td key="standsCount">{entity.stands.length}</td>;
             default:
               throw new Error(`unknown column`);
           }
@@ -66,15 +61,15 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
   );
 
   const getEntities = useCallback(async () => {
-    return dispatch(getApplications());
+    return dispatch(getStands());
   }, [dispatch]);
 
   return (
     <>
       <PageHeader
-        title="Приложения"
+        title="Стенды"
         controls={
-          <Link to={config.routes.applications.create} tabIndex={-1}>
+          <Link to={config.routes.stands.create} tabIndex={-1}>
             <Button intent={Intent.NONE} icon="plus">
               Добавить
             </Button>
@@ -85,10 +80,10 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
         headColumns={headColumns}
         rowBuilder={rowBuilder}
         getEntities={getEntities}
-        entitiesSelector={applicationsSelector}
+        entitiesSelector={standsSelector}
       />
     </>
   );
 };
 
-export default ApplicationsCatalogue;
+export default StandsCatalogue;

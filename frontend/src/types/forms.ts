@@ -13,6 +13,7 @@ export type EditStandFormInputs = {
   title: string;
   description: string;
   applicationId: string;
+  organizationId: string;
 };
 
 export type EditOrganizationFormInputs = {
