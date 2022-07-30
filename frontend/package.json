@@ -38,6 +38,7 @@
     "imask": "6.4.2",
     "include-media": "1.4.10",
     "lodash": "4.17.21",
+    "miragejs": "^0.1.45",
     "react": "17.0.2",
     "react-cosmos": "5.7.0",
     "react-cosmos-redux": "2.0.0",

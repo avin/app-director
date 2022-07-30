@@ -9,7 +9,7 @@ interface Props<TFieldValues extends FieldValues> extends CheckboxProps {
   rules?: RegisterOptions;
 }
 
-const ControlledCheckbox = <T,>({ name, control, rules, ...props }: Props<T>) => {
+const ControlledCheckbox = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({

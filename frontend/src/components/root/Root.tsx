@@ -7,16 +7,20 @@ import NotFoundPage from '../pages/other/NotFoundPage/NotFoundPage';
 import LogInPage from '@/components/pages/auth/LogInPage/LogInPage';
 import AuthLayout from '@/components/layouts/AuthLayout/AuthLayout';
 import GeneralLayout from '../layouts/GeneralLayout/GeneralLayout';
-import ApplicationsCatalogue from '../pages/general/applications/ApplicationsCatalogue/ApplicationsCatalogue';
+import NavigateApplications from '../pages/applications/NavigateApplications/NavigateApplications';
 import MonitoringPage from '../pages/general/MonitoringPage/MonitoringPage';
-import OrganizationsPage from '../pages/general/OrganizationsPage/OrganizationsPage';
-import StandsPage from '../pages/general/StandsPage/StandsPage';
 import AdministrationUsersPage from '../pages/general/AdministrationUsersPage/AdministrationUsersPage';
 import AdministrationLogPage from '../pages/general/AdministrationLogPage/AdministrationLogPage';
-import ViewApplication from '@/components/pages/general/applications/ViewApplication/ViewApplication';
-import CreateApplication from '@/components/pages/general/applications/CreateApplication/CreateApplication';
-import EditApplication from '@/components/pages/general/applications/EditApplication/EditApplication';
-import ApplicationFetcher from '../pages/general/applications/ApplicationFetcher/ApplicationFetcher';
+import ViewApplication from '@/components/pages/applications/ViewApplication/ViewApplication';
+import CreateApplication from '@/components/pages/applications/CreateApplication/CreateApplication';
+import EditApplication from '@/components/pages/applications/EditApplication/EditApplication';
+import ApplicationFetcher from '../fetchers/ApplicationFetcher/ApplicationFetcher';
+import StandFetcher from '@/components/fetchers/StandFetcher/StandFetcher';
+import OrganizationFetcher from '@/components/fetchers/OrganizationFetcher/OrganizationFetcher';
+import StandsCatalogue from '@/components/pages/stands/StandsCatalogue/StandsCatalogue';
+import CreateStand from '@/components/pages/stands/CreateStand/CreateStand';
+import ViewStand from '@/components/pages/stands/ViewStand/ViewStand';
+import EditStand from '@/components/pages/stands/EditStand/EditStand';
 
 const { routes } = config;
 
@@ -37,7 +41,8 @@ const Root = ({ store }: RootProps) => (
         <Route element={<GeneralLayout />}>
           <Route path={routes.monitoring} element={<MonitoringPage />} />
 
-          <Route path={routes.applications.$} element={<ApplicationsCatalogue />} />
+          {/* -------- Applications -------- */}
+          <Route path={routes.applications.$} element={<NavigateApplications />} />
           <Route path={routes.applications.create} element={<CreateApplication />} />
 
           <Route element={<ApplicationFetcher />}>
@@ -45,8 +50,24 @@ const Root = ({ store }: RootProps) => (
             <Route path={routes.applications.edit} element={<EditApplication />} />
           </Route>
 
-          <Route path={routes.organizations} element={<OrganizationsPage />} />
-          {/* <Route path={routes.stands} element={<StandsPage />} />*/}
+          {/* -------- Stands -------- */}
+          <Route path={routes.stands.$} element={<StandsCatalogue />} />
+          <Route path={routes.stands.create} element={<CreateStand />} />
+
+          <Route element={<StandFetcher />}>
+            <Route path={routes.stands.view} element={<ViewStand />} />
+            <Route path={routes.stands.edit} element={<EditStand />} />
+          </Route>
+
+          {/* -------- Organizations -------- */}
+          <Route path={routes.organizations.$} element={<div />} />
+          <Route path={routes.organizations.create} element={<div />} />
+
+          <Route element={<OrganizationFetcher />}>
+            <Route path={routes.organizations.view} element={<div />} />
+            <Route path={routes.organizations.edit} element={<div />} />
+          </Route>
+
           <Route path={routes.administration.users} element={<AdministrationUsersPage />} />
           <Route path={routes.administration.log} element={<AdministrationLogPage />} />
         </Route>

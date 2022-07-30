@@ -32,7 +32,7 @@ export type Stand = CommonEntityProps & {
   title: string;
   description: string | null;
   properties: Record<string, unknown> | null;
-  applicationId: string | null;
+  applicationId: string;
   organizationId: string | null;
 };
 
@@ -57,5 +57,10 @@ export type GetApplicationsResponse = {
 
 export type GetStandsResponse = {
   items: Stand[];
+  count: number;
+};
+
+export type GetOrganizationsResponse = {
+  items: Organization[];
   count: number;
 };

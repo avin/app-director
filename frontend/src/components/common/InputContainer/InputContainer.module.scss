@@ -2,6 +2,11 @@
 @import '~@/styles/mixins';
 
 .container {
+  :global {
+    label.bp4-label .bp4-input {
+      display: flex;
+    }
+  }
 }
 
 .label {

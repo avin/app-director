@@ -11,7 +11,7 @@ interface Props<TFieldValues extends FieldValues> extends TextAreaProps {
   rules?: RegisterOptions;
 }
 
-const ControlledTextArea = <T,>({ name, control, rules, className, ...props }: Props<T>) => {
+const ControlledTextArea = <TFieldValues,>({ name, control, rules, className, ...props }: Props<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({

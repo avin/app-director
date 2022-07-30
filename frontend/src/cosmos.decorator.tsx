@@ -4,18 +4,31 @@
 
 import React, { PropsWithChildren } from 'react';
 import { ReduxMock } from 'react-cosmos-redux';
-import { HashRouter as Router } from 'react-router-dom';
 import configureStore from './store/configureStore';
 import { storeState } from '@/dummies/storeState';
+import { createServer } from 'miragejs';
+import { generateApplication, generateStand } from '@/dummies/entites';
 
-export interface CosmosDecoratorProps {
-  children?: React.ReactNode;
-}
+createServer({
+  routes() {
+    this.namespace = '/api';
+
+    this.get('/applications', () => ({
+      count: 1,
+      items: [generateApplication()],
+    }));
+
+    this.get('/stands', () => ({
+      count: 1,
+      items: [generateStand()],
+    }));
+  },
+});
 
 const CosmosDecorator = ({ children }: PropsWithChildren<{}>) => {
   return (
     <ReduxMock configureStore={configureStore} initialState={storeState}>
-      <Router>{children}</Router>
+      {children}
     </ReduxMock>
   );
 };

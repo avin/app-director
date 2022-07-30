@@ -39,18 +39,18 @@ const Navigation = ({}: Props) => {
         id: 'stands',
         icon: 'cloud',
         label: 'Стенды',
-        isSelected: location.pathname.startsWith(config.routes.stands),
+        isSelected: location.pathname.startsWith(config.routes.stands.$),
         nodeData: {
-          route: config.routes.stands,
+          route: config.routes.stands.$,
         },
       },
       {
         id: 'organizations',
         icon: 'office',
         label: 'Организации',
-        isSelected: location.pathname.startsWith(config.routes.organizations),
+        isSelected: location.pathname.startsWith(config.routes.organizations.$),
         nodeData: {
-          route: config.routes.organizations,
+          route: config.routes.organizations.$,
         },
       },
       {

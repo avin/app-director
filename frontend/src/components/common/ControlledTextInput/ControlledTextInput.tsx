@@ -9,7 +9,7 @@ interface Props<TFieldValues extends FieldValues> extends InputGroupProps2 {
   rules?: RegisterOptions;
 }
 
-const ControlledTextInput = <T,>({ name, control, rules, ...props }: Props<T>) => {
+const ControlledTextInput = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({

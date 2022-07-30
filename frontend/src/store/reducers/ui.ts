@@ -1,5 +1,5 @@
 import { Form } from '@/constants/form';
-import { EditApplicationFormInputs, LogInFormInputs } from '@/types';
+import { EditApplicationFormInputs, EditOrganizationFormInputs, EditStandFormInputs, LogInFormInputs } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type UiState = {
@@ -7,6 +7,8 @@ export type UiState = {
   forms: {
     [Form.LogIn]: LogInFormInputs | null;
     [Form.EditApplication]: EditApplicationFormInputs | null;
+    [Form.EditStand]: EditStandFormInputs | null;
+    [Form.EditOrganization]: EditOrganizationFormInputs | null;
   };
 };
 
@@ -15,6 +17,8 @@ const initialState: UiState = {
   forms: {
     [Form.LogIn]: null,
     [Form.EditApplication]: null,
+    [Form.EditStand]: null,
+    [Form.EditOrganization]: null,
   },
 };
 

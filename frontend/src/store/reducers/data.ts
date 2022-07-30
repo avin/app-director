@@ -3,6 +3,7 @@ import { Form } from '@/constants/form';
 import {
   Application,
   GetApplicationsResponse,
+  GetOrganizationsResponse,
   GetStandsResponse,
   LogInResponse,
   Organization,
@@ -16,21 +17,14 @@ import { accessTokenSelector } from '@/store/selectors';
 import { entitiesArrayToMap } from '@/utils/entitiesArrayToMap';
 import { getIdsFromEntitiesArray } from '@/utils/getIdsFromEntitiesArray';
 import escapeRegExp from 'lodash/escapeRegExp';
+import { generatePath } from 'react-router-dom';
 
 export type DataState = {
-  organizations: Record<string, Organization>;
-  applications: Record<string, Application>;
-  stands: Record<string, Stand>;
-  users: Record<string, User>;
   currentUser: User | null;
   accessToken: string | null;
 };
 
 const initialState: DataState = {
-  organizations: {},
-  applications: {},
-  stands: {},
-  users: {},
   currentUser: null,
   accessToken: null,
 };
@@ -39,34 +33,6 @@ const slice = createSlice({
   name: 'data',
   initialState,
   reducers: {
-    setOrganizations: (state, action: PayloadAction<Record<string, Organization>>) => {
-      state.organizations = {
-        ...state.organizations,
-        ...action.payload,
-      };
-    },
-    setApplications: (state, action: PayloadAction<Record<string, Application>>) => {
-      state.applications = {
-        ...state.applications,
-        ...action.payload,
-      };
-    },
-    setApplication: (state, action: PayloadAction<Application>) => {
-      const application = action.payload;
-      state.applications[application.id] = application;
-    },
-    setStands: (state, action: PayloadAction<Record<string, Stand>>) => {
-      state.stands = {
-        ...state.stands,
-        ...action.payload,
-      };
-    },
-    setUsers: (state, action: PayloadAction<Record<string, User>>) => {
-      state.users = {
-        ...state.users,
-        ...action.payload,
-      };
-    },
     setCurrentUser: (state, action: PayloadAction<User | null>) => {
       state.currentUser = action.payload;
     },
@@ -83,17 +49,7 @@ const slice = createSlice({
   },
 });
 
-export const {
-  setOrganizations,
-  setApplications,
-  setApplication,
-  setStands,
-  setUsers,
-  setCurrentUser,
-  setAccessToken,
-  resetData,
-  resetAuthData,
-} = slice.actions;
+export const { setCurrentUser, setAccessToken, resetData, resetAuthData } = slice.actions;
 
 export default slice.reducer;
 
@@ -130,15 +86,7 @@ export function apiCall<T>(
       reqHeaders.Authorization = `Bearer ${token}`;
     }
 
-    const processedUrl = (() => {
-      let result = url as string;
-      if (urlReplacements) {
-        Object.entries(urlReplacements).forEach(([key, value]) => {
-          result = result.replace(new RegExp(escapeRegExp(`:${key}`), 'g'), value);
-        });
-      }
-      return result;
-    })();
+    const processedUrl = generatePath(url as string, urlReplacements);
 
     let result: AxiosResponse<T>;
     try {
@@ -201,107 +149,5 @@ export function logOut(): AppThunkAction<Promise<void>> {
     });
 
     dispatch(resetAuthData());
-  };
-}
-
-// -------------------
-// Applications
-// -------------------
-
-export function getApplications(): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
-  return async (dispatch, getState) => {
-    const {
-      data: { items, count },
-    } = await dispatch(
-      apiCall<GetApplicationsResponse>({
-        ...config.apiMethods.getApplications,
-        data: {},
-      }),
-    );
-    dispatch(setApplications(entitiesArrayToMap(items)));
-
-    return {
-      ids: getIdsFromEntitiesArray(items),
-      count,
-    };
-  };
-}
-export function getApplication(applicationId: string): AppThunkAction<Promise<Application>> {
-  return async (dispatch, getState) => {
-    const { data } = await dispatch(
-      apiCall<Application>({
-        ...config.apiMethods.getApplication,
-        urlReplacements: {
-          id: applicationId,
-        },
-      }),
-    );
-    dispatch(setApplication(data));
-
-    return data;
-  };
-}
-
-export function updateApplication(applicationId: string): AppThunkAction<Promise<Application>> {
-  return async (dispatch, getState) => {
-    const editApplicationForm = getState().ui.forms[Form.EditApplication];
-
-    const { data } = await dispatch(
-      apiCall<Application>({
-        ...config.apiMethods.updateApplication,
-        urlReplacements: {
-          id: applicationId,
-        },
-        data: {
-          ...editApplicationForm,
-        },
-      }),
-    );
-
-    dispatch(setApplication(data));
-
-    return data;
-  };
-}
-
-export function createApplication(): AppThunkAction<Promise<Application>> {
-  return async (dispatch, getState) => {
-    const editApplicationForm = getState().ui.forms[Form.EditApplication];
-
-    const { data } = await dispatch(
-      apiCall<Application>({
-        ...config.apiMethods.createApplication,
-        data: {
-          ...editApplicationForm,
-        },
-      }),
-    );
-
-    dispatch(setApplication(data));
-
-    return data;
-  };
-}
-
-// -------------------
-// Stands
-// -------------------
-
-export function getStands(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
-  return async (dispatch, getState) => {
-    const {
-      data: { items, count },
-    } = await dispatch(
-      apiCall<GetStandsResponse>({
-        ...config.apiMethods.getStands,
-        params: filters,
-      }),
-    );
-    dispatch(setStands(entitiesArrayToMap(items)));
-
-    return {
-      ids: getIdsFromEntitiesArray(items),
-      count,
-    };
   };
 }

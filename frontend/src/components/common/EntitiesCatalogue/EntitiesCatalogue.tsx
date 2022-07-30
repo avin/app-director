@@ -1,24 +1,27 @@
-import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './EntitiesCatalogue.module.scss';
 import { HTMLTable, Spinner } from '@blueprintjs/core';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/reducers';
-import { wait } from '@/utils/wait';
 
 export type RowBuilderParams<TEntity> = {
   id: string;
   entity: TEntity;
 };
+export type HeadColumn = {
+  id: string;
+  label: React.ReactNode;
+};
 
 interface Props<TEntity> {
-  headBuilder: () => React.ReactNode;
+  headColumns: HeadColumn[];
   rowBuilder: (params: RowBuilderParams<TEntity>) => React.ReactNode;
   getEntities: () => Promise<{ ids: string[]; count: number }>;
   entitiesSelector: (state: RootState) => Record<string, TEntity>;
 }
 
-const EntitiesCatalogue = <TEntity,>({ headBuilder, rowBuilder, getEntities, entitiesSelector }: Props<TEntity>) => {
+const EntitiesCatalogue = <TEntity,>({ headColumns, rowBuilder, getEntities, entitiesSelector }: Props<TEntity>) => {
   const dispatch: AppThunkDispatch = useDispatch();
   const [isDataFetchFailed, setIsDataFetchFailed] = useState(false);
   const entities = useSelector(entitiesSelector);
@@ -44,7 +47,13 @@ const EntitiesCatalogue = <TEntity,>({ headBuilder, rowBuilder, getEntities, ent
 
   return (
     <HTMLTable striped bordered interactive condensed className={styles.table}>
-      <thead>{headBuilder()}</thead>
+      <thead>
+        <tr>
+          {headColumns.map(({ label, id }) => (
+            <th key={id}>{label}</th>
+          ))}
+        </tr>
+      </thead>
 
       <tbody>
         {entitiesCount === null && (

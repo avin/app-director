@@ -23,9 +23,12 @@ export class Config {
       view: '/stands/:id',
       edit: '/stands/:id/edit',
     },
-    // application: '/applications/:id',
-    newApplication: '/applications/new',
-    organizations: '/organizations',
+    organizations: {
+      $: '/organizations',
+      create: '/organizations/create',
+      view: '/organizations/:id',
+      edit: '/organizations/:id/edit',
+    },
     administration: {
       users: '/administration/users',
       log: '/administration/log',

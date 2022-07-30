@@ -1,0 +1,16 @@
+@import '~@/styles/_variables';
+@import '~@/styles/_mixins';
+
+.row {
+  margin-bottom: 15px;
+}
+
+.rowTitle {
+  font-weight: bold;
+  h4 {
+    margin: 0;
+  }
+}
+
+.rowValue {
+}
