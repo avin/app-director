@@ -14,9 +14,9 @@ import AdministrationLogPage from '../pages/general/AdministrationLogPage/Admini
 import ViewApplication from '@/components/pages/applications/ViewApplication/ViewApplication';
 import CreateApplication from '@/components/pages/applications/CreateApplication/CreateApplication';
 import EditApplication from '@/components/pages/applications/EditApplication/EditApplication';
-import ApplicationFetcher from '../fetchers/ApplicationFetcher/ApplicationFetcher';
-import StandFetcher from '@/components/fetchers/StandFetcher/StandFetcher';
-import OrganizationFetcher from '@/components/fetchers/OrganizationFetcher/OrganizationFetcher';
+import ApplicationFetcherLayout from '../layouts/ApplicationFetcherLayout/ApplicationFetcherLayout';
+import StandFetcher from '@/components/layouts/StandFetcherLayout/StandFetcherLayout';
+import OrganizationFetcherLayout from '@/components/layouts/OrganizationFetcherLayout/OrganizationFetcherLayout';
 import StandsCatalogue from '@/components/pages/stands/StandsCatalogue/StandsCatalogue';
 import CreateStand from '@/components/pages/stands/CreateStand/CreateStand';
 import ViewStand from '@/components/pages/stands/ViewStand/ViewStand';
@@ -45,7 +45,7 @@ const Root = ({ store }: RootProps) => (
           <Route path={routes.applications.$} element={<NavigateApplications />} />
           <Route path={routes.applications.create} element={<CreateApplication />} />
 
-          <Route element={<ApplicationFetcher />}>
+          <Route element={<ApplicationFetcherLayout />}>
             <Route path={routes.applications.view} element={<ViewApplication />} />
             <Route path={routes.applications.edit} element={<EditApplication />} />
           </Route>
@@ -63,7 +63,7 @@ const Root = ({ store }: RootProps) => (
           <Route path={routes.organizations.$} element={<div />} />
           <Route path={routes.organizations.create} element={<div />} />
 
-          <Route element={<OrganizationFetcher />}>
+          <Route element={<OrganizationFetcherLayout />}>
             <Route path={routes.organizations.view} element={<div />} />
             <Route path={routes.organizations.edit} element={<div />} />
           </Route>

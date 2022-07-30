@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { AppThunkAction, AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useParams } from 'react-router-dom';
 import { RootState } from '@/store/reducers';
 
+export type EntityFetcherRenderParams<TEntity> = { isLoading: boolean; entity: TEntity | undefined };
+
 interface Props<TEntity> {
-  entityByIdSelector: (state: RootState, entityId: string) => TEntity;
+  entityByIdSelector: (state: RootState, entityId: string) => TEntity | undefined;
   entityGetter: (entityId: string) => AppThunkAction<Promise<TEntity>>;
+  render: (params: EntityFetcherRenderParams<TEntity>) => ReactNode;
+  entityId: string;
 }
 
-const EntityFetcher = <TEntity,>({ entityByIdSelector, entityGetter }: Props<TEntity>) => {
+const EntityFetcher = <TEntity,>({ entityId, entityByIdSelector, entityGetter, render }: Props<TEntity>) => {
   const dispatch: AppThunkDispatch = useDispatch();
-  const entityId = useParams().id as string;
   const entity = useSelector((state: RootState) => entityByIdSelector(state, entityId));
   const [isEntityFetched, setIsEntityFetched] = useState(!!entity);
 
@@ -28,15 +30,14 @@ const EntityFetcher = <TEntity,>({ entityByIdSelector, entityGetter }: Props<TEn
     })();
   }, [entityId, dispatch, isEntityFetched, entityGetter]);
 
-  if (!isEntityFetched) {
-    return <div>Loading...</div>;
-  }
-
-  if (isEntityFetched && !entity) {
-    return <div>Not found</div>;
-  }
-
-  return <Outlet />;
+  return (
+    <>
+      {render({
+        isLoading: !isEntityFetched,
+        entity,
+      })}
+    </>
+  );
 };
 
 export default EntityFetcher;

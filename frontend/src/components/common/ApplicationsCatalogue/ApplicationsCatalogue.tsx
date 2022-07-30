@@ -69,12 +69,24 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
   }, [dispatch]);
 
   return (
-    <EntitiesCatalogue
-      headColumns={headColumns}
-      rowBuilder={rowBuilder}
-      getEntities={getEntities}
-      entitiesSelector={applicationsSelector}
-    />
+    <>
+      <PageHeader
+        title="Приложения"
+        controls={
+          <Link to="/applications/create" tabIndex={-1}>
+            <Button intent={Intent.NONE} icon="plus">
+              Добавить
+            </Button>
+          </Link>
+        }
+      />
+      <EntitiesCatalogue
+        headColumns={headColumns}
+        rowBuilder={rowBuilder}
+        getEntities={getEntities}
+        entitiesSelector={applicationsSelector}
+      />
+    </>
   );
 };
 
