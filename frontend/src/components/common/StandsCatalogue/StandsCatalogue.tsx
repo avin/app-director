@@ -65,24 +65,14 @@ const StandsCatalogue = ({ title, columns, onClickRow }: Props) => {
   }, [dispatch]);
 
   return (
-    <>
-      <PageHeader
-        title="Стенды"
-        controls={
-          <Link to={config.routes.stands.create} tabIndex={-1}>
-            <Button intent={Intent.NONE} icon="plus">
-              Добавить
-            </Button>
-          </Link>
-        }
-      />
-      <EntitiesCatalogue
-        headColumns={headColumns}
-        rowBuilder={rowBuilder}
-        getEntities={getEntities}
-        entitiesSelector={standsSelector}
-      />
-    </>
+    <EntitiesCatalogue
+      title="Стенды"
+      addEntityRoute={config.routes.stands.create}
+      headColumns={headColumns}
+      rowBuilder={rowBuilder}
+      getEntities={getEntities}
+      entitiesSelector={standsSelector}
+    />
   );
 };
 

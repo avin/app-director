@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button, Intent } from '@blueprintjs/core';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import ApplicationLabel from '@/components/common/ApplicationLabel/ApplicationLabel';
+import OrganizationLabel from '@/components/common/OrganizationLabel/OrganizationLabel';
 
 interface Props {}
 
@@ -55,6 +56,15 @@ const ViewStand = ({}: Props) => {
           </div>
           <div className={styles.rowValue}>
             <ApplicationLabel applicationId={stand.applicationId} />
+          </div>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.rowTitle}>
+            <h4>Организация</h4>
+          </div>
+          <div className={styles.rowValue}>
+            {stand.organizationId && <OrganizationLabel organizationId={stand.organizationId} />}
           </div>
         </div>
       </div>

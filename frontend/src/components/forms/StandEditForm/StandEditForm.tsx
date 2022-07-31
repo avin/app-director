@@ -15,6 +15,7 @@ import styles from './StandEditForm.module.scss';
 import { useDefaultRequiredRules } from '@/utils/hooks/useDefaultRequiredRules';
 import ApplicationSelect from '@/components/common/ApplicationSelect/ApplicationSelect';
 import OrganizationSelect from '@/components/common/OrganizationSelect/OrganizationSelect';
+import { useSearchParams } from 'react-router-dom';
 
 interface Props {
   id?: string;
@@ -26,6 +27,7 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const stand = useStandByUrlParams();
   const dispatch: AppThunkDispatch = useDispatch();
+  const [searchParams] = useSearchParams();
 
   const {
     handleSubmit,
@@ -36,8 +38,8 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
     defaultValues: {
       title: stand?.title || '',
       description: stand?.description || '',
-      applicationId: stand?.applicationId || '',
-      organizationId: stand?.organizationId || '',
+      applicationId: stand?.applicationId || searchParams.get('applicationId') || '',
+      organizationId: stand?.organizationId || searchParams.get('organizationId') || '',
     },
   });
 

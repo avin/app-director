@@ -69,24 +69,14 @@ const OrganizationsCatalogue = ({ title, columns, onClickRow }: Props) => {
   }, [dispatch]);
 
   return (
-    <>
-      <PageHeader
-        title="Организации"
-        controls={
-          <Link to={config.routes.organizations.create} tabIndex={-1}>
-            <Button intent={Intent.NONE} icon="plus">
-              Добавить
-            </Button>
-          </Link>
-        }
-      />
-      <EntitiesCatalogue
-        headColumns={headColumns}
-        rowBuilder={rowBuilder}
-        getEntities={getEntities}
-        entitiesSelector={organizationsSelector}
-      />
-    </>
+    <EntitiesCatalogue
+      title="Организации"
+      addEntityRoute={config.routes.organizations.create}
+      headColumns={headColumns}
+      rowBuilder={rowBuilder}
+      getEntities={getEntities}
+      entitiesSelector={organizationsSelector}
+    />
   );
 };
 

@@ -4,6 +4,7 @@ import ApplicationLabel from '../ApplicationLabel/ApplicationLabel';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
 import OrganizationsCatalogue from '@/components/common/OrganizationsCatalogue/OrganizationsCatalogue';
+import OrganizationLabel from '@/components/common/OrganizationLabel/OrganizationLabel';
 
 interface Props<TFieldValues extends FieldValues> {
   name: Path<TFieldValues>;
@@ -37,8 +38,8 @@ const OrganizationSelect = <TFieldValues,>({ name, control, rules }: Props<TFiel
   }, []);
 
   const handleClickCatalogueRow = useCallback(
-    (applicationId: string) => {
-      onChange(applicationId);
+    (organizationId: string) => {
+      onChange(organizationId);
       closeChooseDialog();
     },
     [closeChooseDialog, onChange],
@@ -52,7 +53,7 @@ const OrganizationSelect = <TFieldValues,>({ name, control, rules }: Props<TFiel
         onChange={handleChange}
         placeholder="Выбрать организацию..."
         rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
-        values={value ? [<ApplicationLabel applicationId={value as string} />] : []}
+        values={value ? [<OrganizationLabel organizationId={value as string} />] : []}
       />
       <Dialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog} title="Выбрать организацию">
         <div>

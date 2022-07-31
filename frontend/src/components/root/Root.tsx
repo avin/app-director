@@ -23,6 +23,7 @@ import NavigateOrganizations from '@/components/pages/organizations/NavigateOrga
 import CreateOrganization from '@/components/pages/organizations/CreateOrganization/CreateOrganization';
 import ViewOrganization from '@/components/pages/organizations/ViewOrganization/ViewOrganization';
 import EditOrganization from '@/components/pages/organizations/EditOrganization/EditOrganization';
+import NavigateStands from '../pages/stands/NavigateStands/NavigateStands';
 
 const { routes } = config;
 
@@ -53,7 +54,7 @@ const Root = ({ store }: RootProps) => (
           </Route>
 
           {/* -------- Stands -------- */}
-          <Route path={routes.stands.$} element={<StandsCatalogue />} />
+          <Route path={routes.stands.$} element={<NavigateStands />} />
           <Route path={routes.stands.create} element={<CreateStand />} />
 
           <Route element={<StandFetcher />}>

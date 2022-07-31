@@ -1,12 +1,8 @@
 import React, { SyntheticEvent, useCallback, useMemo } from 'react';
-import styles from './ApplicationsCatalogue.module.scss';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { getApplications } from '@/store/reducers/applications';
 import { applicationsSelector } from '@/store/selectors';
-import { Button, Intent } from '@blueprintjs/core';
-import { Link } from 'react-router-dom';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
 import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { Application } from '@/types';
 import config from '@/config';
@@ -70,24 +66,14 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
   }, [dispatch]);
 
   return (
-    <>
-      <PageHeader
-        title="Приложения"
-        controls={
-          <Link to={config.routes.applications.create} tabIndex={-1}>
-            <Button intent={Intent.NONE} icon="plus">
-              Добавить
-            </Button>
-          </Link>
-        }
-      />
-      <EntitiesCatalogue
-        headColumns={headColumns}
-        rowBuilder={rowBuilder}
-        getEntities={getEntities}
-        entitiesSelector={applicationsSelector}
-      />
-    </>
+    <EntitiesCatalogue
+      title="Приложения"
+      addEntityRoute={config.routes.applications.create}
+      headColumns={headColumns}
+      rowBuilder={rowBuilder}
+      getEntities={getEntities}
+      entitiesSelector={applicationsSelector}
+    />
   );
 };
 

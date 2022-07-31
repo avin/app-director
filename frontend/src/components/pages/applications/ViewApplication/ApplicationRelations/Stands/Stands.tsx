@@ -50,6 +50,7 @@ const Stands = ({}: Props) => {
 
   return (
     <EntitiesCatalogue
+      addEntityRoute={`${config.routes.stands.create}?applicationId=${applicationId}`}
       headColumns={headColumns}
       rowBuilder={rowBuilder}
       getEntities={getEntities}
