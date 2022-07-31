@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styles from './OrganizationRelations.module.scss';
 import { Tab, Tabs } from '@blueprintjs/core';
-import Stands from '@/components/pages/applications/ViewApplication/ApplicationRelations/Stands/Stands';
+import OrganizationStands from './OrganizationStands/OrganizationStands';
 
 interface Props {}
 
@@ -14,7 +14,7 @@ const OrganizationRelations = ({}: Props) => {
   return (
     <div className={styles.relations}>
       <Tabs id="TabsExample" onChange={handleTabChange} selectedTabId={selectedTabId} renderActiveTabPanelOnly large>
-        <Tab id="stands" title="Стенды" panel={<Stands />} />
+        <Tab id="stands" title="Стенды" panel={<OrganizationStands />} />
       </Tabs>
     </div>
   );

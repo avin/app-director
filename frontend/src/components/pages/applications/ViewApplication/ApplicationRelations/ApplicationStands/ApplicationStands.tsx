@@ -10,7 +10,7 @@ import { Stand } from '@/types';
 
 interface Props {}
 
-const Stands = ({}: Props) => {
+const ApplicationStands = ({}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
   const applicationId = useParams().id as string;
   const navigate = useNavigate();
@@ -59,4 +59,4 @@ const Stands = ({}: Props) => {
   );
 };
 
-export default Stands;
+export default ApplicationStands;

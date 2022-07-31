@@ -1,11 +1,11 @@
 import React from 'react';
-import Stands from './Stands';
+import ApplicationStands from './ApplicationStands';
 import { MemoryRouter } from 'react-router-dom';
 
 export default () => {
   return (
     <MemoryRouter>
-      <Stands />
+      <ApplicationStands />
     </MemoryRouter>
   );
 };

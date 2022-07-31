@@ -10,9 +10,9 @@ import { Stand } from '@/types';
 
 interface Props {}
 
-const Stands = ({}: Props) => {
+const OrganizationStands = ({}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
-  const applicationId = useParams().id as string;
+  const organizationId = useParams().id as string;
   const navigate = useNavigate();
 
   const headColumns = useMemo(() => {
@@ -43,13 +43,14 @@ const Stands = ({}: Props) => {
   const getEntities = useCallback(async () => {
     return dispatch(
       getStands({
-        applicationId,
+        organizationId,
       }),
     );
-  }, [applicationId, dispatch]);
+  }, [organizationId, dispatch]);
 
   return (
     <EntitiesCatalogue
+      addEntityRoute={`${config.routes.stands.create}?organizationId=${organizationId}`}
       headColumns={headColumns}
       rowBuilder={rowBuilder}
       getEntities={getEntities}
@@ -58,4 +59,4 @@ const Stands = ({}: Props) => {
   );
 };
 
-export default Stands;
+export default OrganizationStands;
