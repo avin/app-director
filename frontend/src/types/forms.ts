@@ -4,19 +4,19 @@ export type LogInFormInputs = {
   remember: boolean;
 };
 
-export type EditApplicationFormInputs = {
+export type ApplicationEditFormInputs = {
   title: string;
   description: string;
 };
 
-export type EditStandFormInputs = {
+export type StandEditFormInputs = {
   title: string;
   description: string;
   applicationId: string;
   organizationId: string;
 };
 
-export type EditOrganizationFormInputs = {
+export type OrganizationEditFormInputs = {
   title: string;
   description: string;
 };

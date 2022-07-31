@@ -3,7 +3,7 @@ import styles from './ViewOrganization.module.scss';
 import { useApplicationByUrlParams } from '@/utils/hooks/useApplicationByUrlParams';
 import { Link } from 'react-router-dom';
 import { Button, Intent } from '@blueprintjs/core';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import OrganizationRelations from './OrganizationRelations/OrganizationRelations';
 import { useOrganizationByUrlParams } from '@/utils/hooks/useOrganizationByUrlParams';
 
@@ -18,7 +18,7 @@ const ViewOrganization = ({}: Props) => {
 
   return (
     <div>
-      <PageHeader
+      <ViewHeader
         title={organization.title}
         controls={
           <>

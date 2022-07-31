@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { createStand } from '@/store/reducers/stands';
 import config from '@/config';
 import StandEditForm from '@/components/forms/StandEditForm/StandEditForm';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 
 interface Props {}
 
@@ -20,7 +20,7 @@ const CreateStand = ({}: Props) => {
 
   return (
     <div>
-      <PageHeader title="Добавление стенда" />
+      <ViewHeader title="Добавление стенда" />
       <div className="page-content">
         <StandEditForm onSubmit={handleSubmitForm} />
       </div>

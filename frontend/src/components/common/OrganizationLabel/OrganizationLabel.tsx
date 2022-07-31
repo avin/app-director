@@ -1,11 +1,14 @@
 import React from 'react';
 import OrganizationFetcher from '../OrganizationFetcher/OrganizationFetcher';
+import { generatePath, Link } from 'react-router-dom';
+import config from '@/config';
 
 interface Props {
   organizationId: string;
+  linkable?: boolean;
 }
 
-const OrganizationLabel = ({ organizationId }: Props) => {
+const OrganizationLabel = ({ organizationId, linkable }: Props) => {
   return (
     <OrganizationFetcher
       organizationId={organizationId}
@@ -13,10 +16,17 @@ const OrganizationLabel = ({ organizationId }: Props) => {
         if (isLoading) {
           return <span>Loading...</span>;
         }
+
         if (!entity) {
           return <span>NOT_EXISTING_ORGANIZATION</span>;
         }
-        return <span>ORG: {entity.title}</span>;
+
+        let content = <span>ATC: {entity.title}</span>;
+        if (linkable) {
+          content = <Link to={generatePath(config.routes.organizations.view, { id: organizationId })}>{content}</Link>;
+        }
+
+        return content;
       }}
     />
   );

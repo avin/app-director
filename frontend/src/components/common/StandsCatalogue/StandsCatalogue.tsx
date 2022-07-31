@@ -2,9 +2,7 @@ import React, { SyntheticEvent, useCallback, useMemo } from 'react';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { standsSelector } from '@/store/selectors';
-import { Button, Intent } from '@blueprintjs/core';
-import { Link } from 'react-router-dom';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { Stand } from '@/types';
 import config from '@/config';
@@ -13,10 +11,10 @@ import { getStands } from '@/store/reducers/stands';
 interface Props {
   columns: ('title' | 'description')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
-  title?: React.ReactNode;
+  viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
 }
 
-const StandsCatalogue = ({ title, columns, onClickRow }: Props) => {
+const StandsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -66,7 +64,11 @@ const StandsCatalogue = ({ title, columns, onClickRow }: Props) => {
 
   return (
     <EntitiesCatalogue
-      title="Стенды"
+      viewHeaderProps={{
+        title: 'Стенды',
+        icon: config.defaultIcons.stand,
+        ...viewHeaderProps,
+      }}
       addEntityRoute={config.routes.stands.create}
       headColumns={headColumns}
       rowBuilder={rowBuilder}

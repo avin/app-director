@@ -6,14 +6,15 @@ import { applicationsSelector } from '@/store/selectors';
 import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { Application } from '@/types';
 import config from '@/config';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 
 interface Props {
   columns: ('title' | 'description' | 'standsCount')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
-  title?: React.ReactNode;
+  viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
 }
 
-const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
+const ApplicationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -67,7 +68,11 @@ const ApplicationsCatalogue = ({ title, columns, onClickRow }: Props) => {
 
   return (
     <EntitiesCatalogue
-      title="Приложения"
+      viewHeaderProps={{
+        title: 'Приложения',
+        icon: config.defaultIcons.application,
+        ...viewHeaderProps,
+      }}
       addEntityRoute={config.routes.applications.create}
       headColumns={headColumns}
       rowBuilder={rowBuilder}

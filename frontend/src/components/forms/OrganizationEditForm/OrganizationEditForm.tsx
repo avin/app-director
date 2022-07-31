@@ -3,7 +3,7 @@ import { useOrganizationByUrlParams } from '@/utils/hooks/useOrganizationByUrlPa
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { EditOrganizationFormInputs } from '@/types';
+import { OrganizationEditFormInputs } from '@/types';
 import { setFormState } from '@/store/reducers/ui';
 import { Form } from '@/constants/form';
 import ControlledTextInput from '@/components/common/ControlledTextInput/ControlledTextInput';
@@ -29,7 +29,7 @@ const OrganizationEditForm = ({ id = 'organization-edit-form', onSubmit }: Props
     handleSubmit,
     control,
     formState: { isSubmitted, errors },
-  } = useForm<EditOrganizationFormInputs>({
+  } = useForm<OrganizationEditFormInputs>({
     mode: 'onChange',
     defaultValues: {
       title: organization?.title || '',

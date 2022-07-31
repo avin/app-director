@@ -6,8 +6,9 @@ import { useDispatch } from 'react-redux';
 import { updateApplication } from '@/store/reducers/applications';
 import { generatePath, useNavigate } from 'react-router-dom';
 import config from '@/config';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import { useApplicationByUrlParams } from '@/utils/hooks/useApplicationByUrlParams';
+import { useGoBack } from '@/utils/hooks/useGoBack';
 
 interface Props {}
 
@@ -15,6 +16,7 @@ const EditApplication = ({}: Props) => {
   const application = useApplicationByUrlParams();
   const navigate = useNavigate();
   const dispatch: AppThunkDispatch = useDispatch();
+  const goBack = useGoBack();
 
   const handleSubmitForm = useCallback(async () => {
     await dispatch(updateApplication(application.id));
@@ -23,7 +25,7 @@ const EditApplication = ({}: Props) => {
 
   return (
     <div>
-      <PageHeader title={application.title} />
+      <ViewHeader title={application.title} icon={config.defaultIcons.application} onClose={goBack} />
       <div className="page-content">
         <ApplicationEditForm onSubmit={handleSubmitForm} />
       </div>

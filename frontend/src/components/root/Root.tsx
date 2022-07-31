@@ -24,6 +24,7 @@ import CreateOrganization from '@/components/pages/organizations/CreateOrganizat
 import ViewOrganization from '@/components/pages/organizations/ViewOrganization/ViewOrganization';
 import EditOrganization from '@/components/pages/organizations/EditOrganization/EditOrganization';
 import NavigateStands from '../pages/stands/NavigateStands/NavigateStands';
+import LogNavigation from '@/components/common/LogNavigation/LogNavigation';
 
 const { routes } = config;
 
@@ -34,6 +35,8 @@ export interface RootProps {
 const Root = ({ store }: RootProps) => (
   <Provider store={store}>
     <Router basename={config.basename}>
+      <LogNavigation />
+
       <Routes>
         <Route path="*" element={<NotFoundPage />} />
 

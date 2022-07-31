@@ -3,7 +3,7 @@ import styles from './ViewStand.module.scss';
 import { useStandByUrlParams } from '@/utils/hooks/useStandByUrlParams';
 import { Link } from 'react-router-dom';
 import { Button, Intent } from '@blueprintjs/core';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import ApplicationLabel from '@/components/common/ApplicationLabel/ApplicationLabel';
 import OrganizationLabel from '@/components/common/OrganizationLabel/OrganizationLabel';
 
@@ -18,7 +18,7 @@ const ViewStand = ({}: Props) => {
 
   return (
     <div>
-      <PageHeader
+      <ViewHeader
         title={stand.title}
         controls={
           <>
@@ -55,7 +55,7 @@ const ViewStand = ({}: Props) => {
             <h4>Приложение</h4>
           </div>
           <div className={styles.rowValue}>
-            <ApplicationLabel applicationId={stand.applicationId} />
+            <ApplicationLabel applicationId={stand.applicationId} linkable />
           </div>
         </div>
 
@@ -64,7 +64,7 @@ const ViewStand = ({}: Props) => {
             <h4>Организация</h4>
           </div>
           <div className={styles.rowValue}>
-            {stand.organizationId && <OrganizationLabel organizationId={stand.organizationId} />}
+            {stand.organizationId && <OrganizationLabel organizationId={stand.organizationId} linkable />}
           </div>
         </div>
       </div>

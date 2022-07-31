@@ -5,7 +5,7 @@ import { standsSelector } from '@/store/selectors';
 import { Button, Intent } from '@blueprintjs/core';
 import { generatePath, Link, useNavigate } from 'react-router-dom';
 import config from '@/config';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { Stand } from '@/types';
 import { getStands } from '@/store/reducers/stands';
@@ -47,7 +47,7 @@ const StandsCatalogue = ({}: Props) => {
 
   return (
     <div>
-      <PageHeader
+      <ViewHeader
         title="Стенды"
         controls={
           <Link to="/stands/create" tabIndex={-1}>

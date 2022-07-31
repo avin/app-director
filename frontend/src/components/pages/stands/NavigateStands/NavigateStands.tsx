@@ -15,7 +15,7 @@ const NavigateStands = ({}: Props) => {
     [navigate],
   );
 
-  return <StandsCatalogue title="Стенды" columns={['title', 'description']} onClickRow={handleClickRow} />;
+  return <StandsCatalogue columns={['title', 'description']} onClickRow={handleClickRow} />;
 };
 
 export default NavigateStands;

@@ -1,10 +1,10 @@
 import React from 'react';
-import PageHeader from './PageHeader';
+import LogNavigation from './LogNavigation';
 
 export default () => {
   return (
     <div className="content">
-      <PageHeader />
+      <LogNavigation />
     </div>
   );
 };

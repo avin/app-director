@@ -4,6 +4,9 @@ import ApplicationLabel from '../ApplicationLabel/ApplicationLabel';
 import ApplicationsCatalogue from '@/components/common/ApplicationsCatalogue/ApplicationsCatalogue';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
+import styles from './ApplicationSelect.module.scss';
+import config from '@/config';
+import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 
 interface Props<TFieldValues extends FieldValues> {
   name: Path<TFieldValues>;
@@ -48,20 +51,22 @@ const ApplicationSelect = <TFieldValues,>({ name, control, rules }: Props<TField
     <>
       <TagInput
         inputProps={{ readOnly: true }}
-        leftIcon="application"
+        leftIcon={config.defaultIcons.application}
         onChange={handleChange}
         placeholder="Выбрать приложение..."
         rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
         values={value ? [<ApplicationLabel applicationId={value as string} />] : []}
       />
-      <Dialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog} title="Выбрать приложение">
-        <div>
-          <ApplicationsCatalogue
-            columns={['title', 'description', 'standsCount']}
-            onClickRow={handleClickCatalogueRow}
-          />
-        </div>
-      </Dialog>
+      <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog}>
+        <ApplicationsCatalogue
+          viewHeaderProps={{
+            title: 'Выбрать приложение',
+            onClose: closeChooseDialog,
+          }}
+          columns={['title', 'description', 'standsCount']}
+          onClickRow={handleClickCatalogueRow}
+        />
+      </ChooseEntityDialog>
     </>
   );
 };

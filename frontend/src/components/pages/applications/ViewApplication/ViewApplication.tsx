@@ -3,13 +3,16 @@ import styles from './ViewApplication.module.scss';
 import { useApplicationByUrlParams } from '@/utils/hooks/useApplicationByUrlParams';
 import { Link } from 'react-router-dom';
 import { Button, Intent } from '@blueprintjs/core';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import ApplicationRelations from './ApplicationRelations/ApplicationRelations';
+import { useGoBack } from '@/utils/hooks/useGoBack';
+import config from '@/config';
 
 interface Props {}
 
 const ViewApplication = ({}: Props) => {
   const application = useApplicationByUrlParams();
+  const goBack = useGoBack();
 
   if (!application) {
     return <div>unknown application</div>;
@@ -17,8 +20,10 @@ const ViewApplication = ({}: Props) => {
 
   return (
     <div>
-      <PageHeader
+      <ViewHeader
         title={application.title}
+        icon={config.defaultIcons.application}
+        onClose={goBack}
         controls={
           <>
             <Link to={`/applications/${application.id}/edit`} tabIndex={-1}>

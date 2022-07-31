@@ -3,7 +3,7 @@ import { useApplicationByUrlParams } from '@/utils/hooks/useApplicationByUrlPara
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { EditApplicationFormInputs } from '@/types';
+import { ApplicationEditFormInputs } from '@/types';
 import { setFormState } from '@/store/reducers/ui';
 import { Form } from '@/constants/form';
 import ControlledTextInput from '@/components/common/ControlledTextInput/ControlledTextInput';
@@ -29,7 +29,7 @@ const ApplicationEditForm = ({ id = 'application-edit-form', onSubmit }: Props) 
     handleSubmit,
     control,
     formState: { isSubmitted, errors },
-  } = useForm<EditApplicationFormInputs>({
+  } = useForm<ApplicationEditFormInputs>({
     mode: 'onChange',
     defaultValues: {
       title: application?.title || '',

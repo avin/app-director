@@ -1,15 +1,17 @@
 import { Form } from '@/constants/form';
-import { EditApplicationFormInputs, EditOrganizationFormInputs, EditStandFormInputs, LogInFormInputs } from '@/types';
+import { ApplicationEditFormInputs, OrganizationEditFormInputs, StandEditFormInputs, LogInFormInputs } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Location } from 'history';
 
 export type UiState = {
   redirectLinkAfterLogIn: string | null;
   forms: {
     [Form.LogIn]: LogInFormInputs | null;
-    [Form.EditApplication]: EditApplicationFormInputs | null;
-    [Form.EditStand]: EditStandFormInputs | null;
-    [Form.EditOrganization]: EditOrganizationFormInputs | null;
+    [Form.EditApplication]: ApplicationEditFormInputs | null;
+    [Form.EditStand]: StandEditFormInputs | null;
+    [Form.EditOrganization]: OrganizationEditFormInputs | null;
   };
+  navigationLog: Location[];
 };
 
 const initialState: UiState = {
@@ -20,6 +22,7 @@ const initialState: UiState = {
     [Form.EditStand]: null,
     [Form.EditOrganization]: null,
   },
+  navigationLog: [],
 };
 
 const slice = createSlice({
@@ -34,12 +37,15 @@ const slice = createSlice({
     setRedirectLinkAfterLogIn: (state, action: PayloadAction<string | null>) => {
       state.redirectLinkAfterLogIn = action.payload;
     },
+    addToNavigationLog: (state, action: PayloadAction<Location>) => {
+      state.navigationLog.push(action.payload);
+    },
     resetForms: () => {
       return initialState;
     },
   },
 });
 
-export const { setFormState, resetForms, setRedirectLinkAfterLogIn } = slice.actions;
+export const { setFormState, resetForms, setRedirectLinkAfterLogIn, addToNavigationLog } = slice.actions;
 
 export default slice.reducer;

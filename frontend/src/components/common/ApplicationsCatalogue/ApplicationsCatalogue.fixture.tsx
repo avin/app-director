@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 export default () => {
   return (
     <MemoryRouter>
-      <ApplicationsCatalogue title="Приложения" columns={['title', 'description']} />
+      <ApplicationsCatalogue columns={['title', 'description']} />
     </MemoryRouter>
   );
 };

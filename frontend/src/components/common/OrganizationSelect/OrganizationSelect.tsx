@@ -5,6 +5,7 @@ import { FieldValues, Path } from 'react-hook-form/dist/types';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
 import OrganizationsCatalogue from '@/components/common/OrganizationsCatalogue/OrganizationsCatalogue';
 import OrganizationLabel from '@/components/common/OrganizationLabel/OrganizationLabel';
+import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 
 interface Props<TFieldValues extends FieldValues> {
   name: Path<TFieldValues>;
@@ -55,14 +56,12 @@ const OrganizationSelect = <TFieldValues,>({ name, control, rules }: Props<TFiel
         rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
         values={value ? [<OrganizationLabel organizationId={value as string} />] : []}
       />
-      <Dialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog} title="Выбрать организацию">
-        <div>
-          <OrganizationsCatalogue
-            columns={['title', 'description', 'standsCount']}
-            onClickRow={handleClickCatalogueRow}
-          />
-        </div>
-      </Dialog>
+      <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog} title="Выбрать организацию">
+        <OrganizationsCatalogue
+          columns={['title', 'description', 'standsCount']}
+          onClickRow={handleClickCatalogueRow}
+        />
+      </ChooseEntityDialog>
     </>
   );
 };

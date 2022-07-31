@@ -5,8 +5,7 @@ import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/reducers';
 import { Link } from 'react-router-dom';
-import config from '@/config';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 
 export type RowBuilderParams<TEntity> = {
   id: string;
@@ -18,21 +17,23 @@ export type HeadColumn = {
 };
 
 interface Props<TEntity> {
-  title?: string;
   addEntityRoute?: string;
   headColumns: HeadColumn[];
   rowBuilder: (params: RowBuilderParams<TEntity>) => React.ReactNode;
   getEntities: () => Promise<{ ids: string[]; count: number }>;
   entitiesSelector: (state: RootState) => Record<string, TEntity>;
+  onClose?: () => void;
+  viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
 }
 
 const EntitiesCatalogue = <TEntity,>({
-  title,
   addEntityRoute,
   headColumns,
   rowBuilder,
   getEntities,
   entitiesSelector,
+  onClose,
+  viewHeaderProps,
 }: Props<TEntity>) => {
   const dispatch: AppThunkDispatch = useDispatch();
   const [isDataFetchFailed, setIsDataFetchFailed] = useState(false);
@@ -59,8 +60,7 @@ const EntitiesCatalogue = <TEntity,>({
 
   return (
     <div className={styles.main}>
-      <PageHeader
-        title={title}
+      <ViewHeader
         controls={
           addEntityRoute && (
             <Link to={addEntityRoute} tabIndex={-1}>
@@ -70,6 +70,7 @@ const EntitiesCatalogue = <TEntity,>({
             </Link>
           )
         }
+        {...viewHeaderProps}
       />
       <div className={styles.tableContainer}>
         <HTMLTable striped bordered interactive condensed className={styles.table}>

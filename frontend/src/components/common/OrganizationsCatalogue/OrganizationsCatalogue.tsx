@@ -2,9 +2,7 @@ import React, { SyntheticEvent, useCallback, useMemo } from 'react';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { organizationsSelector } from '@/store/selectors';
-import { Button, Intent } from '@blueprintjs/core';
-import { Link } from 'react-router-dom';
-import PageHeader from '@/components/common/PageHeader/PageHeader';
+import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { Organization } from '@/types';
 import config from '@/config';
@@ -13,10 +11,10 @@ import { getOrganizations } from '@/store/reducers/organizations';
 interface Props {
   columns: ('title' | 'description' | 'standsCount')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
-  title?: React.ReactNode;
+  viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
 }
 
-const OrganizationsCatalogue = ({ title, columns, onClickRow }: Props) => {
+const OrganizationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -70,7 +68,11 @@ const OrganizationsCatalogue = ({ title, columns, onClickRow }: Props) => {
 
   return (
     <EntitiesCatalogue
-      title="Организации"
+      viewHeaderProps={{
+        title: 'Организации',
+        icon: config.defaultIcons.organization,
+        ...viewHeaderProps,
+      }}
       addEntityRoute={config.routes.organizations.create}
       headColumns={headColumns}
       rowBuilder={rowBuilder}

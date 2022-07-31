@@ -1,12 +1,19 @@
 /**
  * App config
  */
+
 export class Config {
   apiPrefix = '/api';
 
   basename = document.querySelector('head base')?.getAttribute('href') || '';
 
   pageLoadingElementId = 'page-loading';
+
+  defaultIcons = {
+    application: 'application' as const,
+    stand: 'cloud' as const,
+    organization: 'office' as const,
+  };
 
   routes = {
     logIn: '/logIn',
@@ -122,6 +129,26 @@ export class Config {
       getOrganizations: {
         url: `${apiPrefix}/organizations`,
         method: 'GET',
+      },
+
+      getOrganization: {
+        url: `${apiPrefix}/organizations/:id`,
+        method: 'GET',
+      },
+
+      createOrganization: {
+        url: `${apiPrefix}/organizations`,
+        method: 'POST',
+      },
+
+      updateOrganization: {
+        url: `${apiPrefix}/organizations/:id`,
+        method: 'PATCH',
+      },
+
+      deleteOrganization: {
+        url: `${apiPrefix}/organizations/:id`,
+        method: 'DELETE',
       },
     };
   }

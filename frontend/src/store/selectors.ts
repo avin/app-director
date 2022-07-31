@@ -1,6 +1,7 @@
 import type { RootState } from '@/store/reducers';
 import { Application, Organization, Stand, User } from '@/types';
 import config from '@/config';
+import { Location } from 'history';
 
 export const currentUserSelector = (state: RootState) => state.data.currentUser as User;
 
@@ -17,3 +18,6 @@ export const organizationByIdSelector = (state: RootState, id: string): Organiza
 
 export const redirectLinkAfterLogInSelector = (state: RootState): string =>
   state.ui.redirectLinkAfterLogIn || config.routes.monitoring;
+
+export const previousLocationSelector = (state: RootState): Location | undefined =>
+  state.ui.navigationLog[state.ui.navigationLog.length - 1];

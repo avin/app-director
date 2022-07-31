@@ -1,11 +1,12 @@
 @import '~@/styles/variables';
 @import '~@/styles/mixins';
 
-.pageHeader {
+.viewHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 11px;
+  padding-left: 15px;
+  padding-right: 10px;
   min-height: 50px;
   background-color: $light-gray1;
   border-bottom: 1px solid $gray3;
@@ -19,7 +20,7 @@
     margin-left: 8px;
   }
 
-  h4 {
+  h5 {
     padding: 0;
     margin-bottom: 0;
   }
@@ -31,4 +32,24 @@
   & > * + * {
     margin-left: 8px;
   }
+}
+
+.left,
+.right {
+  display: flex;
+}
+
+.left {
+  color: $pt-text-color;
+}
+
+.closeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-left: -3px;
+  margin-right: 7.5px;
+  color: $gray1;
 }

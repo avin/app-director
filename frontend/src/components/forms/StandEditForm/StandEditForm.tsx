@@ -3,7 +3,7 @@ import { useStandByUrlParams } from '@/utils/hooks/useStandByUrlParams';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { EditStandFormInputs } from '@/types';
+import { StandEditFormInputs } from '@/types';
 import { setFormState } from '@/store/reducers/ui';
 import { Form } from '@/constants/form';
 import ControlledTextInput from '@/components/common/ControlledTextInput/ControlledTextInput';
@@ -33,7 +33,7 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
     handleSubmit,
     control,
     formState: { isSubmitted, errors },
-  } = useForm<EditStandFormInputs>({
+  } = useForm<StandEditFormInputs>({
     mode: 'onChange',
     defaultValues: {
       title: stand?.title || '',
@@ -95,7 +95,7 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
       </InputContainer>
 
       <InputContainer label="Организация" error={isSubmitted && errors.organizationId?.message}>
-        <OrganizationSelect name="organizationId" control={control} rules={requiredRules} />
+        <OrganizationSelect name="organizationId" control={control} />
       </InputContainer>
 
       <div className={styles.controls}>
