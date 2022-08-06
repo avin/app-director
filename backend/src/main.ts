@@ -1,8 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
-import { TransformInterceptor } from './transform.interceptor';
+import { TransformInterceptor } from './TransformInterceptor';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './AppModule';
 import { Logger } from '@nestjs/common';
 
 async function bootstrap() {

@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { Application } from '../../modules/applications/application.entity';
+import { Application } from '../../modules/applications/Application';
 
 export class AddSomeData1657471757685 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

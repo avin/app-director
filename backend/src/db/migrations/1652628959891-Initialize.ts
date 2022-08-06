@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { Application } from '../../modules/applications/application.entity';
+import { Application } from '../../modules/applications/Application';
 
 export class Initialize1652628959891 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -25,7 +25,6 @@ export class Initialize1652628959891 implements MigrationInterface {
         default: 'now()',
       },
     ];
-
 
     /** application */
     await queryRunner.createTable(
