@@ -7,7 +7,6 @@ import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/Entitie
 import { Organization } from '@/types';
 import config from '@/config';
 import { getOrganizations } from '@/store/reducers/organizations';
-import { generatePath, useNavigate } from 'react-router-dom';
 import { useHandleClickCatalogueRow } from '@/utils/hooks/useHandleClickCatalogueRow';
 
 interface Props {

@@ -13,9 +13,17 @@ interface Props {
   columns: ('title' | 'description' | 'applicationsCount')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
+  addEntityRoute?: string;
+  getEntitiesFilter?: any;
 }
 
-const ApplicationCategoryCategoriesCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
+const ApplicationCategoryCategoriesCatalogue = ({
+  viewHeaderProps,
+  columns,
+  onClickRow,
+  addEntityRoute = config.routes.applicationCategories.create,
+  getEntitiesFilter,
+}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -55,9 +63,17 @@ const ApplicationCategoryCategoriesCatalogue = ({ viewHeaderProps, columns, onCl
     [columns, handleClickRow],
   );
 
-  const getEntities = useCallback(async () => {
-    return dispatch(getApplicationCategories());
-  }, [dispatch]);
+  const getEntities = useCallback(
+    async (filter: any) => {
+      return dispatch(
+        getApplicationCategories({
+          ...getEntitiesFilter,
+          ...filter,
+        }),
+      );
+    },
+    [dispatch, getEntitiesFilter],
+  );
 
   return (
     <EntitiesCatalogue
@@ -66,7 +82,7 @@ const ApplicationCategoryCategoriesCatalogue = ({ viewHeaderProps, columns, onCl
         icon: config.defaultIcons.applicationCategory,
         ...viewHeaderProps,
       }}
-      addEntityRoute={config.routes.applicationCategories.create}
+      addEntityRoute={addEntityRoute}
       headColumns={headColumns}
       rowBuilder={rowBuilder}
       getEntities={getEntities}

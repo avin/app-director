@@ -7,6 +7,10 @@ export class GetApplicationsFilterDto extends PaginationParams {
   search?: string;
 
   @IsOptional()
+  @IsString({ each: true })
+  ids?: string[];
+
+  @IsOptional()
   @IsString()
   applicationCategoryId?: string;
 

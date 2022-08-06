@@ -76,13 +76,16 @@ const ApplicationsCatalogue = ({
   const getEntities = useCallback(
     async (filter: any) => {
       return dispatch(
-        getApplications({
-          ...getEntitiesFilter,
-          ...filter,
-        }),
+        getApplications(
+          {
+            ...getEntitiesFilter,
+            ...filter,
+          },
+          (['applicationCategory'] as const).filter((i) => columns.includes(i)),
+        ),
       );
     },
-    [dispatch, getEntitiesFilter],
+    [columns, dispatch, getEntitiesFilter],
   );
 
   return (

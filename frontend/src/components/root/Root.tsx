@@ -15,7 +15,6 @@ import EditApplication from '@/components/pages/applications/EditApplication/Edi
 import ApplicationFetcherLayout from '../layouts/ApplicationFetcherLayout/ApplicationFetcherLayout';
 import StandFetcher from '@/components/layouts/StandFetcherLayout/StandFetcherLayout';
 import OrganizationFetcherLayout from '@/components/layouts/OrganizationFetcherLayout/OrganizationFetcherLayout';
-import StandsCatalogue from '@/components/pages/stands/StandsCatalogue/StandsCatalogue';
 import CreateStand from '@/components/pages/stands/CreateStand/CreateStand';
 import ViewStand from '@/components/pages/stands/ViewStand/ViewStand';
 import EditStand from '@/components/pages/stands/EditStand/EditStand';

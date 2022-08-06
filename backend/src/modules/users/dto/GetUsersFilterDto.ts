@@ -7,6 +7,10 @@ export class GetUsersFilterDto extends PaginationParams {
   search?: string;
 
   @IsOptional()
+  @IsString({ each: true })
+  ids?: string[];
+
+  @IsOptional()
   @IsIn(['email', 'fullName', 'description', 'createdAt', 'updatedAt'])
   orderBy: 'email' | 'fullName' | 'description' | 'createdAt' | 'updatedAt' = 'email';
 

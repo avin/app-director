@@ -6,6 +6,8 @@ import type { AppThunkAction } from '../configureStore';
 import { entitiesArrayToMap } from '@/utils/entitiesArrayToMap';
 import { getIdsFromEntitiesArray } from '@/utils/getIdsFromEntitiesArray';
 import { apiCall } from '@/store/reducers/data';
+import { getRelationIdsFromEntitiesArray } from '@/utils/getRelationIdsFromEntitiesArray';
+import { getApplicationCategories } from '@/store/reducers/applicationCategories';
 
 export type ApplicationsState = {
   entities: Record<string, Application>;
@@ -36,7 +38,10 @@ export const { setApplications, setApplication } = slice.actions;
 
 export default slice.reducer;
 
-export function getApplications(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+export function getApplications(
+  filters: any = {},
+  withRelations: 'applicationCategory'[] = [],
+): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },
@@ -47,6 +52,19 @@ export function getApplications(filters: any = {}): AppThunkAction<Promise<{ ids
       }),
     );
     dispatch(setApplications(entitiesArrayToMap(items)));
+
+    await Promise.all(
+      [['applicationCategory', 'applicationCategoryId', getApplicationCategories] as const].reduce<Promise<unknown>[]>(
+        (acc, [relationName, relationIdKey, getRelationAction]) => {
+          if (withRelations.includes(relationName)) {
+            const ids = getRelationIdsFromEntitiesArray(items, relationIdKey);
+            acc.push(dispatch(getRelationAction({ ids })));
+          }
+          return acc;
+        },
+        [],
+      ),
+    );
 
     return {
       ids: getIdsFromEntitiesArray(items),

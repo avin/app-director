@@ -7,6 +7,7 @@ export const getEntities = async <
     offset?: number;
     search?: string;
     orderBy: string;
+    ids?: string[];
     orderDirection: 'ASC' | 'DESC';
   },
 >(
@@ -22,6 +23,10 @@ export const getEntities = async <
     qb.andWhere('(LOWER(entity.title) LIKE LOWER(:search) OR LOWER(entity.description) LIKE LOWER(:search))', {
       search: `%${filterDto.search}%`,
     });
+  }
+
+  if (filterDto.ids) {
+    qb.andWhere('entity.id IN (:...ids)', { ids: filterDto.ids });
   }
 
   if (query) {

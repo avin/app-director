@@ -17,7 +17,7 @@ const GeneralLayout = ({}: Props) => {
   useEffect(() => {
     void (async () => {
       try {
-        await Promise.all([dispatch(getApplicationCategories()), dispatch(getStandCategories())]);
+        // await Promise.all([dispatch(getApplicationCategories()), dispatch(getStandCategories())]);
       } finally {
         setIsBaseDataFetched(true);
       }

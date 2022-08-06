@@ -83,7 +83,8 @@ const EntitiesCatalogue = <TEntity,>({
     (e: React.UIEvent<HTMLDivElement>) => {
       const tableContainer = e.currentTarget as HTMLDivElement;
       if (tableContainer.scrollTop + tableContainer.clientHeight >= tableContainer.scrollHeight - 200) {
-        void loadMore();
+        // void loadMore();
+        console.log('FIRE');
       }
     },
     [loadMore],

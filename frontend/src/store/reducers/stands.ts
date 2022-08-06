@@ -6,6 +6,10 @@ import type { AppThunkAction } from '../configureStore';
 import { entitiesArrayToMap } from '@/utils/entitiesArrayToMap';
 import { getIdsFromEntitiesArray } from '@/utils/getIdsFromEntitiesArray';
 import { apiCall } from '@/store/reducers/data';
+import { getRelationIdsFromEntitiesArray } from '@/utils/getRelationIdsFromEntitiesArray';
+import { getOrganizations } from '@/store/reducers/organizations';
+import { getApplications } from '@/store/reducers/applications';
+import { getStandCategories } from '@/store/reducers/standCategories';
 
 export type StandsState = {
   entities: Record<string, Stand>;
@@ -36,7 +40,10 @@ export const { setStands, setStand } = slice.actions;
 
 export default slice.reducer;
 
-export function getStands(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+export function getStands(
+  filters: any = {},
+  withRelations: ('organization' | 'application' | 'standCategory')[] = [],
+): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },
@@ -47,6 +54,20 @@ export function getStands(filters: any = {}): AppThunkAction<Promise<{ ids: stri
       }),
     );
     dispatch(setStands(entitiesArrayToMap(items)));
+
+    await Promise.all(
+      [
+        ['organization', 'organizationId', getOrganizations] as const,
+        ['application', 'applicationId', getApplications] as const,
+        ['standCategory', 'standCategoryId', getStandCategories] as const,
+      ].reduce<Promise<unknown>[]>((acc, [relationName, relationIdKey, getRelationAction]) => {
+        if (withRelations.includes(relationName)) {
+          const ids = getRelationIdsFromEntitiesArray(items, relationIdKey);
+          acc.push(dispatch(getRelationAction({ ids })));
+        }
+        return acc;
+      }, []),
+    );
 
     return {
       ids: getIdsFromEntitiesArray(items),

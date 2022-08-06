@@ -13,9 +13,17 @@ interface Props {
   columns: ('title' | 'description' | 'standsCount')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
+  addEntityRoute?: string;
+  getEntitiesFilter?: any;
 }
 
-const StandCategoryCategoriesCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
+const StandCategoryCategoriesCatalogue = ({
+  viewHeaderProps,
+  columns,
+  onClickRow,
+  addEntityRoute = config.routes.standCategories.create,
+  getEntitiesFilter,
+}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -55,9 +63,17 @@ const StandCategoryCategoriesCatalogue = ({ viewHeaderProps, columns, onClickRow
     [columns, handleClickRow],
   );
 
-  const getEntities = useCallback(async () => {
-    return dispatch(getStandCategories());
-  }, [dispatch]);
+  const getEntities = useCallback(
+    async (filter: any) => {
+      return dispatch(
+        getStandCategories({
+          ...getEntitiesFilter,
+          ...filter,
+        }),
+      );
+    },
+    [dispatch, getEntitiesFilter],
+  );
 
   return (
     <EntitiesCatalogue
@@ -66,7 +82,7 @@ const StandCategoryCategoriesCatalogue = ({ viewHeaderProps, columns, onClickRow
         icon: config.defaultIcons.standCategory,
         ...viewHeaderProps,
       }}
-      addEntityRoute={config.routes.standCategories.create}
+      addEntityRoute={addEntityRoute}
       headColumns={headColumns}
       rowBuilder={rowBuilder}
       getEntities={getEntities}

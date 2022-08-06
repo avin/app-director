@@ -36,14 +36,14 @@ export const { setApplicationCategories, setApplicationCategory } = slice.action
 
 export default slice.reducer;
 
-export function getApplicationCategories(): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+export function getApplicationCategories(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },
     } = await dispatch(
       apiCall<GetApplicationCategoriesResponse>({
         ...config.apiMethods.getApplicationCategories,
-        data: {},
+        params: filters,
       }),
     );
     dispatch(setApplicationCategories(entitiesArrayToMap(items)));

@@ -36,14 +36,14 @@ export const { setStandCategories, setStandCategory } = slice.actions;
 
 export default slice.reducer;
 
-export function getStandCategories(): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+export function getStandCategories(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },
     } = await dispatch(
       apiCall<GetStandCategoriesResponse>({
         ...config.apiMethods.getStandCategories,
-        data: {},
+        params: filters,
       }),
     );
     dispatch(setStandCategories(entitiesArrayToMap(items)));

@@ -37,6 +37,7 @@ module.exports = {
     'no-void': 0,
     'no-empty': 0,
     'class-methods-use-this': 0,
+    'no-restricted-syntax': 0,
     // 'consistent-return': 0,
     // 'no-shadow': 0,
     // 'no-new': 0,

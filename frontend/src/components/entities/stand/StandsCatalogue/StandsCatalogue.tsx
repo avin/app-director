@@ -10,7 +10,6 @@ import { getStands } from '@/store/reducers/stands';
 import StandCategoryLabel from '@/components/entities/standCategory/StandCategoryLabel/StandCategoryLabel';
 import ApplicationLabel from '@/components/entities/application/ApplicationLabel/ApplicationLabel';
 import OrganizationLabel from '@/components/entities/organization/OrganizationLabel/OrganizationLabel';
-import { generatePath, useNavigate } from 'react-router-dom';
 import { useHandleClickCatalogueRow } from '@/utils/hooks/useHandleClickCatalogueRow';
 
 interface Props {
@@ -90,13 +89,16 @@ const StandsCatalogue = ({
   const getEntities = useCallback(
     async (filter: any) => {
       return dispatch(
-        getStands({
-          ...getEntitiesFilter,
-          ...filter,
-        }),
+        getStands(
+          {
+            ...getEntitiesFilter,
+            ...filter,
+          },
+          (['organization', 'application', 'standCategory'] as const).filter((i) => columns.includes(i)),
+        ),
       );
     },
-    [dispatch, getEntitiesFilter],
+    [columns, dispatch, getEntitiesFilter],
   );
 
   return (

@@ -7,6 +7,10 @@ export class GetStandsFilterDto extends PaginationParams {
   search?: string;
 
   @IsOptional()
+  @IsString({ each: true })
+  ids?: string[];
+
+  @IsOptional()
   @IsString()
   applicationId?: string;
 
