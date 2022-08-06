@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Dialog, Intent, TagInput } from '@blueprintjs/core';
-import ApplicationLabel from '../ApplicationLabel/ApplicationLabel';
-import ApplicationsCatalogue from '@/components/common/ApplicationsCatalogue/ApplicationsCatalogue';
+import { Button, Intent, TagInput } from '@blueprintjs/core';
+import StandCategoriesCatalogue from '@/components/entities/standCategory/StandCategoriesCatalogue/StandCategoriesCatalogue';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
-import styles from './ApplicationSelect.module.scss';
+import styles from './StandCategoryCategorySelect.module.scss';
 import config from '@/config';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
+import StandCategoryLabel from '../StandCategoryLabel/StandCategoryLabel';
 
 interface Props<TFieldValues extends FieldValues> {
   name: Path<TFieldValues>;
@@ -14,7 +14,7 @@ interface Props<TFieldValues extends FieldValues> {
   rules?: RegisterOptions;
 }
 
-const ApplicationSelect = <TFieldValues,>({ name, control, rules }: Props<TFieldValues>) => {
+const StandCategoryCategorySelect = <TFieldValues,>({ name, control, rules }: Props<TFieldValues>) => {
   const [isOpenChooseDialog, setIsOpenChooseDialog] = useState(false);
 
   const {
@@ -40,8 +40,8 @@ const ApplicationSelect = <TFieldValues,>({ name, control, rules }: Props<TField
   }, []);
 
   const handleClickCatalogueRow = useCallback(
-    (applicationId: string) => {
-      onChange(applicationId);
+    (standCategoryId: string) => {
+      onChange(standCategoryId);
       closeChooseDialog();
     },
     [closeChooseDialog, onChange],
@@ -51,14 +51,14 @@ const ApplicationSelect = <TFieldValues,>({ name, control, rules }: Props<TField
     <>
       <TagInput
         inputProps={{ readOnly: true }}
-        leftIcon={config.defaultIcons.application}
+        leftIcon={config.defaultIcons.standCategory}
         onChange={handleChange}
         placeholder="Выбрать приложение..."
         rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
-        values={value ? [<ApplicationLabel applicationId={value as string} />] : []}
+        values={value ? [<StandCategoryLabel standCategoryId={value as string} />] : []}
       />
       <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog}>
-        <ApplicationsCatalogue
+        <StandCategoriesCatalogue
           viewHeaderProps={{
             title: 'Выбрать приложение',
             onClose: closeChooseDialog,
@@ -71,4 +71,4 @@ const ApplicationSelect = <TFieldValues,>({ name, control, rules }: Props<TField
   );
 };
 
-export default ApplicationSelect;
+export default StandCategoryCategorySelect;

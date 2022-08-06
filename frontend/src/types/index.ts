@@ -26,6 +26,21 @@ export type Application = CommonEntityProps & {
   description: string | null;
   properties: Record<string, unknown> | null;
   stands: string[];
+  applicationCategoryId: string;
+};
+
+export type ApplicationCategory = CommonEntityProps & {
+  title: string;
+  description: string | null;
+  properties: Record<string, unknown> | null;
+  applications: string[];
+};
+
+export type StandCategory = CommonEntityProps & {
+  title: string;
+  description: string | null;
+  properties: Record<string, unknown> | null;
+  stands: string[];
 };
 
 export type Stand = CommonEntityProps & {
@@ -55,8 +70,18 @@ export type GetApplicationsResponse = {
   count: number;
 };
 
+export type GetApplicationCategoriesResponse = {
+  items: ApplicationCategory[];
+  count: number;
+};
+
 export type GetStandsResponse = {
   items: Stand[];
+  count: number;
+};
+
+export type GetStandCategoriesResponse = {
+  items: StandCategory[];
   count: number;
 };
 

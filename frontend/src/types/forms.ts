@@ -7,6 +7,12 @@ export type LogInFormInputs = {
 export type ApplicationEditFormInputs = {
   title: string;
   description: string;
+  applicationCategoryId: string;
+};
+
+export type ApplicationCategoryEditFormInputs = {
+  title: string;
+  description: string;
 };
 
 export type StandEditFormInputs = {
@@ -14,6 +20,11 @@ export type StandEditFormInputs = {
   description: string;
   applicationId: string;
   organizationId: string;
+};
+
+export type StandCategoryEditFormInputs = {
+  title: string;
+  description: string;
 };
 
 export type OrganizationEditFormInputs = {

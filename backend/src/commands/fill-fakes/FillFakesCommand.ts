@@ -12,7 +12,7 @@ import { ApplicationCategory } from '../../modules/applicationCategories/Applica
 import { ApplicationCategoriesService } from '../../modules/applicationCategories/ApplicationCategoriesService';
 
 @Injectable()
-export class FakesCommand {
+export class FillFakesCommand {
   constructor(
     private readonly usersService: UsersService,
     private readonly applicationCategoriesService: ApplicationCategoriesService,
@@ -22,7 +22,7 @@ export class FakesCommand {
   ) {}
 
   @Command({
-    command: 'fakes:fill',
+    command: 'fill-fakes',
     describe: 'Fill DB With fake data',
   })
   async create() {

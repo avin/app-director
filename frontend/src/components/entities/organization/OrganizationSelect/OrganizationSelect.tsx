@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { Button, Dialog, Intent, TagInput } from '@blueprintjs/core';
-import ApplicationLabel from '../ApplicationLabel/ApplicationLabel';
+import ApplicationLabel from '../../application/ApplicationLabel/ApplicationLabel';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
-import OrganizationsCatalogue from '@/components/common/OrganizationsCatalogue/OrganizationsCatalogue';
-import OrganizationLabel from '@/components/common/OrganizationLabel/OrganizationLabel';
+import OrganizationsCatalogue from '@/components/entities/organization/OrganizationsCatalogue/OrganizationsCatalogue';
+import OrganizationLabel from '@/components/entities/organization/OrganizationLabel/OrganizationLabel';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 
 interface Props<TFieldValues extends FieldValues> {

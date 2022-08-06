@@ -1,5 +1,12 @@
 import { Form } from '@/constants/form';
-import { ApplicationEditFormInputs, OrganizationEditFormInputs, StandEditFormInputs, LogInFormInputs } from '@/types';
+import {
+  ApplicationEditFormInputs,
+  OrganizationEditFormInputs,
+  StandEditFormInputs,
+  LogInFormInputs,
+  ApplicationCategoryEditFormInputs,
+  StandCategoryEditFormInputs,
+} from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Location } from 'history';
 
@@ -8,7 +15,9 @@ export type UiState = {
   forms: {
     [Form.LogIn]: LogInFormInputs | null;
     [Form.EditApplication]: ApplicationEditFormInputs | null;
+    [Form.EditApplicationCategory]: ApplicationCategoryEditFormInputs | null;
     [Form.EditStand]: StandEditFormInputs | null;
+    [Form.EditStandCategory]: StandCategoryEditFormInputs | null;
     [Form.EditOrganization]: OrganizationEditFormInputs | null;
   };
   navigationLog: Location[];
@@ -19,7 +28,9 @@ const initialState: UiState = {
   forms: {
     [Form.LogIn]: null,
     [Form.EditApplication]: null,
+    [Form.EditApplicationCategory]: null,
     [Form.EditStand]: null,
+    [Form.EditStandCategory]: null,
     [Form.EditOrganization]: null,
   },
   navigationLog: [],

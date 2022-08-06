@@ -13,8 +13,8 @@ import { Button, Intent } from '@blueprintjs/core';
 import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMessage';
 import styles from './StandEditForm.module.scss';
 import { useDefaultRequiredRules } from '@/utils/hooks/useDefaultRequiredRules';
-import ApplicationSelect from '@/components/common/ApplicationSelect/ApplicationSelect';
-import OrganizationSelect from '@/components/common/OrganizationSelect/OrganizationSelect';
+import ApplicationSelect from '@/components/entities/application/ApplicationSelect/ApplicationSelect';
+import OrganizationSelect from '@/components/entities/organization/OrganizationSelect/OrganizationSelect';
 import { useSearchParams } from 'react-router-dom';
 
 interface Props {

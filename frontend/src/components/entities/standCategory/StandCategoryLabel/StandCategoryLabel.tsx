@@ -1,17 +1,17 @@
 import React from 'react';
-import ApplicationFetcher from '@/components/common/ApplicationFetcher/ApplicationFetcher';
+import StandCategoryFetcher from '@/components/entities/standCategory/StandCategoryFetcher/StandCategoryFetcher';
 import { generatePath, Link } from 'react-router-dom';
 import config from '@/config';
 
 interface Props {
-  applicationId: string;
+  standCategoryId: string;
   linkable?: boolean;
 }
 
-const ApplicationLabel = ({ applicationId, linkable }: Props) => {
+const StandCategoryCategoryLabel = ({ standCategoryId, linkable }: Props) => {
   return (
-    <ApplicationFetcher
-      applicationId={applicationId}
+    <StandCategoryFetcher
+      standCategoryId={standCategoryId}
       render={({ isLoading, entity }) => {
         if (isLoading) {
           return <span>Loading...</span>;
@@ -23,7 +23,9 @@ const ApplicationLabel = ({ applicationId, linkable }: Props) => {
 
         let content = <span>ATC: {entity.title}</span>;
         if (linkable) {
-          content = <Link to={generatePath(config.routes.applications.view, { id: applicationId })}>{content}</Link>;
+          content = (
+            <Link to={generatePath(config.routes.standCategories.view, { id: standCategoryId })}>{content}</Link>
+          );
         }
 
         return content;
@@ -32,4 +34,4 @@ const ApplicationLabel = ({ applicationId, linkable }: Props) => {
   );
 };
 
-export default ApplicationLabel;
+export default StandCategoryCategoryLabel;

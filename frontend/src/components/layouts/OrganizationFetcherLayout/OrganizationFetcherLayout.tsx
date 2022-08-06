@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import OrganizationFetcher from '@/components/common/OrganizationFetcher/OrganizationFetcher';
+import OrganizationFetcher from '@/components/entities/organization/OrganizationFetcher/OrganizationFetcher';
 
 interface Props {}
 

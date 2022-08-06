@@ -4,8 +4,8 @@ import { useStandByUrlParams } from '@/utils/hooks/useStandByUrlParams';
 import { Link } from 'react-router-dom';
 import { Button, Intent } from '@blueprintjs/core';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
-import ApplicationLabel from '@/components/common/ApplicationLabel/ApplicationLabel';
-import OrganizationLabel from '@/components/common/OrganizationLabel/OrganizationLabel';
+import ApplicationLabel from '@/components/entities/application/ApplicationLabel/ApplicationLabel';
+import OrganizationLabel from '@/components/entities/organization/OrganizationLabel/OrganizationLabel';
 
 interface Props {}
 

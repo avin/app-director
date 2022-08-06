@@ -1,7 +1,13 @@
 import type { RootState } from '@/store/reducers';
 import { Form } from '@/constants/form';
 import { Role } from '@/constants/role';
-import { generateApplication, generateOrganization, generateStand } from '@/dummies/entites';
+import {
+  generateApplication,
+  generateApplicationCategory,
+  generateOrganization,
+  generateStand,
+  generateStandCategory,
+} from '@/dummies/entites';
 
 export const storeState: RootState = {
   data: {
@@ -15,9 +21,25 @@ export const storeState: RootState = {
     },
     accessToken: null,
   },
+  applicationCategories: {
+    entities: (() => {
+      const entity = generateApplicationCategory({ id: '00000000-0000-0000-0000-000000000000' });
+      return {
+        [entity.id]: entity,
+      };
+    })(),
+  },
   applications: {
     entities: (() => {
       const entity = generateApplication({ id: '00000000-0000-0000-0000-000000000000' });
+      return {
+        [entity.id]: entity,
+      };
+    })(),
+  },
+  standCategories: {
+    entities: (() => {
+      const entity = generateStandCategory({ id: '00000000-0000-0000-0000-000000000000' });
       return {
         [entity.id]: entity,
       };
@@ -45,7 +67,10 @@ export const storeState: RootState = {
       [Form.EditApplication]: null,
       [Form.EditStand]: null,
       [Form.EditOrganization]: null,
+      [Form.EditApplicationCategory]: null,
+      [Form.EditStandCategory]: null,
     },
     redirectLinkAfterLogIn: null,
+    navigationLog: [],
   },
 };

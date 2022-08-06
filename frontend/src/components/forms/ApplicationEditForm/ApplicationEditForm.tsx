@@ -13,6 +13,7 @@ import { Button, Intent } from '@blueprintjs/core';
 import FormErrorMessage from '@/components/common/FormErrorMessage/FormErrorMessage';
 import styles from './ApplicationEditForm.module.scss';
 import { useDefaultRequiredRules } from '@/utils/hooks/useDefaultRequiredRules';
+import ApplicationCategorySelect from '@/components/entities/applicationCategory/ApplicationCategorySelect/ApplicationCategorySelect';
 
 interface Props {
   id?: string;
@@ -34,6 +35,7 @@ const ApplicationEditForm = ({ id = 'application-edit-form', onSubmit }: Props) 
     defaultValues: {
       title: application?.title || '',
       description: application?.description || '',
+      applicationCategoryId: application?.applicationCategoryId || '',
     },
   });
 
@@ -75,6 +77,10 @@ const ApplicationEditForm = ({ id = 'application-edit-form', onSubmit }: Props) 
   return (
     <form id={id} onSubmit={handleFormSubmit}>
       <FormErrorMessage message={errorMessage} />
+
+      <InputContainer label="Категория приложения" error={isSubmitted && errors.applicationCategoryId?.message}>
+        <ApplicationCategorySelect name="applicationCategoryId" control={control} rules={requiredRules} />
+      </InputContainer>
 
       <InputContainer label="Название" error={isSubmitted && errors.title?.message}>
         <ControlledTextInput name="title" control={control} rules={requiredRules} />

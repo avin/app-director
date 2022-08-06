@@ -8,7 +8,7 @@ import { StandsModule } from './modules/stands/StandsModule';
 import { OrganizationsModule } from './modules/organizations/OrganizationsModule';
 import { UsersModule } from './modules/users/UsersModule';
 import { CommandModule } from 'nestjs-command';
-import { FakesCommand } from './commands/fill-fakes/FakesCommand';
+import { FillFakesCommand } from './commands/fill-fakes/FillFakesCommand';
 import { ApplicationCategoriesModule } from './modules/applicationCategories/ApplicationCategoriesModule';
 
 @Module({
@@ -41,6 +41,6 @@ import { ApplicationCategoriesModule } from './modules/applicationCategories/App
     AuthModule,
     CommandModule,
   ],
-  providers: [FakesCommand],
+  providers: [FillFakesCommand],
 })
 export class AppModule {}

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
 import config from '@/config';
-import StandsCatalogue from '@/components/common/StandsCatalogue/StandsCatalogue';
+import StandsCatalogue from '@/components/entities/stand/StandsCatalogue/StandsCatalogue';
 
 interface Props {}
 

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
 import config from '@/config';
-import ApplicationsCatalogue from '@/components/common/ApplicationsCatalogue/ApplicationsCatalogue';
+import ApplicationsCatalogue from '@/components/entities/application/ApplicationsCatalogue/ApplicationsCatalogue';
 
 interface Props {}
 

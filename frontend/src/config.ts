@@ -11,6 +11,8 @@ export class Config {
 
   defaultIcons = {
     application: 'application' as const,
+    applicationCategory: 'applications' as const,
+    standCategory: 'cloud' as const,
     stand: 'cloud' as const,
     organization: 'office' as const,
   };
@@ -23,6 +25,18 @@ export class Config {
       create: '/applications/create',
       view: '/applications/:id',
       edit: '/applications/:id/edit',
+    },
+    applicationCategories: {
+      $: '/applicationCategories',
+      create: '/applicationCategories/create',
+      view: '/applicationCategories/:id',
+      edit: '/applicationCategories/:id/edit',
+    },
+    standCategories: {
+      $: '/standCategories',
+      create: '/standCategories/create',
+      view: '/standCategories/:id',
+      edit: '/standCategories/:id/edit',
     },
     stands: {
       $: '/stands',
