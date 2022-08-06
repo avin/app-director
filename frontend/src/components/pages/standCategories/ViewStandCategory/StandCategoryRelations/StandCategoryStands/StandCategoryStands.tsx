@@ -40,13 +40,17 @@ const StandCategoryStands = ({}: Props) => {
     [handleClickRow],
   );
 
-  const getEntities = useCallback(async () => {
-    return dispatch(
-      getStands({
-        standCategoryId,
-      }),
-    );
-  }, [standCategoryId, dispatch]);
+  const getEntities = useCallback(
+    async (filter: any) => {
+      return dispatch(
+        getStands({
+          ...filter,
+          standCategoryId,
+        }),
+      );
+    },
+    [standCategoryId, dispatch],
+  );
 
   return (
     <EntitiesCatalogue

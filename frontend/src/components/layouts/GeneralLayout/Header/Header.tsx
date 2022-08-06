@@ -15,7 +15,7 @@ const Header = ({}: Props) => {
           <Logo />
         </div>
         <div className={styles.main}>
-          <div className={styles.controls}>s</div>
+          <div className={styles.controls}>{/* тут пока ничего */}</div>
           <div className={styles.user}>
             <UserButton />
           </div>

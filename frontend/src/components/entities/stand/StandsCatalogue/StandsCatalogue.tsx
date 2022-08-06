@@ -85,9 +85,12 @@ const StandsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
     [columns, handleClickRow],
   );
 
-  const getEntities = useCallback(async () => {
-    return dispatch(getStands());
-  }, [dispatch]);
+  const getEntities = useCallback(
+    async (filter: any) => {
+      return dispatch(getStands(filter));
+    },
+    [dispatch],
+  );
 
   return (
     <EntitiesCatalogue

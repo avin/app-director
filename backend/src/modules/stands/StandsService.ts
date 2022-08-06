@@ -18,6 +18,7 @@ export class StandsService {
   ) {}
 
   async getStands(filterDto: GetStandsFilterDto) {
+    console.log('-----', filterDto);
     return getEntities(this.standsRepository, filterDto, (qb) => {
       if (filterDto.applicationId) {
         qb.andWhere('entity.applicationId = :id', { id: filterDto.applicationId });

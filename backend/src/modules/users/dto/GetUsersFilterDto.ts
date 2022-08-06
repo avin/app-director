@@ -1,6 +1,7 @@
 import { IsIn, IsOptional, IsString, ValidateIf } from 'class-validator';
+import { PaginationParams } from '../../../utils/types/PaginationParams';
 
-export class GetUsersFilterDto {
+export class GetUsersFilterDto extends PaginationParams {
   @IsOptional()
   @IsString()
   search?: string;

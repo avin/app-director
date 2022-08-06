@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './EntitiesCatalogue.module.scss';
 import { Button, HTMLTable, Intent, Spinner } from '@blueprintjs/core';
 import { AppThunkDispatch } from '@/store/configureStore';
@@ -21,7 +21,7 @@ interface Props<TEntity> {
   addEntityRoute?: string;
   headColumns: HeadColumn[];
   rowBuilder: (params: RowBuilderParams<TEntity>) => React.ReactNode;
-  getEntities: () => Promise<{ ids: string[]; count: number }>;
+  getEntities: (filter: any) => Promise<{ ids: string[]; count: number }>;
   entitiesSelector: (state: RootState) => Record<string, TEntity>;
   onClose?: () => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
@@ -39,6 +39,8 @@ const EntitiesCatalogue = <TEntity,>({
   const dispatch: AppThunkDispatch = useDispatch();
   const [isDataFetchFailed, setIsDataFetchFailed] = useState(false);
   const entities = useSelector(entitiesSelector);
+  const tableContainerElRef = useRef<HTMLDivElement>(null);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const [entitiesIds, setEntitiesIds] = useState<string[]>([]);
   const [entitiesCount, setEntitiesCount] = useState<null | number>(null);
@@ -46,7 +48,12 @@ const EntitiesCatalogue = <TEntity,>({
   useEffect(() => {
     void (async () => {
       try {
-        const { ids, count } = await getEntities();
+        let limit: number | undefined;
+        if (tableContainerElRef.current) {
+          limit = Math.floor(tableContainerElRef.current.clientHeight / 30) + 10;
+        }
+
+        const { ids, count } = await getEntities({ limit });
         setEntitiesIds(ids);
         setEntitiesCount(count);
       } catch (error) {
@@ -54,6 +61,33 @@ const EntitiesCatalogue = <TEntity,>({
       }
     })();
   }, [dispatch, getEntities]);
+
+  const loadMore = useCallback(async () => {
+    if (isLoadingMore) {
+      return;
+    }
+    if (entitiesIds.length === entitiesCount) {
+      return;
+    }
+    setIsLoadingMore(true);
+    try {
+      const { ids, count } = await getEntities({ limit: 20, offset: entitiesIds.length });
+      setEntitiesIds([...entitiesIds, ...ids]);
+      setEntitiesCount(count);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  }, [isLoadingMore, entitiesIds, entitiesCount, getEntities]);
+
+  const handleScrollTableContainer = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      const tableContainer = e.currentTarget as HTMLDivElement;
+      if (tableContainer.scrollTop + tableContainer.clientHeight >= tableContainer.scrollHeight - 200) {
+        void loadMore();
+      }
+    },
+    [loadMore],
+  );
 
   if (isDataFetchFailed) {
     return <div>Something wrong</div>;
@@ -74,7 +108,7 @@ const EntitiesCatalogue = <TEntity,>({
         {...viewHeaderProps}
       />
       <FitPage minHeight={100}>
-        <div className={styles.tableContainer}>
+        <div className={styles.tableContainer} onScroll={handleScrollTableContainer} ref={tableContainerElRef}>
           <HTMLTable striped bordered interactive condensed className={styles.table}>
             <thead>
               <tr>
