@@ -3,6 +3,7 @@
  */
 
 import { capitalizeFirstLetter } from './utils/strings';
+import { IconName } from '@blueprintjs/icons';
 
 export class Config {
   apiPrefix = '/api';
@@ -11,12 +12,12 @@ export class Config {
 
   pageLoadingElementId = 'page-loading';
 
-  defaultIcons = {
-    application: 'application' as const,
-    applicationCategory: 'applications' as const,
-    standCategory: 'cloud' as const,
-    stand: 'cloud' as const,
-    organization: 'office' as const,
+  defaultIcons: Record<string, IconName> = {
+    application: 'application',
+    applicationCategory: 'applications',
+    standCategory: 'cloud',
+    stand: 'cloud',
+    organization: 'office',
   };
 
   routes = {

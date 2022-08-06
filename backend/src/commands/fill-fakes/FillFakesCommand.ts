@@ -10,12 +10,15 @@ import { Organization } from '../../modules/organizations/Organization';
 import { sample } from '../../utils/sample';
 import { ApplicationCategory } from '../../modules/applicationCategories/ApplicationCategory';
 import { ApplicationCategoriesService } from '../../modules/applicationCategories/ApplicationCategoriesService';
+import { StandCategoriesService } from '../../modules/standCategories/StandCategoriesService';
+import { StandCategory } from '../../modules/standCategories/StandCategory';
 
 @Injectable()
 export class FillFakesCommand {
   constructor(
     private readonly usersService: UsersService,
     private readonly applicationCategoriesService: ApplicationCategoriesService,
+    private readonly standCategoriesService: StandCategoriesService,
     private readonly organizationsService: OrganizationsService,
     private readonly applicationsService: ApplicationsService,
     private readonly standsService: StandsService,
@@ -27,6 +30,8 @@ export class FillFakesCommand {
   })
   async create() {
     await this.usersService.deleteAllUsers();
+    await this.applicationCategoriesService.deleteAllApplicationCategories();
+    await this.standCategoriesService.deleteAllStandCategories();
     await this.standsService.deleteAllStands();
     await this.organizationsService.deleteAllOrganizations();
     await this.applicationsService.deleteAllApplications();
@@ -34,9 +39,10 @@ export class FillFakesCommand {
     await this.createAdminUser();
     await this.createSome(3, this.createRandomUser);
     const applicationCategories = await this.createSome(2, this.createRandomApplicationCategory);
+    const standCategories = await this.createSome(3, this.createRandomStandCategory);
     const organizations = await this.createSome(20, this.createRandomOrganization);
     const applications = await this.createSome(20, this.createRandomApplication, applicationCategories);
-    await this.createSome(100, this.createRandomStand, applications, organizations);
+    await this.createSome(100, this.createRandomStand, standCategories, applications, organizations);
 
     console.info('Done!');
   }
@@ -65,12 +71,20 @@ export class FillFakesCommand {
     });
   }
 
+  createRandomStandCategory() {
+    return this.standCategoriesService.createStandCategory({
+      title: faker.lorem.word(),
+      description: faker.lorem.sentence(3),
+    });
+  }
+
   createRandomApplicationCategory() {
     return this.applicationCategoriesService.createApplicationCategory({
       title: faker.lorem.word(),
       description: faker.lorem.sentence(3),
     });
   }
+
   createRandomOrganization() {
     return this.organizationsService.createOrganization({
       title: faker.company.companyName(),
@@ -85,7 +99,7 @@ export class FillFakesCommand {
     });
   }
 
-  createRandomStand(applications: Application[], organizations: Organization[]) {
+  createRandomStand(standCategories: StandCategory[], applications: Application[], organizations: Organization[]) {
     return this.standsService.createStand({
       title: faker.word.noun(),
       description: faker.lorem.sentence(),
