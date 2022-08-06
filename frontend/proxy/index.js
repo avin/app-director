@@ -47,7 +47,7 @@ if (process.env.REACT_APP_FAKE_MODE === 'true') {
   });
 }
 
-let delayValue = 10;
+let delayValue = 300;
 if (process.argv.includes('--no-delay')) {
   delayValue = 0;
 }
