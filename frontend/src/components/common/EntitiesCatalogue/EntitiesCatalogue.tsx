@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/reducers';
 import { Link } from 'react-router-dom';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
+import FitPage from '../FitPage/FitPage';
 
 export type RowBuilderParams<TEntity> = {
   id: string;
@@ -72,45 +73,47 @@ const EntitiesCatalogue = <TEntity,>({
         }
         {...viewHeaderProps}
       />
-      <div className={styles.tableContainer}>
-        <HTMLTable striped bordered interactive condensed className={styles.table}>
-          <thead>
-            <tr>
-              {headColumns.map(({ label, id }) => (
-                <th key={id}>{label}</th>
-              ))}
-            </tr>
-          </thead>
-
-          <tbody>
-            {entitiesCount === null && (
-              <tr className={styles.notInteractive}>
-                <td colSpan={1000}>
-                  <div className={styles.loadingTdContent}>
-                    <Spinner size={18} />
-                  </div>
-                </td>
+      <FitPage minHeight={100}>
+        <div className={styles.tableContainer}>
+          <HTMLTable striped bordered interactive condensed className={styles.table}>
+            <thead>
+              <tr>
+                {headColumns.map(({ label, id }) => (
+                  <th key={id}>{label}</th>
+                ))}
               </tr>
-            )}
+            </thead>
 
-            {entitiesCount === 0 && (
-              <tr className={styles.notInteractive}>
-                <td colSpan={1000}>
-                  <div className={styles.noItemsTdContent}>Ничего не найдено</div>
-                </td>
-              </tr>
-            )}
-
-            {!!entitiesCount &&
-              entitiesIds.map((id) =>
-                rowBuilder({
-                  id,
-                  entity: entities[id],
-                }),
+            <tbody>
+              {entitiesCount === null && (
+                <tr className={styles.notInteractive}>
+                  <td colSpan={1000}>
+                    <div className={styles.loadingTdContent}>
+                      <Spinner size={18} />
+                    </div>
+                  </td>
+                </tr>
               )}
-          </tbody>
-        </HTMLTable>
-      </div>
+
+              {entitiesCount === 0 && (
+                <tr className={styles.notInteractive}>
+                  <td colSpan={1000}>
+                    <div className={styles.noItemsTdContent}>Ничего не найдено</div>
+                  </td>
+                </tr>
+              )}
+
+              {!!entitiesCount &&
+                entitiesIds.map((id) =>
+                  rowBuilder({
+                    id,
+                    entity: entities[id],
+                  }),
+                )}
+            </tbody>
+          </HTMLTable>
+        </div>
+      </FitPage>
     </div>
   );
 };
