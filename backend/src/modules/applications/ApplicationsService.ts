@@ -18,7 +18,11 @@ export class ApplicationsService {
   ) {}
 
   async getApplications(filterDto: GetApplicationsFilterDto) {
-    return getEntities(this.applicationsRepository, filterDto);
+    return getEntities(this.applicationsRepository, filterDto, (qb) => {
+      if (filterDto.applicationCategoryId) {
+        qb.andWhere('entity.applicationCategoryId = :id', { id: filterDto.applicationCategoryId });
+      }
+    });
   }
 
   async getApplicationById(id: string) {

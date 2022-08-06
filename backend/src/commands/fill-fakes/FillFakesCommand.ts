@@ -105,6 +105,7 @@ export class FillFakesCommand {
       description: faker.lorem.sentence(),
       applicationId: sample(applications).id,
       organizationId: sample(organizations).id,
+      standCategoryId: sample(standCategories).id,
     });
   }
 }

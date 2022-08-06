@@ -23,6 +23,9 @@ export class Application extends BaseEntity {
   @OneToMany((_type) => Stand, (stand) => stand.application, { eager: false })
   stands: Stand[];
 
+  @Column({ nullable: true })
+  applicationCategoryId: string;
+
   @ManyToOne((_type) => ApplicationCategory, (applicationCategory) => applicationCategory.applications, {
     eager: false,
   })

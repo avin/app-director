@@ -27,6 +27,9 @@ export class Stand extends BaseEntity {
   @Column({ nullable: true })
   organizationId: string;
 
+  @Column({ nullable: true })
+  standCategoryId: string;
+
   @ManyToOne((_type) => Application, (application) => application.stands, { eager: false })
   application: Application;
 

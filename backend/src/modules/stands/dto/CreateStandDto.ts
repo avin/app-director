@@ -13,6 +13,9 @@ export class CreateStandDto {
   note?: string;
 
   @IsString()
+  standCategoryId: string;
+
+  @IsString()
   applicationId: string;
 
   @IsOptional()

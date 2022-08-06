@@ -7,6 +7,10 @@ export class GetApplicationsFilterDto extends PaginationParams {
   search?: string;
 
   @IsOptional()
+  @IsString()
+  applicationCategoryId?: string;
+
+  @IsOptional()
   @IsIn(['title', 'description', 'createdAt', 'updatedAt'])
   orderBy: 'title' | 'description' | 'createdAt' | 'updatedAt' = 'title';
 
