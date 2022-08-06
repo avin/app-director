@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
-export class CreateApplicationDto {
+export class CreateApplicationCategoryDto {
   @IsNotEmpty()
   title: string;
 
@@ -12,7 +12,4 @@ export class CreateApplicationDto {
 
   @IsOptional()
   properties?: Record<string, unknown>;
-
-  @IsString()
-  applicationCategoryId: string;
 }

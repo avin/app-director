@@ -16,4 +16,8 @@ export class UpdateApplicationDto {
 
   @IsOptional()
   properties?: Record<string, unknown>;
+
+  @IsString()
+  @IsOptional()
+  applicationCategoryId: string;
 }

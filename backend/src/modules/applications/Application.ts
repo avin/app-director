@@ -1,6 +1,7 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Stand } from '../stands/Stand';
 import { BaseEntity } from '../../utils/types/BaseEntity';
+import { ApplicationCategory } from '../applicationCategories/ApplicationCategory';
 
 @Entity()
 export class Application extends BaseEntity {
@@ -21,4 +22,9 @@ export class Application extends BaseEntity {
 
   @OneToMany((_type) => Stand, (stand) => stand.application, { eager: false })
   stands: Stand[];
+
+  @ManyToOne((_type) => ApplicationCategory, (applicationCategory) => applicationCategory.applications, {
+    eager: false,
+  })
+  applicationCategory: ApplicationCategory[];
 }

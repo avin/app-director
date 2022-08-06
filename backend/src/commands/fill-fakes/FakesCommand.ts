@@ -8,11 +8,14 @@ import { faker } from '@faker-js/faker';
 import { Application } from '../../modules/applications/Application';
 import { Organization } from '../../modules/organizations/Organization';
 import { sample } from '../../utils/sample';
+import { ApplicationCategory } from '../../modules/applicationCategories/ApplicationCategory';
+import { ApplicationCategoriesService } from '../../modules/applicationCategories/ApplicationCategoriesService';
 
 @Injectable()
 export class FakesCommand {
   constructor(
     private readonly usersService: UsersService,
+    private readonly applicationCategoriesService: ApplicationCategoriesService,
     private readonly organizationsService: OrganizationsService,
     private readonly applicationsService: ApplicationsService,
     private readonly standsService: StandsService,
@@ -30,8 +33,9 @@ export class FakesCommand {
 
     await this.createAdminUser();
     await this.createSome(3, this.createRandomUser);
+    const applicationCategories = await this.createSome(2, this.createRandomApplicationCategory);
     const organizations = await this.createSome(20, this.createRandomOrganization);
-    const applications = await this.createSome(20, this.createRandomApplication);
+    const applications = await this.createSome(20, this.createRandomApplication, applicationCategories);
     await this.createSome(100, this.createRandomStand, applications, organizations);
 
     console.info('Done!');
@@ -61,16 +65,23 @@ export class FakesCommand {
     });
   }
 
+  createRandomApplicationCategory() {
+    return this.applicationCategoriesService.createApplicationCategory({
+      title: faker.lorem.word(),
+      description: faker.lorem.sentence(3),
+    });
+  }
   createRandomOrganization() {
     return this.organizationsService.createOrganization({
       title: faker.company.companyName(),
     });
   }
 
-  createRandomApplication() {
+  createRandomApplication(applicationCategories: ApplicationCategory[]) {
     return this.applicationsService.createApplication({
       title: faker.company.companyName(),
-      description: faker.lorem.sentence(Math.round(Math.random() * 10)),
+      description: faker.lorem.sentence(),
+      applicationCategoryId: sample(applicationCategories).id,
     });
   }
 

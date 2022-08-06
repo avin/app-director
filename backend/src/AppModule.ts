@@ -9,6 +9,7 @@ import { OrganizationsModule } from './modules/organizations/OrganizationsModule
 import { UsersModule } from './modules/users/UsersModule';
 import { CommandModule } from 'nestjs-command';
 import { FakesCommand } from './commands/fill-fakes/FakesCommand';
+import { ApplicationCategoriesModule } from './modules/applicationCategories/ApplicationCategoriesModule';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { FakesCommand } from './commands/fill-fakes/FakesCommand';
       inject: [ConfigService],
     }),
     ApplicationsModule,
+    ApplicationCategoriesModule,
     StandsModule,
     OrganizationsModule,
     UsersModule,
