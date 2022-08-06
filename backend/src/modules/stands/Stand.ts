@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 import { Application } from '../applications/Application';
 import { Organization } from '../organizations/Organization';
 import { BaseEntity } from '../../utils/types/BaseEntity';
+import { StandCategory } from '../standCategories/StandCategory';
 
 @Entity()
 export class Stand extends BaseEntity {
@@ -29,6 +30,9 @@ export class Stand extends BaseEntity {
   @ManyToOne((_type) => Application, (application) => application.stands, { eager: false })
   application: Application;
 
-  @ManyToOne((_type) => Organization, (application) => application.stands, { eager: false })
+  @ManyToOne((_type) => Organization, (organization) => organization.stands, { eager: false })
   organization: Organization;
+
+  @ManyToOne((_type) => StandCategory, (standCategory) => standCategory.stands, { eager: false })
+  standCategory: Organization;
 }

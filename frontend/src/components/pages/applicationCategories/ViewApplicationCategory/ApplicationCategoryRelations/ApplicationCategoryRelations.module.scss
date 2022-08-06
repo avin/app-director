@@ -1,0 +1,21 @@
+@import '~@/styles/_variables';
+@import '~@/styles/_mixins';
+
+.relations {
+  :global {
+    .bp4-tabs {
+      border-top: 1px solid $gray3;
+    }
+
+    .bp4-tab-panel {
+      margin-top: 0;
+    }
+
+    .bp4-tab-list {
+      background-color: $white;
+      user-select: none;
+      padding: 0 16px;
+      border-bottom: 1px solid $gray5;
+    }
+  }
+}

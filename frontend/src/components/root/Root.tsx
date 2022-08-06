@@ -25,6 +25,16 @@ import ViewOrganization from '@/components/pages/organizations/ViewOrganization/
 import EditOrganization from '@/components/pages/organizations/EditOrganization/EditOrganization';
 import NavigateStands from '../pages/stands/NavigateStands/NavigateStands';
 import LogNavigation from '@/components/common/LogNavigation/LogNavigation';
+import ApplicationCategoryFetcherLayout from '../layouts/ApplicationCategoryFetcherLayout/ApplicationCategoryFetcherLayout';
+import StandCategoryFetcherLayout from '@/components/layouts/StandCategoryFetcherLayout/StandCategoryFetcherLayout';
+import NavigateApplicationCategories from '../pages/applicationCategories/NavigateApplicationCategories/NavigateApplicationCategories';
+import CreateApplicationCategory from '../pages/applicationCategories/CreateApplicationCategory/CreateApplicationCategory';
+import ViewApplicationCategory from '../pages/applicationCategories/ViewApplicationCategory/ViewApplicationCategory';
+import EditApplicationCategory from '../pages/applicationCategories/EditApplicationCategory/EditApplicationCategory';
+import NavigateStandCategories from '../pages/standCategories/NavigateStandCategories/NavigateStandCategories';
+import CreateStandCategory from '../pages/standCategories/CreateStandCategory/CreateStandCategory';
+import ViewStandCategory from '../pages/standCategories/ViewStandCategory/ViewStandCategory';
+import EditStandCategory from '../pages/standCategories/EditStandCategory/EditStandCategory';
 
 const { routes } = config;
 
@@ -54,6 +64,24 @@ const Root = ({ store }: RootProps) => (
           <Route element={<ApplicationFetcherLayout />}>
             <Route path={routes.applications.view} element={<ViewApplication />} />
             <Route path={routes.applications.edit} element={<EditApplication />} />
+          </Route>
+
+          {/* -------- ApplicationCategories -------- */}
+          <Route path={routes.applicationCategories.$} element={<NavigateApplicationCategories />} />
+          <Route path={routes.applicationCategories.create} element={<CreateApplicationCategory />} />
+
+          <Route element={<ApplicationCategoryFetcherLayout />}>
+            <Route path={routes.applicationCategories.view} element={<ViewApplicationCategory />} />
+            <Route path={routes.applicationCategories.edit} element={<EditApplicationCategory />} />
+          </Route>
+
+          {/* -------- StandCategories -------- */}
+          <Route path={routes.standCategories.$} element={<NavigateStandCategories />} />
+          <Route path={routes.standCategories.create} element={<CreateStandCategory />} />
+
+          <Route element={<StandCategoryFetcherLayout />}>
+            <Route path={routes.standCategories.view} element={<ViewStandCategory />} />
+            <Route path={routes.standCategories.edit} element={<EditStandCategory />} />
           </Route>
 
           {/* -------- Stands -------- */}

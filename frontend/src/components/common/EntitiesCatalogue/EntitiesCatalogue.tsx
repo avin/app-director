@@ -87,7 +87,7 @@ const EntitiesCatalogue = <TEntity,>({
               <tr className={styles.notInteractive}>
                 <td colSpan={1000}>
                   <div className={styles.loadingTdContent}>
-                    <Spinner size={20} />
+                    <Spinner size={18} />
                   </div>
                 </td>
               </tr>

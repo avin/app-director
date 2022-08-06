@@ -10,6 +10,7 @@ import { UsersModule } from './modules/users/UsersModule';
 import { CommandModule } from 'nestjs-command';
 import { FillFakesCommand } from './commands/fill-fakes/FillFakesCommand';
 import { ApplicationCategoriesModule } from './modules/applicationCategories/ApplicationCategoriesModule';
+import { StandCategoriesModule } from './modules/standCategories/StandCategoriesModule';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ApplicationCategoriesModule } from './modules/applicationCategories/App
     }),
     ApplicationsModule,
     ApplicationCategoriesModule,
+    StandCategoriesModule,
     StandsModule,
     OrganizationsModule,
     UsersModule,

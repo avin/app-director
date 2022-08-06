@@ -28,7 +28,7 @@ const Navigation = ({}: Props) => {
       },
       {
         id: 'applications',
-        icon: 'application',
+        icon: config.defaultIcons.application,
         label: 'Приложения',
         isSelected: location.pathname.startsWith(config.routes.applications.$),
         nodeData: {
@@ -37,7 +37,7 @@ const Navigation = ({}: Props) => {
       },
       {
         id: 'stands',
-        icon: 'cloud',
+        icon: config.defaultIcons.stand,
         label: 'Стенды',
         isSelected: location.pathname.startsWith(config.routes.stands.$),
         nodeData: {
@@ -46,7 +46,7 @@ const Navigation = ({}: Props) => {
       },
       {
         id: 'organizations',
-        icon: 'office',
+        icon: config.defaultIcons.organization,
         label: 'Организации',
         isSelected: location.pathname.startsWith(config.routes.organizations.$),
         nodeData: {
@@ -60,6 +60,24 @@ const Navigation = ({}: Props) => {
         label: 'Администрирование',
         isExpanded: true,
         childNodes: [
+          {
+            id: 'applicationCategories',
+            icon: config.defaultIcons.applicationCategory,
+            label: 'Категории приложений',
+            isSelected: location.pathname.startsWith(config.routes.applicationCategories.$),
+            nodeData: {
+              route: config.routes.applicationCategories.$,
+            },
+          },
+          {
+            id: 'standCategories',
+            icon: config.defaultIcons.standCategory,
+            label: 'Категории стендов',
+            isSelected: location.pathname.startsWith(config.routes.standCategories.$),
+            nodeData: {
+              route: config.routes.standCategories.$,
+            },
+          },
           {
             id: 'users',
             icon: 'people',

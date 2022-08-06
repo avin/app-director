@@ -2,6 +2,8 @@
  * App config
  */
 
+import { capitalizeFirstLetter } from './utils/strings';
+
 export class Config {
   apiPrefix = '/api';
 
@@ -61,6 +63,38 @@ export class Config {
   } {
     const { apiPrefix } = this;
 
+    const getEntityApiMethods = (singularName: string, pluralName: string) => {
+      const singularNameWithUpperLetter = capitalizeFirstLetter(singularName);
+      const pluralNameWithUpperLetter = capitalizeFirstLetter(pluralName);
+
+      return {
+        [`get${pluralNameWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralName}`,
+          method: 'GET',
+        },
+
+        [`get${singularNameWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralName}/:id`,
+          method: 'GET',
+        },
+
+        [`create${singularNameWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralName}`,
+          method: 'POST',
+        },
+
+        [`update${singularNameWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralName}/:id`,
+          method: 'PATCH',
+        },
+
+        [`delete${singularNameWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralName}/:id`,
+          method: 'DELETE',
+        },
+      };
+    };
+
     return {
       version: {
         url: `${apiPrefix}/version`,
@@ -84,86 +118,14 @@ export class Config {
         method: 'GET',
       },
 
-      // ------- Applications -------
+      // ------- Entities -------
 
-      getApplications: {
-        url: `${apiPrefix}/applications`,
-        method: 'GET',
-      },
-
-      getApplication: {
-        url: `${apiPrefix}/applications/:id`,
-        method: 'GET',
-      },
-
-      createApplication: {
-        url: `${apiPrefix}/applications`,
-        method: 'POST',
-      },
-
-      updateApplication: {
-        url: `${apiPrefix}/applications/:id`,
-        method: 'PATCH',
-      },
-
-      deleteApplication: {
-        url: `${apiPrefix}/applications/:id`,
-        method: 'DELETE',
-      },
-
-      // ------- Stands -------
-
-      getStands: {
-        url: `${apiPrefix}/stands`,
-        method: 'GET',
-      },
-
-      getStand: {
-        url: `${apiPrefix}/stands/:id`,
-        method: 'GET',
-      },
-
-      createStand: {
-        url: `${apiPrefix}/stands`,
-        method: 'POST',
-      },
-
-      updateStand: {
-        url: `${apiPrefix}/stands/:id`,
-        method: 'PATCH',
-      },
-
-      deleteStand: {
-        url: `${apiPrefix}/stands/:id`,
-        method: 'DELETE',
-      },
-
-      // ------- Organizations -------
-
-      getOrganizations: {
-        url: `${apiPrefix}/organizations`,
-        method: 'GET',
-      },
-
-      getOrganization: {
-        url: `${apiPrefix}/organizations/:id`,
-        method: 'GET',
-      },
-
-      createOrganization: {
-        url: `${apiPrefix}/organizations`,
-        method: 'POST',
-      },
-
-      updateOrganization: {
-        url: `${apiPrefix}/organizations/:id`,
-        method: 'PATCH',
-      },
-
-      deleteOrganization: {
-        url: `${apiPrefix}/organizations/:id`,
-        method: 'DELETE',
-      },
+      ...getEntityApiMethods('application', 'applications'),
+      ...getEntityApiMethods('applicationCategory', 'applicationCategories'),
+      ...getEntityApiMethods('standCategory', 'standCategories'),
+      ...getEntityApiMethods('stand', 'stands'),
+      ...getEntityApiMethods('organization', 'organizations'),
+      ...getEntityApiMethods('user', 'users'),
     };
   }
 
