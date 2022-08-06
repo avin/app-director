@@ -1,7 +1,7 @@
 const delay = require('mocker-api/utils/delay');
 const assignIn = require('lodash/assignIn');
 
-const apiPrefix = process.env.REACT_APP_BNPL_API_PREFIX || '/api';
+const apiPrefix = process.env.REACT_APP_API_PREFIX || '/api';
 const apiServer = process.env.REACT_APP_API_SERVER || 'localhost:3000';
 
 const proxy = {
