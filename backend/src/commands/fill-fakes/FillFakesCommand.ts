@@ -88,6 +88,7 @@ export class FillFakesCommand {
   createRandomOrganization() {
     return this.organizationsService.createOrganization({
       title: faker.company.companyName(),
+      description: faker.lorem.sentence(),
     });
   }
 

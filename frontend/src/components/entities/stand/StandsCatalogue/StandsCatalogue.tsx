@@ -10,14 +10,24 @@ import { getStands } from '@/store/reducers/stands';
 import StandCategoryLabel from '@/components/entities/standCategory/StandCategoryLabel/StandCategoryLabel';
 import ApplicationLabel from '@/components/entities/application/ApplicationLabel/ApplicationLabel';
 import OrganizationLabel from '@/components/entities/organization/OrganizationLabel/OrganizationLabel';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { useHandleClickCatalogueRow } from '@/utils/hooks/useHandleClickCatalogueRow';
 
 interface Props {
   columns: ('standCategory' | 'title' | 'description' | 'application' | 'organization')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
+  addEntityRoute?: string;
+  getEntitiesFilter?: any;
 }
 
-const StandsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
+const StandsCatalogue = ({
+  viewHeaderProps,
+  columns,
+  onClickRow,
+  addEntityRoute = config.routes.stands.create,
+  getEntitiesFilter,
+}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -39,15 +49,7 @@ const StandsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
     });
   }, [columns]);
 
-  const handleClickRow = useCallback(
-    (e: SyntheticEvent<HTMLTableRowElement>) => {
-      const entityId = e.currentTarget.dataset.id as string;
-      if (onClickRow) {
-        onClickRow(entityId, e);
-      }
-    },
-    [onClickRow],
-  );
+  const handleClickRow = useHandleClickCatalogueRow(config.routes.stands.view, onClickRow);
 
   const rowBuilder = useCallback(
     ({ id, entity }: RowBuilderParams<Stand>) => (
@@ -87,9 +89,14 @@ const StandsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
 
   const getEntities = useCallback(
     async (filter: any) => {
-      return dispatch(getStands(filter));
+      return dispatch(
+        getStands({
+          ...getEntitiesFilter,
+          ...filter,
+        }),
+      );
     },
-    [dispatch],
+    [dispatch, getEntitiesFilter],
   );
 
   return (
@@ -99,7 +106,7 @@ const StandsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
         icon: config.defaultIcons.stand,
         ...viewHeaderProps,
       }}
-      addEntityRoute={config.routes.stands.create}
+      addEntityRoute={addEntityRoute}
       headColumns={headColumns}
       rowBuilder={rowBuilder}
       getEntities={getEntities}

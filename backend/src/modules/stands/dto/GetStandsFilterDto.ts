@@ -15,6 +15,10 @@ export class GetStandsFilterDto extends PaginationParams {
   organizationId?: string;
 
   @IsOptional()
+  @IsString()
+  standCategoryId?: string;
+
+  @IsOptional()
   @IsIn(['title', 'description', 'createdAt', 'updatedAt'])
   orderBy: 'title' | 'description' | 'createdAt' | 'updatedAt' = 'title';
 

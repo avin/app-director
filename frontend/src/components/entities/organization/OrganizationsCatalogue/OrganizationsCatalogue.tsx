@@ -7,14 +7,24 @@ import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/Entitie
 import { Organization } from '@/types';
 import config from '@/config';
 import { getOrganizations } from '@/store/reducers/organizations';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { useHandleClickCatalogueRow } from '@/utils/hooks/useHandleClickCatalogueRow';
 
 interface Props {
   columns: ('title' | 'description' | 'standsCount')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
+  addEntityRoute?: string;
+  getEntitiesFilter?: any;
 }
 
-const OrganizationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
+const OrganizationsCatalogue = ({
+  viewHeaderProps,
+  columns,
+  onClickRow,
+  addEntityRoute = config.routes.organizations.create,
+  getEntitiesFilter,
+}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -32,15 +42,7 @@ const OrganizationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props)
     });
   }, [columns]);
 
-  const handleClickRow = useCallback(
-    (e: SyntheticEvent<HTMLTableRowElement>) => {
-      const entityId = e.currentTarget.dataset.id as string;
-      if (onClickRow) {
-        onClickRow(entityId, e);
-      }
-    },
-    [onClickRow],
-  );
+  const handleClickRow = useHandleClickCatalogueRow(config.routes.organizations.view, onClickRow);
 
   const rowBuilder = useCallback(
     ({ id, entity }: RowBuilderParams<Organization>) => (
@@ -62,9 +64,17 @@ const OrganizationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props)
     [columns, handleClickRow],
   );
 
-  const getEntities = useCallback(async () => {
-    return dispatch(getOrganizations());
-  }, [dispatch]);
+  const getEntities = useCallback(
+    async (filter: any) => {
+      return dispatch(
+        getOrganizations({
+          ...getEntitiesFilter,
+          ...filter,
+        }),
+      );
+    },
+    [dispatch, getEntitiesFilter],
+  );
 
   return (
     <EntitiesCatalogue
@@ -73,7 +83,7 @@ const OrganizationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props)
         icon: config.defaultIcons.organization,
         ...viewHeaderProps,
       }}
-      addEntityRoute={config.routes.organizations.create}
+      addEntityRoute={addEntityRoute}
       headColumns={headColumns}
       rowBuilder={rowBuilder}
       getEntities={getEntities}

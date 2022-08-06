@@ -36,14 +36,14 @@ export const { setApplications, setApplication } = slice.actions;
 
 export default slice.reducer;
 
-export function getApplications(): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+export function getApplications(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },
     } = await dispatch(
       apiCall<GetApplicationsResponse>({
         ...config.apiMethods.getApplications,
-        data: {},
+        params: filters,
       }),
     );
     dispatch(setApplications(entitiesArrayToMap(items)));

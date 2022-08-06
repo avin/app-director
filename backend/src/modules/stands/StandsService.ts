@@ -26,6 +26,9 @@ export class StandsService {
       if (filterDto.organizationId) {
         qb.andWhere('entity.organizationId = :id', { id: filterDto.organizationId });
       }
+      if (filterDto.standCategoryId) {
+        qb.andWhere('entity.standCategoryId = :id', { id: filterDto.standCategoryId });
+      }
     });
   }
 

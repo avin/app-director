@@ -8,14 +8,24 @@ import { Application } from '@/types';
 import config from '@/config';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import ApplicationCategoryLabel from '../../applicationCategory/ApplicationCategoryLabel/ApplicationCategoryLabel';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { useHandleClickCatalogueRow } from '@/utils/hooks/useHandleClickCatalogueRow';
 
 interface Props {
   columns: ('applicationCategory' | 'title' | 'description' | 'standsCount')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
+  addEntityRoute?: string;
+  getEntitiesFilter?: any;
 }
 
-const ApplicationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) => {
+const ApplicationsCatalogue = ({
+  viewHeaderProps,
+  columns,
+  onClickRow,
+  addEntityRoute = config.routes.applications.create,
+  getEntitiesFilter,
+}: Props) => {
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
@@ -35,15 +45,7 @@ const ApplicationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) 
     });
   }, [columns]);
 
-  const handleClickRow = useCallback(
-    (e: SyntheticEvent<HTMLTableRowElement>) => {
-      const entityId = e.currentTarget.dataset.id as string;
-      if (onClickRow) {
-        onClickRow(entityId, e);
-      }
-    },
-    [onClickRow],
-  );
+  const handleClickRow = useHandleClickCatalogueRow(config.routes.applications.view, onClickRow);
 
   const rowBuilder = useCallback(
     ({ id, entity }: RowBuilderParams<Application>) => (
@@ -71,9 +73,17 @@ const ApplicationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) 
     [columns, handleClickRow],
   );
 
-  const getEntities = useCallback(async () => {
-    return dispatch(getApplications());
-  }, [dispatch]);
+  const getEntities = useCallback(
+    async (filter: any) => {
+      return dispatch(
+        getApplications({
+          ...getEntitiesFilter,
+          ...filter,
+        }),
+      );
+    },
+    [dispatch, getEntitiesFilter],
+  );
 
   return (
     <EntitiesCatalogue
@@ -82,7 +92,7 @@ const ApplicationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) 
         icon: config.defaultIcons.application,
         ...viewHeaderProps,
       }}
-      addEntityRoute={config.routes.applications.create}
+      addEntityRoute={addEntityRoute}
       headColumns={headColumns}
       rowBuilder={rowBuilder}
       getEntities={getEntities}

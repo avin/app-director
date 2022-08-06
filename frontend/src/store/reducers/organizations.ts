@@ -36,14 +36,14 @@ export const { setOrganizations, setOrganization } = slice.actions;
 
 export default slice.reducer;
 
-export function getOrganizations(): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+export function getOrganizations(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },
     } = await dispatch(
       apiCall<GetOrganizationsResponse>({
         ...config.apiMethods.getOrganizations,
-        data: {},
+        params: filters,
       }),
     );
     dispatch(setOrganizations(entitiesArrayToMap(items)));

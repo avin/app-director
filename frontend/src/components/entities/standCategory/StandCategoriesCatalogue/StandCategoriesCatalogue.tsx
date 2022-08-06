@@ -7,6 +7,7 @@ import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/Entitie
 import { StandCategory } from '@/types';
 import config from '@/config';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
+import { useHandleClickCatalogueRow } from '@/utils/hooks/useHandleClickCatalogueRow';
 
 interface Props {
   columns: ('title' | 'description' | 'standsCount')[];
@@ -32,15 +33,7 @@ const StandCategoryCategoriesCatalogue = ({ viewHeaderProps, columns, onClickRow
     });
   }, [columns]);
 
-  const handleClickRow = useCallback(
-    (e: SyntheticEvent<HTMLTableRowElement>) => {
-      const entityId = e.currentTarget.dataset.id as string;
-      if (onClickRow) {
-        onClickRow(entityId, e);
-      }
-    },
-    [onClickRow],
-  );
+  const handleClickRow = useHandleClickCatalogueRow(config.routes.standCategories.view, onClickRow);
 
   const rowBuilder = useCallback(
     ({ id, entity }: RowBuilderParams<StandCategory>) => (
