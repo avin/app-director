@@ -21,7 +21,7 @@ const StandCategoryCategoryLabel = ({ standCategoryId, linkable }: Props) => {
           return <span>NOT_EXISTING_APPLICATION</span>;
         }
 
-        let content = <span>ATC: {entity.title}</span>;
+        let content = <span>SC: {entity.title}</span>;
         if (linkable) {
           content = (
             <Link to={generatePath(config.routes.standCategories.view, { id: standCategoryId })}>{content}</Link>

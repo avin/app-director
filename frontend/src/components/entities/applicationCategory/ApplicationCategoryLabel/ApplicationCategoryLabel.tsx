@@ -21,7 +21,7 @@ const ApplicationCategoryCategoryLabel = ({ applicationCategoryId, linkable }: P
           return <span>NOT_EXISTING_APPLICATION</span>;
         }
 
-        let content = <span>ATC: {entity.title}</span>;
+        let content = <span>AC: {entity.title}</span>;
         if (linkable) {
           content = (
             <Link to={generatePath(config.routes.applicationCategories.view, { id: applicationCategoryId })}>

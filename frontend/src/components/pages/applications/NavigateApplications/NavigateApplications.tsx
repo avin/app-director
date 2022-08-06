@@ -15,7 +15,12 @@ const NavigateApplications = ({}: Props) => {
     [navigate],
   );
 
-  return <ApplicationsCatalogue columns={['title', 'description', 'standsCount']} onClickRow={handleClickRow} />;
+  return (
+    <ApplicationsCatalogue
+      columns={['applicationCategory', 'title', 'description', 'standsCount']}
+      onClickRow={handleClickRow}
+    />
+  );
 };
 
 export default NavigateApplications;

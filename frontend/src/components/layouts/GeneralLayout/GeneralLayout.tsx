@@ -1,45 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import styles from './GeneralLayout.module.scss';
 import Header from './Header/Header';
 import Navigation from './Navigation/Navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import { currentUserSelector } from '@/store/selectors';
-import config from '@/config';
 import { AppThunkDispatch } from '@/store/configureStore';
-import { setRedirectLinkAfterLogIn } from '@/store/reducers/ui';
-import { refreshTokens } from '@/store/reducers/data';
+import { useDispatch } from 'react-redux';
+import { getApplicationCategories } from '@/store/reducers/applicationCategories';
+import { getStandCategories } from '@/store/reducers/standCategories';
 
 interface Props {}
 
 const GeneralLayout = ({}: Props) => {
-  const user = useSelector(currentUserSelector);
-  const navigate = useNavigate();
+  const [isBaseDataFetched, setIsBaseDataFetched] = useState(false);
   const dispatch: AppThunkDispatch = useDispatch();
-  const location = useLocation();
-  const [isUserFetched, setIsUserFetched] = useState(false);
 
   useEffect(() => {
     void (async () => {
       try {
-        if (!user) {
-          await dispatch(refreshTokens());
-        }
+        await Promise.all([dispatch(getApplicationCategories()), dispatch(getStandCategories())]);
       } finally {
-        setIsUserFetched(true);
+        setIsBaseDataFetched(true);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
-  useEffect(() => {
-    if (!user && isUserFetched) {
-      dispatch(setRedirectLinkAfterLogIn(location.pathname));
-      navigate(config.routes.logIn);
-    }
-  }, [dispatch, location.pathname, navigate, user, isUserFetched]);
-
-  if (!user) {
+  if (!isBaseDataFetched) {
     return null;
   }
 

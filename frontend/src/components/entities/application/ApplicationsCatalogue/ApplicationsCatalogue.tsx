@@ -7,9 +7,10 @@ import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/Entitie
 import { Application } from '@/types';
 import config from '@/config';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
+import ApplicationCategoryLabel from '../../applicationCategory/ApplicationCategoryLabel/ApplicationCategoryLabel';
 
 interface Props {
-  columns: ('title' | 'description' | 'standsCount')[];
+  columns: ('applicationCategory' | 'title' | 'description' | 'standsCount')[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
 }
@@ -20,6 +21,8 @@ const ApplicationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) 
   const headColumns = useMemo(() => {
     return columns.map((column) => {
       switch (column) {
+        case 'applicationCategory':
+          return { id: 'applicationCategory', label: 'Категория' };
         case 'title':
           return { id: 'title', label: 'Название' };
         case 'description':
@@ -47,6 +50,12 @@ const ApplicationsCatalogue = ({ viewHeaderProps, columns, onClickRow }: Props) 
       <tr key={id} onClick={handleClickRow} data-id={id}>
         {columns.map((column) => {
           switch (column) {
+            case 'applicationCategory':
+              return (
+                <td key="applicationCategory">
+                  <ApplicationCategoryLabel applicationCategoryId={entity.applicationCategoryId} />
+                </td>
+              );
             case 'title':
               return <td key="title">{entity.title}</td>;
             case 'description':

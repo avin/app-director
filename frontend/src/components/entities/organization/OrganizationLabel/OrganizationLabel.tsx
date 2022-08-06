@@ -21,7 +21,7 @@ const OrganizationLabel = ({ organizationId, linkable }: Props) => {
           return <span>NOT_EXISTING_ORGANIZATION</span>;
         }
 
-        let content = <span>ATC: {entity.title}</span>;
+        let content = <span>O: {entity.title}</span>;
         if (linkable) {
           content = <Link to={generatePath(config.routes.organizations.view, { id: organizationId })}>{content}</Link>;
         }

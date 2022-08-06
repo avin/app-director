@@ -21,7 +21,7 @@ const ApplicationLabel = ({ applicationId, linkable }: Props) => {
           return <span>NOT_EXISTING_APPLICATION</span>;
         }
 
-        let content = <span>ATC: {entity.title}</span>;
+        let content = <span>A: {entity.title}</span>;
         if (linkable) {
           content = <Link to={generatePath(config.routes.applications.view, { id: applicationId })}>{content}</Link>;
         }

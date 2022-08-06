@@ -47,6 +47,7 @@ export type Stand = CommonEntityProps & {
   title: string;
   description: string | null;
   properties: Record<string, unknown> | null;
+  standCategoryId: string;
   applicationId: string;
   organizationId: string | null;
 };

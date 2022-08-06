@@ -35,6 +35,7 @@ import NavigateStandCategories from '../pages/standCategories/NavigateStandCateg
 import CreateStandCategory from '../pages/standCategories/CreateStandCategory/CreateStandCategory';
 import ViewStandCategory from '../pages/standCategories/ViewStandCategory/ViewStandCategory';
 import EditStandCategory from '../pages/standCategories/EditStandCategory/EditStandCategory';
+import UserRequiredLayout from '@/components/layouts/UserRequiredLayout/UserRequiredLayout';
 
 const { routes } = config;
 
@@ -54,56 +55,58 @@ const Root = ({ store }: RootProps) => (
           <Route path={routes.logIn} element={<LogInPage />} />
         </Route>
 
-        <Route element={<GeneralLayout />}>
-          <Route path={routes.monitoring} element={<MonitoringPage />} />
+        <Route element={<UserRequiredLayout />}>
+          <Route element={<GeneralLayout />}>
+            <Route path={routes.monitoring} element={<MonitoringPage />} />
 
-          {/* -------- Applications -------- */}
-          <Route path={routes.applications.$} element={<NavigateApplications />} />
-          <Route path={routes.applications.create} element={<CreateApplication />} />
+            {/* -------- Applications -------- */}
+            <Route path={routes.applications.$} element={<NavigateApplications />} />
+            <Route path={routes.applications.create} element={<CreateApplication />} />
 
-          <Route element={<ApplicationFetcherLayout />}>
-            <Route path={routes.applications.view} element={<ViewApplication />} />
-            <Route path={routes.applications.edit} element={<EditApplication />} />
+            <Route element={<ApplicationFetcherLayout />}>
+              <Route path={routes.applications.view} element={<ViewApplication />} />
+              <Route path={routes.applications.edit} element={<EditApplication />} />
+            </Route>
+
+            {/* -------- ApplicationCategories -------- */}
+            <Route path={routes.applicationCategories.$} element={<NavigateApplicationCategories />} />
+            <Route path={routes.applicationCategories.create} element={<CreateApplicationCategory />} />
+
+            <Route element={<ApplicationCategoryFetcherLayout />}>
+              <Route path={routes.applicationCategories.view} element={<ViewApplicationCategory />} />
+              <Route path={routes.applicationCategories.edit} element={<EditApplicationCategory />} />
+            </Route>
+
+            {/* -------- StandCategories -------- */}
+            <Route path={routes.standCategories.$} element={<NavigateStandCategories />} />
+            <Route path={routes.standCategories.create} element={<CreateStandCategory />} />
+
+            <Route element={<StandCategoryFetcherLayout />}>
+              <Route path={routes.standCategories.view} element={<ViewStandCategory />} />
+              <Route path={routes.standCategories.edit} element={<EditStandCategory />} />
+            </Route>
+
+            {/* -------- Stands -------- */}
+            <Route path={routes.stands.$} element={<NavigateStands />} />
+            <Route path={routes.stands.create} element={<CreateStand />} />
+
+            <Route element={<StandFetcher />}>
+              <Route path={routes.stands.view} element={<ViewStand />} />
+              <Route path={routes.stands.edit} element={<EditStand />} />
+            </Route>
+
+            {/* -------- Organizations -------- */}
+            <Route path={routes.organizations.$} element={<NavigateOrganizations />} />
+            <Route path={routes.organizations.create} element={<CreateOrganization />} />
+
+            <Route element={<OrganizationFetcherLayout />}>
+              <Route path={routes.organizations.view} element={<ViewOrganization />} />
+              <Route path={routes.organizations.edit} element={<EditOrganization />} />
+            </Route>
+
+            <Route path={routes.administration.users} element={<div />} />
+            <Route path={routes.administration.log} element={<div />} />
           </Route>
-
-          {/* -------- ApplicationCategories -------- */}
-          <Route path={routes.applicationCategories.$} element={<NavigateApplicationCategories />} />
-          <Route path={routes.applicationCategories.create} element={<CreateApplicationCategory />} />
-
-          <Route element={<ApplicationCategoryFetcherLayout />}>
-            <Route path={routes.applicationCategories.view} element={<ViewApplicationCategory />} />
-            <Route path={routes.applicationCategories.edit} element={<EditApplicationCategory />} />
-          </Route>
-
-          {/* -------- StandCategories -------- */}
-          <Route path={routes.standCategories.$} element={<NavigateStandCategories />} />
-          <Route path={routes.standCategories.create} element={<CreateStandCategory />} />
-
-          <Route element={<StandCategoryFetcherLayout />}>
-            <Route path={routes.standCategories.view} element={<ViewStandCategory />} />
-            <Route path={routes.standCategories.edit} element={<EditStandCategory />} />
-          </Route>
-
-          {/* -------- Stands -------- */}
-          <Route path={routes.stands.$} element={<NavigateStands />} />
-          <Route path={routes.stands.create} element={<CreateStand />} />
-
-          <Route element={<StandFetcher />}>
-            <Route path={routes.stands.view} element={<ViewStand />} />
-            <Route path={routes.stands.edit} element={<EditStand />} />
-          </Route>
-
-          {/* -------- Organizations -------- */}
-          <Route path={routes.organizations.$} element={<NavigateOrganizations />} />
-          <Route path={routes.organizations.create} element={<CreateOrganization />} />
-
-          <Route element={<OrganizationFetcherLayout />}>
-            <Route path={routes.organizations.view} element={<ViewOrganization />} />
-            <Route path={routes.organizations.edit} element={<EditOrganization />} />
-          </Route>
-
-          <Route path={routes.administration.users} element={<div />} />
-          <Route path={routes.administration.log} element={<div />} />
         </Route>
       </Routes>
     </Router>
