@@ -16,6 +16,7 @@ import { useDefaultRequiredRules } from '@/utils/hooks/useDefaultRequiredRules';
 import ApplicationSelect from '@/components/entities/application/ApplicationSelect/ApplicationSelect';
 import OrganizationSelect from '@/components/entities/organization/OrganizationSelect/OrganizationSelect';
 import { useSearchParams } from 'react-router-dom';
+import StandCategorySelect from '@/components/entities/standCategory/StandCategorySelect/StandCategorySelect';
 
 interface Props {
   id?: string;
@@ -38,6 +39,7 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
     defaultValues: {
       title: stand?.title || '',
       description: stand?.description || '',
+      standCategoryId: stand?.standCategoryId || searchParams.get('standCategoryId') || '',
       applicationId: stand?.applicationId || searchParams.get('applicationId') || '',
       organizationId: stand?.organizationId || searchParams.get('organizationId') || '',
     },
@@ -81,6 +83,10 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
   return (
     <form id={id} onSubmit={handleFormSubmit}>
       <FormErrorMessage message={errorMessage} />
+
+      <InputContainer label="Категория стенда" error={isSubmitted && errors.standCategoryId?.message}>
+        <StandCategorySelect name="standCategoryId" control={control} rules={requiredRules} />
+      </InputContainer>
 
       <InputContainer label="Название" error={isSubmitted && errors.title?.message}>
         <ControlledTextInput name="title" control={control} rules={requiredRules} />

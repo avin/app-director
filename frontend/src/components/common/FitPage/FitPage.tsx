@@ -16,7 +16,6 @@ const FitPage = ({ children, bottomOffset = 0, minHeight = 0 }: React.PropsWithC
     const container = containerRef.current;
     const rect = container.getBoundingClientRect();
 
-    const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
     container.style.height = `${Math.max(windowHeight - rect.y - bottomOffset, minHeight)}px`;
@@ -30,11 +29,7 @@ const FitPage = ({ children, bottomOffset = 0, minHeight = 0 }: React.PropsWithC
     };
   }, [resizeContainer]);
 
-  return (
-    <div style={{ height: '100px' }} ref={containerRef}>
-      {children}
-    </div>
-  );
+  return <div ref={containerRef}>{children}</div>;
 };
 
 export default FitPage;

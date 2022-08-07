@@ -53,14 +53,14 @@ const ApplicationCategoryCategorySelect = <TFieldValues,>({ name, control, rules
         inputProps={{ readOnly: true }}
         leftIcon={config.defaultIcons.applicationCategory}
         onChange={handleChange}
-        placeholder="Выбрать приложение..."
+        placeholder="Выбрать категорию приложения..."
         rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
         values={value ? [<ApplicationCategoryLabel applicationCategoryId={value as string} />] : []}
       />
       <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog}>
         <ApplicationCategoriesCatalogue
           viewHeaderProps={{
-            title: 'Выбрать приложение',
+            title: 'Выбрать категорию приложения',
             onClose: closeChooseDialog,
           }}
           columns={['title', 'description', 'applicationsCount']}

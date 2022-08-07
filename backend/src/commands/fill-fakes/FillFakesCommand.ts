@@ -30,17 +30,17 @@ export class FillFakesCommand {
   })
   async create() {
     await this.usersService.deleteAllUsers();
-    await this.applicationCategoriesService.deleteAllApplicationCategories();
-    await this.standCategoriesService.deleteAllStandCategories();
     await this.standsService.deleteAllStands();
     await this.organizationsService.deleteAllOrganizations();
     await this.applicationsService.deleteAllApplications();
+    await this.applicationCategoriesService.deleteAllApplicationCategories();
+    await this.standCategoriesService.deleteAllStandCategories();
 
     await this.createAdminUser();
     await this.createSome(3, this.createRandomUser);
     const applicationCategories = await this.createSome(2, this.createRandomApplicationCategory);
     const standCategories = await this.createSome(3, this.createRandomStandCategory);
-    const organizations = await this.createSome(20, this.createRandomOrganization);
+    const organizations = await this.createSome(100, this.createRandomOrganization);
     const applications = await this.createSome(20, this.createRandomApplication, applicationCategories);
     await this.createSome(100, this.createRandomStand, standCategories, applications, organizations);
 

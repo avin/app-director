@@ -53,14 +53,14 @@ const StandCategoryCategorySelect = <TFieldValues,>({ name, control, rules }: Pr
         inputProps={{ readOnly: true }}
         leftIcon={config.defaultIcons.standCategory}
         onChange={handleChange}
-        placeholder="Выбрать приложение..."
+        placeholder="Выбрать категорию стенда..."
         rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
         values={value ? [<StandCategoryLabel standCategoryId={value as string} />] : []}
       />
       <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog}>
         <StandCategoriesCatalogue
           viewHeaderProps={{
-            title: 'Выбрать приложение',
+            title: 'Выбрать категорию стенда',
             onClose: closeChooseDialog,
           }}
           columns={['title', 'description', 'standsCount']}

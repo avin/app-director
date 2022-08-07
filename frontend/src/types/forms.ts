@@ -18,6 +18,7 @@ export type ApplicationCategoryEditFormInputs = {
 export type StandEditFormInputs = {
   title: string;
   description: string;
+  standCategoryId: string;
   applicationId: string;
   organizationId: string;
 };
