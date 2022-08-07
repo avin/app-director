@@ -18,7 +18,16 @@ export class StandCategoriesService {
   ) {}
 
   async getStandCategories(filterDto: GetStandCategoriesFilterDto) {
-    return getEntities(this.standCategoriesRepository, filterDto);
+    return getEntities(this.standCategoriesRepository, filterDto, (qb) => {
+      switch (filterDto.orderBy) {
+        case 'title':
+        case 'description':
+        case 'createdAt':
+        case 'updatedAt':
+          qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+          break;
+      }
+    });
   }
 
   async getStandCategoryById(id: string) {

@@ -17,8 +17,6 @@ export const getEntities = async <
 ) => {
   const qb = repository.createQueryBuilder('entity');
 
-  qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
-
   if (filterDto.search) {
     qb.andWhere('(LOWER(entity.title) LIKE LOWER(:search) OR LOWER(entity.description) LIKE LOWER(:search))', {
       search: `%${filterDto.search}%`,

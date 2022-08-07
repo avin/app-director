@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import cn from 'clsx';
 import styles from './EntitiesCatalogue.module.scss';
 import { Button, HTMLTable, Intent, Spinner } from '@blueprintjs/core';
 import { AppThunkDispatch } from '@/store/configureStore';
@@ -7,6 +8,8 @@ import { RootState } from '@/store/reducers';
 import { Link } from 'react-router-dom';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import FitPage from '../FitPage/FitPage';
+import SortIndicator from '@/components/common/EntitiesCatalogue/SortIndicator/SortIndicator';
+import { SortingDirection } from '@/types';
 
 export type RowBuilderParams<TEntity> = {
   id: string;
@@ -15,6 +18,7 @@ export type RowBuilderParams<TEntity> = {
 export type HeadColumn = {
   id: string;
   label: React.ReactNode;
+  sortable?: boolean;
 };
 
 interface Props<TEntity> {
@@ -25,6 +29,8 @@ interface Props<TEntity> {
   entitiesSelector: (state: RootState) => Record<string, TEntity>;
   onClose?: () => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
+  defaultSortingColumnId?: string;
+  defaultSortingDirection?: SortingDirection;
 }
 
 const EntitiesCatalogue = <TEntity,>({
@@ -35,15 +41,29 @@ const EntitiesCatalogue = <TEntity,>({
   entitiesSelector,
   onClose,
   viewHeaderProps,
+  defaultSortingColumnId,
+  defaultSortingDirection = 'ASC',
 }: Props<TEntity>) => {
   const dispatch: AppThunkDispatch = useDispatch();
   const [isDataFetchFailed, setIsDataFetchFailed] = useState(false);
   const entities = useSelector(entitiesSelector);
   const tableContainerElRef = useRef<HTMLDivElement>(null);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-
   const [entitiesIds, setEntitiesIds] = useState<string[]>([]);
   const [entitiesCount, setEntitiesCount] = useState<null | number>(null);
+  const [sorting, setSorting] = useState<{ columnId: string | undefined; direction: SortingDirection }>({
+    columnId: defaultSortingColumnId,
+    direction: defaultSortingDirection,
+  });
+
+  const entitiesFilter = useMemo(() => {
+    return {
+      ...(sorting.columnId && {
+        orderBy: sorting.columnId,
+        orderDirection: sorting.direction,
+      }),
+    };
+  }, [sorting]);
 
   useEffect(() => {
     void (async () => {
@@ -53,14 +73,17 @@ const EntitiesCatalogue = <TEntity,>({
           limit = Math.floor(tableContainerElRef.current.clientHeight / 30) + 10;
         }
 
-        const { ids, count } = await getEntities({ limit });
+        const { ids, count } = await getEntities({
+          ...entitiesFilter,
+          limit,
+        });
         setEntitiesIds(ids);
         setEntitiesCount(count);
       } catch (error) {
         setIsDataFetchFailed(true);
       }
     })();
-  }, [dispatch, getEntities]);
+  }, [dispatch, entitiesFilter, getEntities, sorting]);
 
   const loadMore = useCallback(async () => {
     if (isLoadingMore) {
@@ -71,13 +94,17 @@ const EntitiesCatalogue = <TEntity,>({
     }
     setIsLoadingMore(true);
     try {
-      const { ids, count } = await getEntities({ limit: 20, offset: entitiesIds.length });
+      const { ids, count } = await getEntities({
+        ...entitiesFilter,
+        limit: 20,
+        offset: entitiesIds.length,
+      });
       setEntitiesIds([...entitiesIds, ...ids]);
       setEntitiesCount(count);
     } finally {
       setIsLoadingMore(false);
     }
-  }, [isLoadingMore, entitiesIds, entitiesCount, getEntities]);
+  }, [isLoadingMore, entitiesIds, entitiesCount, getEntities, entitiesFilter]);
 
   const handleScrollTableContainer = useCallback(() => {
     const tableContainerEl = tableContainerElRef.current;
@@ -95,6 +122,30 @@ const EntitiesCatalogue = <TEntity,>({
       window.removeEventListener('resize', handleScrollTableContainer);
     };
   }, [handleScrollTableContainer]);
+
+  const handleClickTh = useCallback((e: React.MouseEvent<HTMLTableCellElement>) => {
+    const columnId = e.currentTarget.dataset.id as string;
+    const sortable = e.currentTarget.dataset.sortable as 'true' | 'false';
+
+    if (sortable === 'false') {
+      return;
+    }
+
+    setSorting((curr) => {
+      let direction: 'ASC' | 'DESC' = 'ASC';
+      if (curr.columnId === columnId) {
+        if (curr.direction === 'DESC') {
+          direction = 'ASC';
+        } else {
+          direction = 'DESC';
+        }
+      }
+      return {
+        columnId,
+        direction,
+      };
+    });
+  }, []);
 
   if (isDataFetchFailed) {
     return <div>Something wrong</div>;
@@ -119,8 +170,18 @@ const EntitiesCatalogue = <TEntity,>({
           <HTMLTable striped bordered interactive condensed className={styles.table}>
             <thead>
               <tr>
-                {headColumns.map(({ label, id }) => (
-                  <th key={id}>{label}</th>
+                {headColumns.map(({ label, id, sortable }) => (
+                  <th key={id} onClick={handleClickTh} data-id={id} data-sortable={String(sortable || false)}>
+                    {label}
+                    {sortable && (
+                      <SortIndicator
+                        className={cn(styles.sortIndicator, {
+                          [styles.active]: sorting.columnId === id,
+                        })}
+                        direction={id === sorting.columnId ? sorting.direction : 'ASC'}
+                      />
+                    )}
+                  </th>
                 ))}
               </tr>
             </thead>

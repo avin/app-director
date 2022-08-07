@@ -18,7 +18,16 @@ export class ApplicationCategoriesService {
   ) {}
 
   async getApplicationCategories(filterDto: GetApplicationCategoriesFilterDto) {
-    return getEntities(this.applicationCategoriesRepository, filterDto);
+    return getEntities(this.applicationCategoriesRepository, filterDto, (qb) => {
+      switch (filterDto.orderBy) {
+        case 'title':
+        case 'description':
+        case 'createdAt':
+        case 'updatedAt':
+          qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+          break;
+      }
+    });
   }
 
   async getApplicationCategoryById(id: string) {

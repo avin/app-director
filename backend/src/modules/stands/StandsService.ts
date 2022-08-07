@@ -28,6 +28,15 @@ export class StandsService {
       if (filterDto.standCategoryId) {
         qb.andWhere('entity.standCategoryId = :id', { id: filterDto.standCategoryId });
       }
+
+      switch (filterDto.orderBy) {
+        case 'title':
+        case 'description':
+        case 'createdAt':
+        case 'updatedAt':
+          qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+          break;
+      }
     });
   }
 

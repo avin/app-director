@@ -30,11 +30,11 @@ const OrganizationsCatalogue = ({
     return columns.map((column) => {
       switch (column) {
         case 'title':
-          return { id: 'title', label: 'Название' };
+          return { id: 'title', label: 'Название', sortable: true };
         case 'description':
-          return { id: 'description', label: 'Описание' };
+          return { id: 'description', label: 'Описание', sortable: true };
         case 'standsCount':
-          return { id: 'standsCount', label: 'Стенды' };
+          return { id: 'standsCount', label: 'Стенды', sortable: false };
         default:
           throw new Error(`unknown column`);
       }
@@ -87,6 +87,7 @@ const OrganizationsCatalogue = ({
       rowBuilder={rowBuilder}
       getEntities={getEntities}
       entitiesSelector={organizationsSelector}
+      defaultSortingColumnId="title"
     />
   );
 };

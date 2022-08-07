@@ -22,6 +22,15 @@ export class ApplicationsService {
       if (filterDto.applicationCategoryId) {
         qb.andWhere('entity.applicationCategoryId = :id', { id: filterDto.applicationCategoryId });
       }
+
+      switch (filterDto.orderBy) {
+        case 'title':
+        case 'description':
+        case 'createdAt':
+        case 'updatedAt':
+          qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+          break;
+      }
     });
   }
 

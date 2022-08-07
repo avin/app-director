@@ -3,12 +3,14 @@ import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { getApplications } from '@/store/reducers/applications';
 import { applicationsSelector } from '@/store/selectors';
-import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
+import EntitiesCatalogue, {
+  HeadColumn,
+  RowBuilderParams,
+} from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { Application } from '@/types';
 import config from '@/config';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import ApplicationCategoryLabel from '../../applicationCategory/ApplicationCategoryLabel/ApplicationCategoryLabel';
-import { generatePath, useNavigate } from 'react-router-dom';
 import { useHandleClickCatalogueRow } from '@/utils/hooks/useHandleClickCatalogueRow';
 
 interface Props {
@@ -29,16 +31,16 @@ const ApplicationsCatalogue = ({
   const dispatch: AppThunkDispatch = useDispatch();
 
   const headColumns = useMemo(() => {
-    return columns.map((column) => {
+    return columns.map((column): HeadColumn => {
       switch (column) {
         case 'applicationCategory':
-          return { id: 'applicationCategory', label: 'Категория' };
+          return { id: 'applicationCategory', label: 'Категория', sortable: false };
         case 'title':
-          return { id: 'title', label: 'Название' };
+          return { id: 'title', label: 'Название', sortable: true };
         case 'description':
-          return { id: 'description', label: 'Описание' };
+          return { id: 'description', label: 'Описание', sortable: true };
         case 'standsCount':
-          return { id: 'standsCount', label: 'Стенды' };
+          return { id: 'standsCount', label: 'Стенды', sortable: false };
         default:
           throw new Error(`unknown column`);
       }
@@ -100,6 +102,7 @@ const ApplicationsCatalogue = ({
       rowBuilder={rowBuilder}
       getEntities={getEntities}
       entitiesSelector={applicationsSelector}
+      defaultSortingColumnId="title"
     />
   );
 };

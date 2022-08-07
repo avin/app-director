@@ -30,11 +30,11 @@ const ApplicationCategoryCategoriesCatalogue = ({
     return columns.map((column) => {
       switch (column) {
         case 'title':
-          return { id: 'title', label: 'Название' };
+          return { id: 'title', label: 'Название', sortable: true };
         case 'description':
-          return { id: 'description', label: 'Описание' };
+          return { id: 'description', label: 'Описание', sortable: true };
         case 'applicationsCount':
-          return { id: 'applicationsCount', label: 'Приложения' };
+          return { id: 'applicationsCount', label: 'Приложения', sortable: false };
         default:
           throw new Error(`unknown column`);
       }
@@ -87,6 +87,7 @@ const ApplicationCategoryCategoriesCatalogue = ({
       rowBuilder={rowBuilder}
       getEntities={getEntities}
       entitiesSelector={applicationCategoriesSelector}
+      defaultSortingColumnId="title"
     />
   );
 };

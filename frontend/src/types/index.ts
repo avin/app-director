@@ -2,6 +2,8 @@ import { Role } from '@/constants/role';
 
 export * from './forms';
 
+export type SortingDirection = 'ASC' | 'DESC';
+
 export type ApiError = {
   statusCode: number;
   message: string;

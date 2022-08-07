@@ -26,7 +26,17 @@ export class UsersService {
   ) {}
 
   async getUsers(filterDto: GetUsersFilterDto) {
-    return getEntities(this.usersRepository, filterDto);
+    return getEntities(this.usersRepository, filterDto, (qb) => {
+      switch (filterDto.orderBy) {
+        case 'email':
+        case 'fullName':
+        case 'description':
+        case 'createdAt':
+        case 'updatedAt':
+          qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+          break;
+      }
+    });
   }
 
   async getUserById(id: string) {

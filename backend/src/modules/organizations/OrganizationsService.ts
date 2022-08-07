@@ -18,7 +18,16 @@ export class OrganizationsService {
   ) {}
 
   async getOrganizations(filterDto: GetOrganizationsFilterDto) {
-    return getEntities(this.organizationsRepository, filterDto);
+    return getEntities(this.organizationsRepository, filterDto, (qb) => {
+      switch (filterDto.orderBy) {
+        case 'title':
+        case 'description':
+        case 'createdAt':
+        case 'updatedAt':
+          qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+          break;
+      }
+    });
   }
 
   async getOrganizationById(id: string) {
