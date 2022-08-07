@@ -54,16 +54,18 @@ export function getApplications(
     dispatch(setApplications(entitiesArrayToMap(items)));
 
     await Promise.all(
-      [['applicationCategory', 'applicationCategoryId', getApplicationCategories] as const].reduce<Promise<unknown>[]>(
-        (acc, [relationName, relationIdKey, getRelationAction]) => {
-          if (withRelations.includes(relationName)) {
-            const ids = getRelationIdsFromEntitiesArray(items, relationIdKey);
+      [
+        ['applicationCategory', 'applicationCategoryId', 'applicationCategories', getApplicationCategories] as const,
+      ].reduce<Promise<unknown>[]>((acc, [relationName, relationIdKey, entityStoreKey, getRelationAction]) => {
+        if (withRelations.includes(relationName)) {
+          let ids = getRelationIdsFromEntitiesArray(items, relationIdKey);
+          ids = ids.filter((id) => !getState()[entityStoreKey].entities[id]);
+          if (ids.length) {
             acc.push(dispatch(getRelationAction({ ids })));
           }
-          return acc;
-        },
-        [],
-      ),
+        }
+        return acc;
+      }, []),
     );
 
     return {

@@ -79,16 +79,22 @@ const EntitiesCatalogue = <TEntity,>({
     }
   }, [isLoadingMore, entitiesIds, entitiesCount, getEntities]);
 
-  const handleScrollTableContainer = useCallback(
-    (e: React.UIEvent<HTMLDivElement>) => {
-      const tableContainer = e.currentTarget as HTMLDivElement;
-      if (tableContainer.scrollTop + tableContainer.clientHeight >= tableContainer.scrollHeight - 200) {
-        // void loadMore();
-        console.log('FIRE');
-      }
-    },
-    [loadMore],
-  );
+  const handleScrollTableContainer = useCallback(() => {
+    const tableContainerEl = tableContainerElRef.current;
+    if (!tableContainerEl) {
+      return;
+    }
+    if (tableContainerEl.scrollTop + tableContainerEl.clientHeight >= tableContainerEl.scrollHeight - 200) {
+      void loadMore();
+    }
+  }, [loadMore]);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleScrollTableContainer);
+    return () => {
+      window.removeEventListener('resize', handleScrollTableContainer);
+    };
+  }, [handleScrollTableContainer]);
 
   if (isDataFetchFailed) {
     return <div>Something wrong</div>;
