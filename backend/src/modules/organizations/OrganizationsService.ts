@@ -8,6 +8,7 @@ import { Organization } from './Organization';
 import OrganizationNotFoundException from './exceptions/OrganizationNotFoundException';
 import { getEntities } from '../../utils/getEntities';
 import { Stand } from '../stands/Stand';
+import { qbSearchLike } from '../../utils/qbSearchLike';
 
 @Injectable()
 export class OrganizationsService {
@@ -20,6 +21,13 @@ export class OrganizationsService {
 
   async getOrganizations(filterDto: GetOrganizationsFilterDto) {
     return getEntities(this.organizationsRepository, filterDto, (qb) => {
+      if (filterDto.search) {
+        qbSearchLike(qb, {
+          columns: ['entity.title', 'entity.description'],
+          search: filterDto.search,
+        });
+      }
+
       switch (filterDto.orderBy) {
         case 'title':
         case 'description':

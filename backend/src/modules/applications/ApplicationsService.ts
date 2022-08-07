@@ -8,6 +8,7 @@ import { Application } from './Application';
 import ApplicationNotFoundException from './exceptions/ApplicationNotFoundException';
 import { getEntities } from '../../utils/getEntities';
 import { Stand } from '../stands/Stand';
+import { qbSearchLike } from '../../utils/qbSearchLike';
 
 @Injectable()
 export class ApplicationsService {
@@ -22,6 +23,15 @@ export class ApplicationsService {
     return getEntities(this.applicationsRepository, filterDto, (qb) => {
       if (filterDto.applicationCategoryId) {
         qb.andWhere('entity.applicationCategoryId = :id', { id: filterDto.applicationCategoryId });
+      }
+
+      if (filterDto.search) {
+        qb.innerJoinAndSelect('entity.applicationCategory', 'applicationCategory');
+
+        qbSearchLike(qb, {
+          columns: ['entity.title', 'entity.description', 'applicationCategory.title'],
+          search: filterDto.search,
+        });
       }
 
       switch (filterDto.orderBy) {

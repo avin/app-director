@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Stand } from './Stand';
 import StandNotFoundException from './exceptions/StandNotFoundException';
 import { getEntities } from '../../utils/getEntities';
+import { qbSearchLike } from '../../utils/qbSearchLike';
 
 @Injectable()
 export class StandsService {
@@ -27,6 +28,23 @@ export class StandsService {
       }
       if (filterDto.standCategoryId) {
         qb.andWhere('entity.standCategoryId = :id', { id: filterDto.standCategoryId });
+      }
+
+      if (filterDto.search) {
+        qb.innerJoinAndSelect('entity.application', 'application')
+          .innerJoinAndSelect('entity.organization', 'organization')
+          .innerJoinAndSelect('entity.standCategory', 'standCategory');
+
+        qbSearchLike(qb, {
+          columns: [
+            'entity.title',
+            'entity.description',
+            'application.title',
+            'organization.title',
+            'standCategory.title',
+          ],
+          search: filterDto.search,
+        });
       }
 
       switch (filterDto.orderBy) {

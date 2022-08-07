@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import cn from 'clsx';
 import styles from './EntitiesCatalogue.module.scss';
-import { Button, ControlGroup, HTMLTable, InputGroup, Intent, Spinner } from '@blueprintjs/core';
+import { Button, HTMLTable, Intent, Spinner } from '@blueprintjs/core';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/reducers';
@@ -12,6 +12,8 @@ import SortIndicator from '@/components/common/EntitiesCatalogue/SortIndicator/S
 import { SortingDirection } from '@/types';
 import Search from '@/components/common/EntitiesCatalogue/Search/Search';
 import queryString from 'query-string';
+import Mark from 'mark.js';
+import { usePrevious } from '@/utils/hooks/usePrevious';
 
 export type RowBuilderParams<TEntity> = {
   id: string;
@@ -50,6 +52,7 @@ const EntitiesCatalogue = <TEntity,>({
   const [isDataFetchFailed, setIsDataFetchFailed] = useState(false);
   const entities = useSelector(entitiesSelector);
   const tableContainerElRef = useRef<HTMLDivElement>(null);
+  const markInstanceRef = useRef<Mark | null>(null);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [entitiesIds, setEntitiesIds] = useState<string[]>([]);
   const [entitiesCount, setEntitiesCount] = useState<null | number>(null);
@@ -59,7 +62,26 @@ const EntitiesCatalogue = <TEntity,>({
   });
   const [searchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get('search') || '');
+  const prevEntitiesIds = usePrevious(entitiesIds);
 
+  // Highlight search substrings
+  useEffect(() => {
+    if (prevEntitiesIds !== entitiesIds) {
+      if (!tableContainerElRef.current) {
+        return;
+      }
+      markInstanceRef.current = markInstanceRef.current || new Mark(tableContainerElRef.current);
+      markInstanceRef.current.unmark({
+        done: () => {
+          if (markInstanceRef.current && searchValue) {
+            markInstanceRef.current.mark(searchValue);
+          }
+        },
+      });
+    }
+  }, [entitiesIds, prevEntitiesIds, searchValue]);
+
+  // Set search string as query-param in URL
   useEffect(() => {
     const parsed = queryString.parse(window.location.search);
     parsed.search = searchValue;

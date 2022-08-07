@@ -8,6 +8,7 @@ import { ApplicationCategory } from './ApplicationCategory';
 import ApplicationCategoryNotFoundException from './exceptions/ApplicationCategoryNotFoundException';
 import { getEntities } from '../../utils/getEntities';
 import { Application } from '../applications/Application';
+import { qbSearchLike } from '../../utils/qbSearchLike';
 
 @Injectable()
 export class ApplicationCategoriesService {
@@ -20,6 +21,13 @@ export class ApplicationCategoriesService {
 
   async getApplicationCategories(filterDto: GetApplicationCategoriesFilterDto) {
     return getEntities(this.applicationCategoriesRepository, filterDto, (qb) => {
+      if (filterDto.search) {
+        qbSearchLike(qb, {
+          columns: ['entity.title', 'entity.description'],
+          search: filterDto.search,
+        });
+      }
+
       switch (filterDto.orderBy) {
         case 'title':
         case 'description':
