@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Intent, TagInput } from '@blueprintjs/core';
+import { Button, Intent, TagInput, TagInputProps } from '@blueprintjs/core';
 import ApplicationCategoriesCatalogue from '@/components/entities/applicationCategory/ApplicationCategoriesCatalogue/ApplicationCategoriesCatalogue';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
@@ -8,19 +8,13 @@ import config from '@/config';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 import ApplicationCategoryLabel from '../ApplicationCategoryLabel/ApplicationCategoryLabel';
 
-interface Props<TFieldValues extends FieldValues> {
+interface Props<TFieldValues extends FieldValues> extends TagInputProps {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
-  intent?: Intent;
 }
 
-const ApplicationCategoryCategorySelect = <TFieldValues,>({
-  name,
-  control,
-  rules,
-  intent = Intent.NONE,
-}: Props<TFieldValues>) => {
+const ApplicationCategoryCategorySelect = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
   const [isOpenChooseDialog, setIsOpenChooseDialog] = useState(false);
 
   const {
@@ -56,13 +50,13 @@ const ApplicationCategoryCategorySelect = <TFieldValues,>({
   return (
     <>
       <TagInput
-        inputProps={{ readOnly: true }}
+        {...props}
+        inputProps={{ readOnly: true, onDoubleClick: openChooseDialog }}
         leftIcon={config.defaultIcons.applicationCategory}
         onChange={handleChange}
         placeholder="Выбрать категорию приложения..."
         rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
         values={value ? [<ApplicationCategoryLabel applicationCategoryId={value as string} />] : []}
-        intent={intent}
       />
       <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog}>
         <ApplicationCategoriesCatalogue

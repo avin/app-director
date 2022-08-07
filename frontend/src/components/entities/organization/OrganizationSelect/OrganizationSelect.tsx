@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Dialog, Intent, TagInput } from '@blueprintjs/core';
+import { Button, Dialog, Intent, TagInput, TagInputProps } from '@blueprintjs/core';
 import ApplicationLabel from '../../application/ApplicationLabel/ApplicationLabel';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
@@ -7,13 +7,13 @@ import OrganizationsCatalogue from '@/components/entities/organization/Organizat
 import OrganizationLabel from '@/components/entities/organization/OrganizationLabel/OrganizationLabel';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 
-interface Props<TFieldValues extends FieldValues> {
+interface Props<TFieldValues extends FieldValues> extends TagInputProps {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
 }
 
-const OrganizationSelect = <TFieldValues,>({ name, control, rules }: Props<TFieldValues>) => {
+const OrganizationSelect = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
   const [isOpenChooseDialog, setIsOpenChooseDialog] = useState(false);
 
   const {
@@ -49,7 +49,8 @@ const OrganizationSelect = <TFieldValues,>({ name, control, rules }: Props<TFiel
   return (
     <>
       <TagInput
-        inputProps={{ readOnly: true }}
+        {...props}
+        inputProps={{ readOnly: true, onDoubleClick: openChooseDialog }}
         leftIcon="office"
         onChange={handleChange}
         placeholder="Выбрать организацию..."

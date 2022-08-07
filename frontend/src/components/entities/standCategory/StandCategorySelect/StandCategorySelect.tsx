@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Intent, TagInput } from '@blueprintjs/core';
+import { Button, Intent, TagInput, TagInputProps } from '@blueprintjs/core';
 import StandCategoriesCatalogue from '@/components/entities/standCategory/StandCategoriesCatalogue/StandCategoriesCatalogue';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
@@ -8,13 +8,13 @@ import config from '@/config';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 import StandCategoryLabel from '../StandCategoryLabel/StandCategoryLabel';
 
-interface Props<TFieldValues extends FieldValues> {
+interface Props<TFieldValues extends FieldValues> extends TagInputProps {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
 }
 
-const StandCategoryCategorySelect = <TFieldValues,>({ name, control, rules }: Props<TFieldValues>) => {
+const StandCategoryCategorySelect = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
   const [isOpenChooseDialog, setIsOpenChooseDialog] = useState(false);
 
   const {
@@ -50,7 +50,8 @@ const StandCategoryCategorySelect = <TFieldValues,>({ name, control, rules }: Pr
   return (
     <>
       <TagInput
-        inputProps={{ readOnly: true }}
+        {...props}
+        inputProps={{ readOnly: true, onDoubleClick: openChooseDialog }}
         leftIcon={config.defaultIcons.standCategory}
         onChange={handleChange}
         placeholder="Выбрать категорию стенда..."

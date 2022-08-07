@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Dialog, Intent, TagInput } from '@blueprintjs/core';
+import { Button, Dialog, Intent, TagInput, TagInputProps } from '@blueprintjs/core';
 import ApplicationLabel from '../ApplicationLabel/ApplicationLabel';
 import ApplicationsCatalogue from '@/components/entities/application/ApplicationsCatalogue/ApplicationsCatalogue';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
@@ -8,13 +8,13 @@ import styles from './ApplicationSelect.module.scss';
 import config from '@/config';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 
-interface Props<TFieldValues extends FieldValues> {
+interface Props<TFieldValues extends FieldValues> extends TagInputProps {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
 }
 
-const ApplicationSelect = <TFieldValues,>({ name, control, rules }: Props<TFieldValues>) => {
+const ApplicationSelect = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
   const [isOpenChooseDialog, setIsOpenChooseDialog] = useState(false);
 
   const {
@@ -50,7 +50,8 @@ const ApplicationSelect = <TFieldValues,>({ name, control, rules }: Props<TField
   return (
     <>
       <TagInput
-        inputProps={{ readOnly: true }}
+        {...props}
+        inputProps={{ readOnly: true, onDoubleClick: openChooseDialog }}
         leftIcon={config.defaultIcons.application}
         onChange={handleChange}
         placeholder="Выбрать приложение..."
