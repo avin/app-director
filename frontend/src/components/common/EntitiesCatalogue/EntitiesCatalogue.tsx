@@ -67,16 +67,18 @@ const EntitiesCatalogue = <TEntity,>({
   // Highlight search substrings
   useEffect(() => {
     if (prevEntitiesIds !== entitiesIds) {
-      if (!tableContainerElRef.current) {
-        return;
-      }
-      markInstanceRef.current = markInstanceRef.current || new Mark(tableContainerElRef.current);
-      markInstanceRef.current.unmark({
-        done: () => {
-          if (markInstanceRef.current && searchValue) {
-            markInstanceRef.current.mark(searchValue);
-          }
-        },
+      setTimeout(() => {
+        if (!tableContainerElRef.current) {
+          return;
+        }
+        markInstanceRef.current = markInstanceRef.current || new Mark(tableContainerElRef.current);
+        markInstanceRef.current.unmark({
+          done: () => {
+            if (markInstanceRef.current && searchValue) {
+              markInstanceRef.current.mark(searchValue);
+            }
+          },
+        });
       });
     }
   }, [entitiesIds, prevEntitiesIds, searchValue]);

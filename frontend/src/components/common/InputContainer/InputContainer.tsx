@@ -1,51 +1,39 @@
-import cn from 'clsx';
-import { Label } from '@blueprintjs/core';
-import React, { useEffect, useState } from 'react';
+import { FormGroup, Intent } from '@blueprintjs/core';
+import React from 'react';
 import styles from './InputContainer.module.scss';
 import WrappedUp from '../WrappedUp/WrappedUp';
 
 export interface InputContainerProps extends React.PropsWithChildren<{}> {
   label?: React.ReactNode;
+  labelInfo?: React.ReactNode;
   error?: React.ReactNode;
   subtext?: React.ReactNode;
   className?: string;
 }
 
-const InputContainer = ({ label, error, subtext, className, children }: InputContainerProps) => {
-  // const [errorToShow, setErrorToShow] = useState(error);
-
-  // useEffect(() => {
-  //   if (error) {
-  //     const errorLabel =
-  //       {
-  //         fieldRequired: 'Требуется заполнить поле',
-  //       }[error as string] || error;
-  //
-  //     console.log('error=', error);
-  //
-  //     setErrorToShow(errorLabel);
-  //   }
-  // }, [error]);
+const InputContainer = ({ label, labelInfo, error, subtext, className, children }: InputContainerProps) => {
+  const childrenWithProps = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, {
+        intent: error ? Intent.DANGER : undefined,
+      });
+    }
+    return child;
+  });
 
   return (
-    <div className={cn(styles.container, className, { withError: !!error })}>
-      <Label>
-        {label && <div className={styles.label}>{label}</div>}
-        <div className={styles.inputContainer}>{children}</div>
-
-        {subtext && (
-          <div className={styles.subtextContainer}>
-            <div className={styles.subtext}>{subtext}</div>
-          </div>
-        )}
-
+    <FormGroup
+      helperText={
         <WrappedUp open={!!error} duration={200} className={styles.errorWrapper}>
-          <div className={styles.errorContainer}>
-            <div className={styles.error}>{error}</div>
-          </div>
+          {error}
         </WrappedUp>
-      </Label>
-    </div>
+      }
+      label={label}
+      labelInfo={labelInfo}
+      intent={error ? Intent.DANGER : Intent.NONE}
+    >
+      {childrenWithProps}
+    </FormGroup>
   );
 };
 

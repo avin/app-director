@@ -12,9 +12,15 @@ interface Props<TFieldValues extends FieldValues> {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
+  intent?: Intent;
 }
 
-const ApplicationCategoryCategorySelect = <TFieldValues,>({ name, control, rules }: Props<TFieldValues>) => {
+const ApplicationCategoryCategorySelect = <TFieldValues,>({
+  name,
+  control,
+  rules,
+  intent = Intent.NONE,
+}: Props<TFieldValues>) => {
   const [isOpenChooseDialog, setIsOpenChooseDialog] = useState(false);
 
   const {
@@ -56,6 +62,7 @@ const ApplicationCategoryCategorySelect = <TFieldValues,>({ name, control, rules
         placeholder="Выбрать категорию приложения..."
         rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
         values={value ? [<ApplicationCategoryLabel applicationCategoryId={value as string} />] : []}
+        intent={intent}
       />
       <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog}>
         <ApplicationCategoriesCatalogue
