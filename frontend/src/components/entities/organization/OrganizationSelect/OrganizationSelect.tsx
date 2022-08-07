@@ -7,7 +7,7 @@ import OrganizationsCatalogue from '@/components/entities/organization/Organizat
 import OrganizationLabel from '@/components/entities/organization/OrganizationLabel/OrganizationLabel';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 
-interface Props<TFieldValues extends FieldValues> extends TagInputProps {
+interface Props<TFieldValues extends FieldValues> extends Omit<TagInputProps, 'values'> {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;

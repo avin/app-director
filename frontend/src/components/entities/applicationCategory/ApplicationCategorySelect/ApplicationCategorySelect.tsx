@@ -8,7 +8,7 @@ import config from '@/config';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 import ApplicationCategoryLabel from '../ApplicationCategoryLabel/ApplicationCategoryLabel';
 
-interface Props<TFieldValues extends FieldValues> extends TagInputProps {
+interface Props<TFieldValues extends FieldValues> extends Omit<TagInputProps, 'values'> {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
