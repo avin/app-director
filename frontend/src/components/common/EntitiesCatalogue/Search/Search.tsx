@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './Search.module.scss';
-import { Button, ControlGroup, InputGroup } from '@blueprintjs/core';
+import { Button, ControlGroup, InputGroup, Intent } from '@blueprintjs/core';
 import debounce from 'lodash/debounce';
 
 interface Props {
@@ -38,7 +38,7 @@ const Search = ({ onChange, defaultValue }: Props) => {
         onChange={handleSearchValue}
         value={value}
         fill
-        rightElement={value ? <Button icon="cross" onClick={handleClear} minimal /> : undefined}
+        rightElement={value ? <Button icon="cross" onClick={handleClear} minimal intent={Intent.DANGER} /> : undefined}
       />
     </ControlGroup>
   );
