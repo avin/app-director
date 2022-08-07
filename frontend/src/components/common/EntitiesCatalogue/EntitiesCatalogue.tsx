@@ -1,15 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import cn from 'clsx';
 import styles from './EntitiesCatalogue.module.scss';
-import { Button, HTMLTable, Intent, Spinner } from '@blueprintjs/core';
+import { Button, ControlGroup, HTMLTable, InputGroup, Intent, Spinner } from '@blueprintjs/core';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/reducers';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import FitPage from '../FitPage/FitPage';
 import SortIndicator from '@/components/common/EntitiesCatalogue/SortIndicator/SortIndicator';
 import { SortingDirection } from '@/types';
+import Search from '@/components/common/EntitiesCatalogue/Search/Search';
+import queryString from 'query-string';
 
 export type RowBuilderParams<TEntity> = {
   id: string;
@@ -55,6 +57,15 @@ const EntitiesCatalogue = <TEntity,>({
     columnId: defaultSortingColumnId,
     direction: defaultSortingDirection,
   });
+  const [searchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState(searchParams.get('search') || '');
+
+  useEffect(() => {
+    const parsed = queryString.parse(window.location.search);
+    parsed.search = searchValue;
+    const queryResult = queryString.stringify(parsed, { skipEmptyString: true });
+    window.history.replaceState(null, '', `${window.location.pathname}?${queryResult}`.replace(/\?$/, ''));
+  }, [searchValue]);
 
   const entitiesFilter = useMemo(() => {
     return {
@@ -62,8 +73,11 @@ const EntitiesCatalogue = <TEntity,>({
         orderBy: sorting.columnId,
         orderDirection: sorting.direction,
       }),
+      ...(searchValue && {
+        search: searchValue,
+      }),
     };
-  }, [sorting]);
+  }, [searchValue, sorting.columnId, sorting.direction]);
 
   useEffect(() => {
     void (async () => {
@@ -155,13 +169,19 @@ const EntitiesCatalogue = <TEntity,>({
     <div className={styles.main}>
       <ViewHeader
         controls={
-          addEntityRoute && (
-            <Link to={addEntityRoute} tabIndex={-1}>
-              <Button intent={Intent.PRIMARY} icon="plus">
-                Добавить
-              </Button>
-            </Link>
-          )
+          <>
+            <Search onChange={setSearchValue} defaultValue={searchValue} />
+
+            <div className="bp4-navbar-divider" />
+
+            {addEntityRoute && (
+              <Link to={addEntityRoute} tabIndex={-1}>
+                <Button intent={Intent.PRIMARY} icon="plus">
+                  Добавить
+                </Button>
+              </Link>
+            )}
+          </>
         }
         {...viewHeaderProps}
       />

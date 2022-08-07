@@ -52,4 +52,5 @@ if (process.argv.includes('--no-delay')) {
   delayValue = 0;
 }
 
-module.exports = delay(proxy, delayValue);
+// module.exports = delay(proxy, delayValue);
+module.exports = proxy;

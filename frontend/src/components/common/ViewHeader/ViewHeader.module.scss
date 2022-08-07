@@ -28,9 +28,17 @@
 
 .controls {
   display: flex;
+  align-items: center;
 
   & > * + * {
     margin-left: 8px;
+  }
+
+  :global {
+    .bp4-navbar-divider {
+      margin-left: 10px;
+      margin-right: 2px;
+    }
   }
 }
 
