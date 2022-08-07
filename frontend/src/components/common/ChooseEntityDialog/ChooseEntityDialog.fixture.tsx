@@ -10,7 +10,9 @@ export default () => {
 
   return (
     <div className="content">
-      <ChooseEntityDialog isOpen={isOpen} />
+      <ChooseEntityDialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        content
+      </ChooseEntityDialog>
       <button type="button" onClick={handleToggleOpen}>
         toggle
       </button>
