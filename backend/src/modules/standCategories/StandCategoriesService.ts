@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { StandCategory } from './StandCategory';
 import StandCategoryNotFoundException from './exceptions/StandCategoryNotFoundException';
 import { getEntities } from '../../utils/getEntities';
+import { Stand } from '../stands/Stand';
 
 @Injectable()
 export class StandCategoriesService {
@@ -25,6 +26,14 @@ export class StandCategoriesService {
         case 'createdAt':
         case 'updatedAt':
           qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+          break;
+        case 'standsCount':
+          qb.addSelect((subQuery) => {
+            return subQuery
+              .select('COUNT(stand.id)', 'count')
+              .from(Stand, 'stand')
+              .where('stand.standCategory.id = entity.id');
+          }, 'count').orderBy('count', filterDto.orderDirection);
           break;
       }
     });

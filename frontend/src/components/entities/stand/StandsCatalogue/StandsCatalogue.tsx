@@ -33,15 +33,15 @@ const StandsCatalogue = ({
     return columns.map((column) => {
       switch (column) {
         case 'standCategory':
-          return { id: 'standCategory', label: 'Категория', sortable: false };
+          return { id: 'standCategory', label: 'Категория', sortable: true };
         case 'title':
           return { id: 'title', label: 'Название', sortable: true };
         case 'description':
           return { id: 'description', label: 'Описание', sortable: true };
         case 'application':
-          return { id: 'application', label: 'Приложение', sortable: false };
+          return { id: 'application', label: 'Приложение', sortable: true };
         case 'organization':
-          return { id: 'organization', label: 'Организация', sortable: false };
+          return { id: 'organization', label: 'Организация', sortable: true };
         default:
           throw new Error(`unknown column`);
       }

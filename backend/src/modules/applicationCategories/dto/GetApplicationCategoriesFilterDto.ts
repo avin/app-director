@@ -11,8 +11,7 @@ export class GetApplicationCategoriesFilterDto extends PaginationParams {
   ids?: string[];
 
   @IsOptional()
-  @IsIn(['title', 'description', 'createdAt', 'updatedAt'])
-  orderBy: 'title' | 'description' | 'createdAt' | 'updatedAt' = 'title';
+  orderBy: 'title' | 'description' | 'createdAt' | 'updatedAt' | 'applicationsCount' = 'title';
 
   @IsOptional()
   @ValidateIf((o) => !!o.orderBy)

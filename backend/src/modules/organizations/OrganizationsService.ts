@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Organization } from './Organization';
 import OrganizationNotFoundException from './exceptions/OrganizationNotFoundException';
 import { getEntities } from '../../utils/getEntities';
+import { Stand } from '../stands/Stand';
 
 @Injectable()
 export class OrganizationsService {
@@ -25,6 +26,14 @@ export class OrganizationsService {
         case 'createdAt':
         case 'updatedAt':
           qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+          break;
+        case 'standsCount':
+          qb.addSelect((subQuery) => {
+            return subQuery
+              .select('COUNT(stand.id)', 'count')
+              .from(Stand, 'stand')
+              .where('stand.organization.id = entity.id');
+          }, 'count').orderBy('count', filterDto.orderDirection);
           break;
       }
     });

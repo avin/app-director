@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { ApplicationCategory } from './ApplicationCategory';
 import ApplicationCategoryNotFoundException from './exceptions/ApplicationCategoryNotFoundException';
 import { getEntities } from '../../utils/getEntities';
+import { Application } from '../applications/Application';
 
 @Injectable()
 export class ApplicationCategoriesService {
@@ -25,6 +26,14 @@ export class ApplicationCategoriesService {
         case 'createdAt':
         case 'updatedAt':
           qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+          break;
+        case 'applicationsCount':
+          qb.addSelect((subQuery) => {
+            return subQuery
+              .select('COUNT(application.id)', 'count')
+              .from(Application, 'application')
+              .where('application.applicationCategory.id = entity.id');
+          }, 'count').orderBy('count', filterDto.orderDirection);
           break;
       }
     });

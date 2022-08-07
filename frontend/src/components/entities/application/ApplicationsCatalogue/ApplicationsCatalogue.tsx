@@ -34,13 +34,13 @@ const ApplicationsCatalogue = ({
     return columns.map((column): HeadColumn => {
       switch (column) {
         case 'applicationCategory':
-          return { id: 'applicationCategory', label: 'Категория', sortable: false };
+          return { id: 'applicationCategory', label: 'Категория', sortable: true };
         case 'title':
           return { id: 'title', label: 'Название', sortable: true };
         case 'description':
           return { id: 'description', label: 'Описание', sortable: true };
         case 'standsCount':
-          return { id: 'standsCount', label: 'Стенды', sortable: false };
+          return { id: 'standsCount', label: 'Стенды', sortable: true };
         default:
           throw new Error(`unknown column`);
       }

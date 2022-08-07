@@ -34,7 +34,7 @@ const StandCategoryCategoriesCatalogue = ({
         case 'description':
           return { id: 'description', label: 'Описание', sortable: true };
         case 'standsCount':
-          return { id: 'standsCount', label: 'Стенды', sortable: false };
+          return { id: 'standsCount', label: 'Стенды', sortable: true };
         default:
           throw new Error(`unknown column`);
       }

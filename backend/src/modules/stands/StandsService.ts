@@ -36,6 +36,24 @@ export class StandsService {
         case 'updatedAt':
           qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
           break;
+        case 'standCategory':
+          qb.leftJoinAndSelect('entity.standCategory', 'standCategory').orderBy(
+            'standCategory.title',
+            filterDto.orderDirection,
+          );
+          break;
+        case 'application':
+          qb.leftJoinAndSelect('entity.application', 'application').orderBy(
+            'application.title',
+            filterDto.orderDirection,
+          );
+          break;
+        case 'organization':
+          qb.leftJoinAndSelect('entity.organization', 'organization').orderBy(
+            'organization.title',
+            filterDto.orderDirection,
+          );
+          break;
       }
     });
   }

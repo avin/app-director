@@ -23,8 +23,8 @@ export class GetStandsFilterDto extends PaginationParams {
   standCategoryId?: string;
 
   @IsOptional()
-  @IsIn(['title', 'description', 'createdAt', 'updatedAt'])
-  orderBy: 'title' | 'description' | 'createdAt' | 'updatedAt' = 'title';
+  orderBy: 'title' | 'description' | 'createdAt' | 'updatedAt' | 'standCategory' | 'application' | 'organization' =
+    'title';
 
   @IsOptional()
   @ValidateIf((o) => !!o.orderBy)

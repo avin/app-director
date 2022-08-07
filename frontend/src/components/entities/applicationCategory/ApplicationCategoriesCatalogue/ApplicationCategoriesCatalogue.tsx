@@ -34,7 +34,7 @@ const ApplicationCategoryCategoriesCatalogue = ({
         case 'description':
           return { id: 'description', label: 'Описание', sortable: true };
         case 'applicationsCount':
-          return { id: 'applicationsCount', label: 'Приложения', sortable: false };
+          return { id: 'applicationsCount', label: 'Приложения', sortable: true };
         default:
           throw new Error(`unknown column`);
       }
