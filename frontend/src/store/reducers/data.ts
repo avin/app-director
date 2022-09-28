@@ -5,6 +5,7 @@ import {
   GetApplicationsResponse,
   GetOrganizationsResponse,
   GetStandsResponse,
+  LogInFormInputs,
   LogInResponse,
   Organization,
   Stand,
@@ -127,11 +128,7 @@ export function apiCall<T>(
 
 export function logIn(): AppThunkAction<Promise<void>> {
   return async (dispatch, getState) => {
-    const logInForm = getState().ui.forms[Form.LogIn];
-
-    if (!logInForm) {
-      throw new Error('logInForm is null');
-    }
+    const logInForm = getState().ui.forms[Form.LogIn] as LogInFormInputs;
 
     const {
       data: { user, accessToken },
@@ -141,7 +138,7 @@ export function logIn(): AppThunkAction<Promise<void>> {
         data: {
           email: logInForm.email,
           password: logInForm.password,
-          remember: logInForm.remember,
+          save: logInForm.save,
         },
       }),
     );

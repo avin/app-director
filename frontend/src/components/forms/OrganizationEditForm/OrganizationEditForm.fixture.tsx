@@ -4,7 +4,7 @@ import OrganizationEditForm from './OrganizationEditForm';
 export default () => {
   return (
     <div className="content">
-      <OrganizationEditForm id="form" onSubmit={console.log} />
+      <OrganizationEditForm onSubmit={console.log} />
     </div>
   );
 };

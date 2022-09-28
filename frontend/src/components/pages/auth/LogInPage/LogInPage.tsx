@@ -118,7 +118,7 @@ const LogInPage = ({}: Props) => {
         <div>
           <ControlledCheckbox
             control={control}
-            name="remember"
+            name="save"
             label="Запомнить меня"
           />
         </div>

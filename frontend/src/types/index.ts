@@ -1,13 +1,17 @@
 import { Role } from '@/constants/role';
 
-export * from './forms';
-
 export type SortingDirection = 'ASC' | 'DESC';
 
 export type ApiError = {
   statusCode: number;
   message: string;
   error: string;
+};
+
+export type LogInFormInputs = {
+  email: string;
+  password: string;
+  save: boolean;
 };
 
 export type CommonEntityProps = {
@@ -93,7 +97,7 @@ export type GetOrganizationsResponse = {
   count: number;
 };
 
-export type FieldType = 'text' | 'relation-select' | 'markdown';
+export type FieldType = 'text' | 'relationSelect' | 'markdown';
 
 export type FieldConfig = {
   name: string;

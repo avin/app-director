@@ -4,7 +4,7 @@ import ApplicationEditForm from './ApplicationEditForm';
 export default () => {
   return (
     <div className="content">
-      <ApplicationEditForm id="form" onSubmit={console.log} />
+      <ApplicationEditForm onSubmit={console.log} />
     </div>
   );
 };

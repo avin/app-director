@@ -3,7 +3,7 @@ import { Location } from 'history';
 
 export type UiState = {
   redirectLinkAfterLogIn: string | null;
-  forms: Record<string, any>;
+  forms: {};
   navigationLog: Location[];
 };
 

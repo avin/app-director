@@ -4,7 +4,7 @@ import StandEditForm from './StandEditForm';
 export default () => {
   return (
     <div className="content">
-      <StandEditForm id="form" onSubmit={console.log} />
+      <StandEditForm onSubmit={console.log} />
     </div>
   );
 };

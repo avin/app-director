@@ -10,6 +10,9 @@ import ApplicationCategorySelect from '@/components/entities/applicationCategory
 import ControlledTextInput from '@/components/common/ControlledTextInput/ControlledTextInput';
 import { Button, Intent } from '@blueprintjs/core';
 import { FieldConfig } from '@/types';
+import OrganizationSelect from '@/components/entities/organization/OrganizationSelect/OrganizationSelect';
+import StandCategorySelect from '@/components/entities/standCategory/StandCategorySelect/StandCategorySelect';
+import ApplicationSelect from '@/components/entities/application/ApplicationSelect/ApplicationSelect';
 
 interface Props {
   name: string;
@@ -82,17 +85,35 @@ const EntityEditForm = ({ name, onSubmit, fields, defaultValues }: Props) => {
               </InputContainer>
             );
           }
-          case 'relation-select': {
+          case 'relationSelect': {
+            const relation = field.relation;
+            if (!relation) {
+              return null;
+            }
+            const SelectComponent = (() => {
+              switch (relation.relationTo) {
+                case 'application':
+                  return ApplicationSelect;
+                case 'organization':
+                  return OrganizationSelect;
+                case 'applicationCategory':
+                  return ApplicationCategorySelect;
+                case 'standCategory':
+                  return StandCategorySelect;
+                default:
+                  return null;
+              }
+            })();
+            if (!SelectComponent) {
+              return null;
+            }
             return (
               <InputContainer
                 key={field.name}
-                label="Категория приложения"
+                label={field.label}
                 error={isSubmitted && errors[field.name]?.message}
               >
-                <ApplicationCategorySelect
-                  name={field.name}
-                  control={control}
-                />
+                <SelectComponent name={field.name} control={control} />
               </InputContainer>
             );
           }

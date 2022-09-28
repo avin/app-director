@@ -4,7 +4,7 @@ import StandCategoryEditForm from './StandCategoryEditForm';
 export default () => {
   return (
     <div className="content">
-      <StandCategoryEditForm id="form" onSubmit={console.log} />
+      <StandCategoryEditForm onSubmit={console.log} />
     </div>
   );
 };

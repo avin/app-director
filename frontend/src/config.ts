@@ -18,7 +18,7 @@ export class Config {
       fields: [
         {
           name: 'applicationCategoryId',
-          type: 'relation-select',
+          type: 'relationSelect',
           relation: {
             relationTo: 'applicationCategory',
             single: true,
@@ -43,6 +43,100 @@ export class Config {
           type: 'markdown',
           label: 'Заметки',
           required: false,
+        },
+      ],
+    },
+    applicationCategory: {
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Название',
+          required: true,
+        },
+        {
+          name: 'properties.description',
+          type: 'text',
+          label: 'Описание',
+          required: false,
+        },
+      ],
+    },
+    organization: {
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Название',
+          required: true,
+        },
+        {
+          name: 'properties.description',
+          type: 'text',
+          label: 'Описание',
+          required: false,
+        },
+      ],
+    },
+    standCategory: {
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Название',
+          required: true,
+        },
+        {
+          name: 'properties.description',
+          type: 'text',
+          label: 'Описание',
+          required: false,
+        },
+      ],
+    },
+    stand: {
+      fields: [
+        {
+          name: 'standCategoryId',
+          type: 'relationSelect',
+          relation: {
+            relationTo: 'standCategory',
+            single: true,
+          },
+          label: 'Категория стенда',
+          required: true,
+        },
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Название',
+          required: true,
+        },
+        {
+          name: 'properties.description',
+          type: 'text',
+          label: 'Описание',
+          required: false,
+        },
+        {
+          name: 'applicationId',
+          type: 'relationSelect',
+          relation: {
+            relationTo: 'application',
+            single: true,
+          },
+          label: 'Приложение',
+          required: true,
+        },
+        {
+          name: 'organizationId',
+          type: 'relationSelect',
+          relation: {
+            relationTo: 'organization',
+            single: true,
+          },
+          label: 'Организация',
+          required: true,
         },
       ],
     },
