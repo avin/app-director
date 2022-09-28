@@ -40,7 +40,6 @@ if (process.env.REACT_APP_FAKE_MODE === 'true') {
         id: '89158d27-8569-4208-a33e-92686512537a',
         email: 'foo@bar.com',
         fullName: 'Avin Lambrero',
-        description: null,
         properties: null,
       },
     },
