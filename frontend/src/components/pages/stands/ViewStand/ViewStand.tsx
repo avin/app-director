@@ -64,7 +64,12 @@ const ViewStand = ({}: Props) => {
             <h4>Организация</h4>
           </div>
           <div className={styles.rowValue}>
-            {stand.organizationId && <OrganizationLabel organizationId={stand.organizationId} linkable />}
+            {stand.organizationId && (
+              <OrganizationLabel
+                organizationId={stand.organizationId}
+                linkable
+              />
+            )}
           </div>
         </div>
       </div>

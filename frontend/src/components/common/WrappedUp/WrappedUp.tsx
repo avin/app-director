@@ -4,7 +4,8 @@ import { CSSTransitionClassNames } from 'react-transition-group/CSSTransition';
 import styles from './WrappedUp.module.scss';
 import { blockFocus } from '@/utils/blockFocus';
 
-interface Props extends React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>> {
+interface Props
+  extends React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>> {
   // is open state
   open?: boolean;
   // animation duration
@@ -28,7 +29,9 @@ const WrappedUp = ({
 }: Props) => {
   const measureRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const changeHeightTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const changeHeightTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
 
   useEffect(() => {
     if (contentRef.current) {
@@ -82,7 +85,11 @@ const WrappedUp = ({
           classNames={cssTransitionClassNames}
           nodeRef={contentRef}
         >
-          <div ref={contentRef} style={{ ...style, height: 0, overflow: 'hidden' }} {...props}>
+          <div
+            ref={contentRef}
+            style={{ ...style, height: 0, overflow: 'hidden' }}
+            {...props}
+          >
             <div ref={measureRef} className={styles.measure}>
               {children}
             </div>

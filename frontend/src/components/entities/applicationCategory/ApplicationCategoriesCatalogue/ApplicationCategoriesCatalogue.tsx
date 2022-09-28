@@ -3,7 +3,9 @@ import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { getApplicationCategories } from '@/store/reducers/applicationCategories';
 import { applicationCategoriesSelector } from '@/store/selectors';
-import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
+import EntitiesCatalogue, {
+  RowBuilderParams,
+} from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { ApplicationCategory } from '@/types';
 import config from '@/config';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
@@ -34,14 +36,21 @@ const ApplicationCategoryCategoriesCatalogue = ({
         case 'description':
           return { id: 'description', label: 'Описание', sortable: true };
         case 'applicationsCount':
-          return { id: 'applicationsCount', label: 'Приложения', sortable: true };
+          return {
+            id: 'applicationsCount',
+            label: 'Приложения',
+            sortable: true,
+          };
         default:
           throw new Error(`unknown column`);
       }
     });
   }, [columns]);
 
-  const handleClickRow = useHandleClickCatalogueRow(config.routes.applicationCategories.view, onClickRow);
+  const handleClickRow = useHandleClickCatalogueRow(
+    config.routes.applicationCategories.view,
+    onClickRow,
+  );
 
   const rowBuilder = useCallback(
     ({ id, entity }: RowBuilderParams<ApplicationCategory>) => (

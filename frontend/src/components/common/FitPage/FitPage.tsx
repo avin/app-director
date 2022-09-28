@@ -6,7 +6,11 @@ interface Props {
   bottomOffset?: number;
 }
 
-const FitPage = ({ children, bottomOffset = 0, minHeight = 0 }: React.PropsWithChildren<Props>) => {
+const FitPage = ({
+  children,
+  bottomOffset = 0,
+  minHeight = 0,
+}: React.PropsWithChildren<Props>) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const resizeContainer = useCallback(() => {
@@ -18,7 +22,10 @@ const FitPage = ({ children, bottomOffset = 0, minHeight = 0 }: React.PropsWithC
 
     const windowHeight = window.innerHeight;
 
-    container.style.height = `${Math.max(windowHeight - rect.y - bottomOffset, minHeight)}px`;
+    container.style.height = `${Math.max(
+      windowHeight - rect.y - bottomOffset,
+      minHeight,
+    )}px`;
   }, [bottomOffset, minHeight]);
 
   useEffect(() => {

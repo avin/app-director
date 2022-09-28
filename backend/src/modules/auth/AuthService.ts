@@ -23,7 +23,10 @@ export class AuthService {
     const { email, password } = authCredentialsDto;
 
     try {
-      const user = await this.usersService.getUserByEmailAndPassword(email, password);
+      const user = await this.usersService.getUserByEmailAndPassword(
+        email,
+        password,
+      );
       return user;
     } catch {
       throw new UnauthorizedException('Please check login credentials');
@@ -35,7 +38,9 @@ export class AuthService {
 
     return this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
-      expiresIn: `${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}s`,
+      expiresIn: `${this.configService.get(
+        'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
+      )}s`,
     });
   }
 
@@ -45,7 +50,9 @@ export class AuthService {
       path: '/',
       secure: true,
       sameSite: 'strict',
-      maxAge: isLongLive ? Number(this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME')) : undefined,
+      maxAge: isLongLive
+        ? Number(this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME'))
+        : undefined,
     };
   };
 
@@ -54,7 +61,9 @@ export class AuthService {
 
     return this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
-      expiresIn: `${this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME')}s`,
+      expiresIn: `${this.configService.get(
+        'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
+      )}s`,
     });
   }
 }

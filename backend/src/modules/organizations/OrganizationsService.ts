@@ -47,7 +47,10 @@ export class OrganizationsService {
   }
 
   async getOrganizationById(id: string) {
-    const found = await this.organizationsRepository.findOne({ where: { id }, relations: ['stands'] });
+    const found = await this.organizationsRepository.findOne({
+      where: { id },
+      relations: ['stands'],
+    });
 
     if (!found) {
       throw new OrganizationNotFoundException(id);
@@ -57,13 +60,18 @@ export class OrganizationsService {
   }
 
   async createOrganization(createOrganizationDto: CreateOrganizationDto) {
-    const organization = this.organizationsRepository.create(createOrganizationDto);
+    const organization = this.organizationsRepository.create(
+      createOrganizationDto,
+    );
 
     await this.organizationsRepository.save(organization);
     return organization;
   }
 
-  async updateOrganization(id: string, updateOrganizationDto: UpdateOrganizationDto) {
+  async updateOrganization(
+    id: string,
+    updateOrganizationDto: UpdateOrganizationDto,
+  ) {
     await this.organizationsRepository.update(id, updateOrganizationDto);
     const updatedOrganization = await this.organizationsRepository.findOne({
       where: {

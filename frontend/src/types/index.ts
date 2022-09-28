@@ -92,3 +92,17 @@ export type GetOrganizationsResponse = {
   items: Organization[];
   count: number;
 };
+
+export type FieldType = 'text' | 'relation-select' | 'markdown';
+
+export type FieldConfig = {
+  name: string;
+  type: FieldType;
+  label: string;
+  required: boolean;
+  [k: string]: any;
+};
+
+export type EntityConfig = {
+  fields: FieldConfig[];
+};

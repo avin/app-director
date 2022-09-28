@@ -21,7 +21,12 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/*.spec.ts", "src/setupProxy.js", "src/translations.js"],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "src/setupProxy.js",
+    "src/translations.js"
+  ],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs",

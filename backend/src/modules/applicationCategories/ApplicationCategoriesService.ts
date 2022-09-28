@@ -20,34 +20,41 @@ export class ApplicationCategoriesService {
   ) {}
 
   async getApplicationCategories(filterDto: GetApplicationCategoriesFilterDto) {
-    return getEntities(this.applicationCategoriesRepository, filterDto, (qb) => {
-      if (filterDto.search) {
-        qbSearchLike(qb, {
-          columns: ['entity.title'],
-          search: filterDto.search,
-        });
-      }
+    return getEntities(
+      this.applicationCategoriesRepository,
+      filterDto,
+      (qb) => {
+        if (filterDto.search) {
+          qbSearchLike(qb, {
+            columns: ['entity.title'],
+            search: filterDto.search,
+          });
+        }
 
-      switch (filterDto.orderBy) {
-        case 'title':
-        case 'createdAt':
-        case 'updatedAt':
-          qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
-          break;
-        case 'applicationsCount':
-          qb.addSelect((subQuery) => {
-            return subQuery
-              .select('COUNT(application.id)', 'count')
-              .from(Application, 'application')
-              .where('application.applicationCategory.id = entity.id');
-          }, 'count').orderBy('count', filterDto.orderDirection);
-          break;
-      }
-    });
+        switch (filterDto.orderBy) {
+          case 'title':
+          case 'createdAt':
+          case 'updatedAt':
+            qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
+            break;
+          case 'applicationsCount':
+            qb.addSelect((subQuery) => {
+              return subQuery
+                .select('COUNT(application.id)', 'count')
+                .from(Application, 'application')
+                .where('application.applicationCategory.id = entity.id');
+            }, 'count').orderBy('count', filterDto.orderDirection);
+            break;
+        }
+      },
+    );
   }
 
   async getApplicationCategoryById(id: string) {
-    const found = await this.applicationCategoriesRepository.findOne({ where: { id }, loadRelationIds: true });
+    const found = await this.applicationCategoriesRepository.findOne({
+      where: { id },
+      loadRelationIds: true,
+    });
 
     if (!found) {
       throw new ApplicationCategoryNotFoundException(id);
@@ -56,20 +63,31 @@ export class ApplicationCategoriesService {
     return found;
   }
 
-  async createApplicationCategory(createApplicationCategoryDto: CreateApplicationCategoryDto) {
-    const applicationCategory = this.applicationCategoriesRepository.create(createApplicationCategoryDto);
+  async createApplicationCategory(
+    createApplicationCategoryDto: CreateApplicationCategoryDto,
+  ) {
+    const applicationCategory = this.applicationCategoriesRepository.create(
+      createApplicationCategoryDto,
+    );
 
     await this.applicationCategoriesRepository.save(applicationCategory);
     return applicationCategory;
   }
 
-  async updateApplicationCategory(id: string, updateApplicationCategoryDto: UpdateApplicationCategoryDto) {
-    await this.applicationCategoriesRepository.update(id, updateApplicationCategoryDto);
-    const updatedApplicationCategory = await this.applicationCategoriesRepository.findOne({
-      where: {
-        id,
-      },
-    });
+  async updateApplicationCategory(
+    id: string,
+    updateApplicationCategoryDto: UpdateApplicationCategoryDto,
+  ) {
+    await this.applicationCategoriesRepository.update(
+      id,
+      updateApplicationCategoryDto,
+    );
+    const updatedApplicationCategory =
+      await this.applicationCategoriesRepository.findOne({
+        where: {
+          id,
+        },
+      });
     if (updatedApplicationCategory) {
       return updatedApplicationCategory;
     }
@@ -77,7 +95,9 @@ export class ApplicationCategoriesService {
   }
 
   async deleteApplicationCategory(id: string) {
-    const result = await this.applicationCategoriesRepository.softDelete({ id });
+    const result = await this.applicationCategoriesRepository.softDelete({
+      id,
+    });
 
     if (result.affected === 0) {
       throw new ApplicationCategoryNotFoundException(id);

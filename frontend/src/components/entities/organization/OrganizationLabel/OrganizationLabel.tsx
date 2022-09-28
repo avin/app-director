@@ -23,7 +23,15 @@ const OrganizationLabel = ({ organizationId, linkable }: Props) => {
 
         let content = <span>O: {entity.title}</span>;
         if (linkable) {
-          content = <Link to={generatePath(config.routes.organizations.view, { id: organizationId })}>{content}</Link>;
+          content = (
+            <Link
+              to={generatePath(config.routes.organizations.view, {
+                id: organizationId,
+              })}
+            >
+              {content}
+            </Link>
+          );
         }
 
         return content;

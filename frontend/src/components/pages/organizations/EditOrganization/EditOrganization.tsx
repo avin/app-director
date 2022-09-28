@@ -18,7 +18,9 @@ const EditOrganization = ({}: Props) => {
 
   const handleSubmitForm = useCallback(async () => {
     await dispatch(updateOrganization(organization.id));
-    navigate(generatePath(config.routes.organizations.view, { id: organization.id }));
+    navigate(
+      generatePath(config.routes.organizations.view, { id: organization.id }),
+    );
   }, [dispatch, organization, navigate]);
 
   return (

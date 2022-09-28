@@ -10,12 +10,21 @@ const NavigateStandCategories = ({}: Props) => {
 
   const handleClickRow = useCallback(
     (standCategoryId: string) => {
-      navigate(generatePath(config.routes.standCategories.view, { id: standCategoryId }));
+      navigate(
+        generatePath(config.routes.standCategories.view, {
+          id: standCategoryId,
+        }),
+      );
     },
     [navigate],
   );
 
-  return <StandCategoriesCatalogue columns={['title', 'description', 'standsCount']} onClickRow={handleClickRow} />;
+  return (
+    <StandCategoriesCatalogue
+      columns={['title', 'description', 'standsCount']}
+      onClickRow={handleClickRow}
+    />
+  );
 };
 
 export default NavigateStandCategories;

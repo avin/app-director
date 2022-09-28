@@ -17,8 +17,13 @@ export class AuthController {
   }
 
   @Post('/signin')
-  async signIn(@Body() authCredentialsDto: AuthCredentialsDto, @Res({ passthrough: true }) response: Response) {
-    const user = await this.authService.getUserByEmailAndPassword(authCredentialsDto);
+  async signIn(
+    @Body() authCredentialsDto: AuthCredentialsDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const user = await this.authService.getUserByEmailAndPassword(
+      authCredentialsDto,
+    );
 
     const accessToken = await this.authService.getAccessTokenForUser(user);
     const refreshToken = await this.authService.getRefreshTokenForUser(user, {
@@ -28,7 +33,9 @@ export class AuthController {
     response.cookie(
       'Refresh',
       refreshToken,
-      this.authService.getRefreshTokenCookieOptions(authCredentialsDto.remember),
+      this.authService.getRefreshTokenCookieOptions(
+        authCredentialsDto.remember,
+      ),
     );
 
     return {
@@ -39,13 +46,22 @@ export class AuthController {
 
   @Get('/refresh')
   @UseGuards(JwtRefreshGuard)
-  async refresh(@GetUser() jwtPayload: JwtPayload & { user: User }, @Res({ passthrough: true }) response: Response) {
+  async refresh(
+    @GetUser() jwtPayload: JwtPayload & { user: User },
+    @Res({ passthrough: true }) response: Response,
+  ) {
     const { user } = jwtPayload;
 
     const accessToken = await this.authService.getAccessTokenForUser(user);
-    const refreshToken = await this.authService.getRefreshTokenForUser(user, { isLongLive: jwtPayload.isLongLive });
+    const refreshToken = await this.authService.getRefreshTokenForUser(user, {
+      isLongLive: jwtPayload.isLongLive,
+    });
 
-    response.cookie('Refresh', refreshToken, this.authService.getRefreshTokenCookieOptions(jwtPayload.isLongLive));
+    response.cookie(
+      'Refresh',
+      refreshToken,
+      this.authService.getRefreshTokenCookieOptions(jwtPayload.isLongLive),
+    );
 
     return {
       accessToken,

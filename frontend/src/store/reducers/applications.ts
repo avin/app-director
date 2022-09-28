@@ -21,7 +21,10 @@ const slice = createSlice({
   name: 'applications',
   initialState,
   reducers: {
-    setApplications: (state, action: PayloadAction<Record<string, Application>>) => {
+    setApplications: (
+      state,
+      action: PayloadAction<Record<string, Application>>,
+    ) => {
       state.entities = {
         ...state.entities,
         ...action.payload,
@@ -55,17 +58,28 @@ export function getApplications(
 
     await Promise.all(
       [
-        ['applicationCategory', 'applicationCategoryId', 'applicationCategories', getApplicationCategories] as const,
-      ].reduce<Promise<unknown>[]>((acc, [relationName, relationIdKey, entityStoreKey, getRelationAction]) => {
-        if (withRelations.includes(relationName)) {
-          let ids = getRelationIdsFromEntitiesArray(items, relationIdKey);
-          ids = ids.filter((id) => !getState()[entityStoreKey].entities[id]);
-          if (ids.length) {
-            acc.push(dispatch(getRelationAction({ ids })));
+        [
+          'applicationCategory',
+          'applicationCategoryId',
+          'applicationCategories',
+          getApplicationCategories,
+        ] as const,
+      ].reduce<Promise<unknown>[]>(
+        (
+          acc,
+          [relationName, relationIdKey, entityStoreKey, getRelationAction],
+        ) => {
+          if (withRelations.includes(relationName)) {
+            let ids = getRelationIdsFromEntitiesArray(items, relationIdKey);
+            ids = ids.filter((id) => !getState()[entityStoreKey].entities[id]);
+            if (ids.length) {
+              acc.push(dispatch(getRelationAction({ ids })));
+            }
           }
-        }
-        return acc;
-      }, []),
+          return acc;
+        },
+        [],
+      ),
     );
 
     return {
@@ -75,7 +89,9 @@ export function getApplications(
   };
 }
 
-export function getApplication(applicationId: string): AppThunkAction<Promise<Application>> {
+export function getApplication(
+  applicationId: string,
+): AppThunkAction<Promise<Application>> {
   return async (dispatch, getState) => {
     const { data } = await dispatch(
       apiCall<Application>({
@@ -91,7 +107,9 @@ export function getApplication(applicationId: string): AppThunkAction<Promise<Ap
   };
 }
 
-export function updateApplication(applicationId: string): AppThunkAction<Promise<Application>> {
+export function updateApplication(
+  applicationId: string,
+): AppThunkAction<Promise<Application>> {
   return async (dispatch, getState) => {
     const editApplicationForm = getState().ui.forms[Form.EditApplication];
 

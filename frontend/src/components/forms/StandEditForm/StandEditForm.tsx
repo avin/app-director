@@ -39,9 +39,12 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
     defaultValues: {
       title: stand?.title || '',
       description: stand?.description || '',
-      standCategoryId: stand?.standCategoryId || searchParams.get('standCategoryId') || '',
-      applicationId: stand?.applicationId || searchParams.get('applicationId') || '',
-      organizationId: stand?.organizationId || searchParams.get('organizationId') || '',
+      standCategoryId:
+        stand?.standCategoryId || searchParams.get('standCategoryId') || '',
+      applicationId:
+        stand?.applicationId || searchParams.get('applicationId') || '',
+      organizationId:
+        stand?.organizationId || searchParams.get('organizationId') || '',
     },
   });
 
@@ -84,28 +87,64 @@ const StandEditForm = ({ id = 'stand-edit-form', onSubmit }: Props) => {
     <form id={id} onSubmit={handleFormSubmit}>
       <FormErrorMessage message={errorMessage} />
 
-      <InputContainer label="Категория стенда" error={isSubmitted && errors.standCategoryId?.message}>
-        <StandCategorySelect name="standCategoryId" control={control} rules={requiredRules} />
+      <InputContainer
+        label="Категория стенда"
+        error={isSubmitted && errors.standCategoryId?.message}
+      >
+        <StandCategorySelect
+          name="standCategoryId"
+          control={control}
+          rules={requiredRules}
+        />
       </InputContainer>
 
-      <InputContainer label="Название" error={isSubmitted && errors.title?.message}>
-        <ControlledTextInput name="title" control={control} rules={requiredRules} />
+      <InputContainer
+        label="Название"
+        error={isSubmitted && errors.title?.message}
+      >
+        <ControlledTextInput
+          name="title"
+          control={control}
+          rules={requiredRules}
+        />
       </InputContainer>
 
-      <InputContainer label="Описание" error={isSubmitted && errors.description?.message}>
-        <ControlledTextArea growVertically name="description" control={control} />
+      <InputContainer
+        label="Описание"
+        error={isSubmitted && errors.description?.message}
+      >
+        <ControlledTextArea
+          growVertically
+          name="description"
+          control={control}
+        />
       </InputContainer>
 
-      <InputContainer label="Приложение" error={isSubmitted && errors.applicationId?.message}>
-        <ApplicationSelect name="applicationId" control={control} rules={requiredRules} />
+      <InputContainer
+        label="Приложение"
+        error={isSubmitted && errors.applicationId?.message}
+      >
+        <ApplicationSelect
+          name="applicationId"
+          control={control}
+          rules={requiredRules}
+        />
       </InputContainer>
 
-      <InputContainer label="Организация" error={isSubmitted && errors.organizationId?.message}>
+      <InputContainer
+        label="Организация"
+        error={isSubmitted && errors.organizationId?.message}
+      >
         <OrganizationSelect name="organizationId" control={control} />
       </InputContainer>
 
       <div className={styles.controls}>
-        <Button type="submit" loading={isInProgress} intent={Intent.SUCCESS} icon="floppy-disk">
+        <Button
+          type="submit"
+          loading={isInProgress}
+          intent={Intent.SUCCESS}
+          icon="floppy-disk"
+        >
           Сохранить
         </Button>
       </div>

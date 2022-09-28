@@ -49,7 +49,8 @@ const slice = createSlice({
   },
 });
 
-export const { setCurrentUser, setAccessToken, resetData, resetAuthData } = slice.actions;
+export const { setCurrentUser, setAccessToken, resetData, resetAuthData } =
+  slice.actions;
 
 export default slice.reducer;
 
@@ -74,10 +75,19 @@ export function refreshTokens(): AppThunkAction<Promise<void>> {
 }
 
 export function apiCall<T>(
-  params: AxiosRequestConfig & { urlReplacements?: Record<string, string>; isAfterRefreshToken?: boolean },
+  params: AxiosRequestConfig & {
+    urlReplacements?: Record<string, string>;
+    isAfterRefreshToken?: boolean;
+  },
 ): AppThunkAction<Promise<AxiosResponse<T>>> {
   return async (dispatch, getState) => {
-    const { headers, urlReplacements, url, isAfterRefreshToken, ...otherParams } = params;
+    const {
+      headers,
+      urlReplacements,
+      url,
+      isAfterRefreshToken,
+      ...otherParams
+    } = params;
     const token = accessTokenSelector(getState());
 
     const reqHeaders = { ...headers };

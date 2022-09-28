@@ -10,7 +10,11 @@ module.exports = {
   },
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
-      _.set(webpackConfig, ['resolve', 'alias', '@'], path.resolve(__dirname, `${paths.appSrc}/`));
+      _.set(
+        webpackConfig,
+        ['resolve', 'alias', '@'],
+        path.resolve(__dirname, `${paths.appSrc}/`),
+      );
 
       const htmlWebpackPluginInstance = webpackConfig.plugins.find(
         (webpackPlugin) => webpackPlugin instanceof HtmlWebpackPlugin,
@@ -24,8 +28,14 @@ module.exports = {
   },
   devServer: (devServerConfig, { env, paths, proxy, allowedHost }) => {
     devServerConfig.https = {
-      key: fs.readFileSync('../node_modules/localhost-certs/files/server.key', 'utf8'),
-      cert: fs.readFileSync('../node_modules/localhost-certs/files/server.crt', 'utf8'),
+      key: fs.readFileSync(
+        '../node_modules/localhost-certs/files/server.key',
+        'utf8',
+      ),
+      cert: fs.readFileSync(
+        '../node_modules/localhost-certs/files/server.crt',
+        'utf8',
+      ),
     };
     return devServerConfig;
   },

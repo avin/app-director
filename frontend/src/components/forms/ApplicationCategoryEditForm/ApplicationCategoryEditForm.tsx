@@ -19,7 +19,10 @@ interface Props {
   onSubmit: (data: unknown) => Promise<void> | void;
 }
 
-const ApplicationCategoryEditForm = ({ id = 'applicationCategory-edit-form', onSubmit }: Props) => {
+const ApplicationCategoryEditForm = ({
+  id = 'applicationCategory-edit-form',
+  onSubmit,
+}: Props) => {
   const [isInProgress, setIsInProgress] = React.useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const applicationCategory = useApplicationCategoryByUrlParams();
@@ -43,7 +46,12 @@ const ApplicationCategoryEditForm = ({ id = 'applicationCategory-edit-form', onS
         return;
       }
 
-      dispatch(setFormState({ formName: Form.EditApplicationCategory, formState: data }));
+      dispatch(
+        setFormState({
+          formName: Form.EditApplicationCategory,
+          formState: data,
+        }),
+      );
 
       try {
         setErrorMessage(null);
@@ -76,16 +84,35 @@ const ApplicationCategoryEditForm = ({ id = 'applicationCategory-edit-form', onS
     <form id={id} onSubmit={handleFormSubmit}>
       <FormErrorMessage message={errorMessage} />
 
-      <InputContainer label="Название" error={isSubmitted && errors.title?.message}>
-        <ControlledTextInput name="title" control={control} rules={requiredRules} />
+      <InputContainer
+        label="Название"
+        error={isSubmitted && errors.title?.message}
+      >
+        <ControlledTextInput
+          name="title"
+          control={control}
+          rules={requiredRules}
+        />
       </InputContainer>
 
-      <InputContainer label="Описание" error={isSubmitted && errors.description?.message}>
-        <ControlledTextArea growVertically name="description" control={control} />
+      <InputContainer
+        label="Описание"
+        error={isSubmitted && errors.description?.message}
+      >
+        <ControlledTextArea
+          growVertically
+          name="description"
+          control={control}
+        />
       </InputContainer>
 
       <div className={styles.controls}>
-        <Button type="submit" loading={isInProgress} intent={Intent.SUCCESS} icon="floppy-disk">
+        <Button
+          type="submit"
+          loading={isInProgress}
+          intent={Intent.SUCCESS}
+          icon="floppy-disk"
+        >
           Сохранить
         </Button>
       </div>

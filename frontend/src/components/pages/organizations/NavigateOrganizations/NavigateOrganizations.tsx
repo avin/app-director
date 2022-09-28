@@ -10,12 +10,19 @@ const NavigateOrganizations = ({}: Props) => {
 
   const handleClickRow = useCallback(
     (organizationId: string) => {
-      navigate(generatePath(config.routes.organizations.view, { id: organizationId }));
+      navigate(
+        generatePath(config.routes.organizations.view, { id: organizationId }),
+      );
     },
     [navigate],
   );
 
-  return <OrganizationsCatalogue columns={['title', 'description', 'standsCount']} onClickRow={handleClickRow} />;
+  return (
+    <OrganizationsCatalogue
+      columns={['title', 'description', 'standsCount']}
+      onClickRow={handleClickRow}
+    />
+  );
 };
 
 export default NavigateOrganizations;

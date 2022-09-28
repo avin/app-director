@@ -22,11 +22,16 @@ export class ApplicationsService {
   async getApplications(filterDto: GetApplicationsFilterDto) {
     return getEntities(this.applicationsRepository, filterDto, (qb) => {
       if (filterDto.applicationCategoryId) {
-        qb.andWhere('entity.applicationCategoryId = :id', { id: filterDto.applicationCategoryId });
+        qb.andWhere('entity.applicationCategoryId = :id', {
+          id: filterDto.applicationCategoryId,
+        });
       }
 
       if (filterDto.search) {
-        qb.innerJoinAndSelect('entity.applicationCategory', 'applicationCategory');
+        qb.innerJoinAndSelect(
+          'entity.applicationCategory',
+          'applicationCategory',
+        );
 
         qbSearchLike(qb, {
           columns: ['entity.title', 'applicationCategory.title'],
@@ -41,10 +46,10 @@ export class ApplicationsService {
           qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
           break;
         case 'applicationCategory':
-          qb.leftJoinAndSelect('entity.applicationCategory', 'applicationCategory').orderBy(
-            'applicationCategory.title',
-            filterDto.orderDirection,
-          );
+          qb.leftJoinAndSelect(
+            'entity.applicationCategory',
+            'applicationCategory',
+          ).orderBy('applicationCategory.title', filterDto.orderDirection);
           break;
         case 'standsCount':
           qb.addSelect((subQuery) => {
@@ -59,7 +64,10 @@ export class ApplicationsService {
   }
 
   async getApplicationById(id: string) {
-    const found = await this.applicationsRepository.findOne({ where: { id }, loadRelationIds: true });
+    const found = await this.applicationsRepository.findOne({
+      where: { id },
+      loadRelationIds: true,
+    });
 
     if (!found) {
       throw new ApplicationNotFoundException(id);
@@ -69,13 +77,17 @@ export class ApplicationsService {
   }
 
   async createApplication(createApplicationDto: CreateApplicationDto) {
-    const application = this.applicationsRepository.create(createApplicationDto);
+    const application =
+      this.applicationsRepository.create(createApplicationDto);
 
     await this.applicationsRepository.save(application);
     return application;
   }
 
-  async updateApplication(id: string, updateApplicationDto: UpdateApplicationDto) {
+  async updateApplication(
+    id: string,
+    updateApplicationDto: UpdateApplicationDto,
+  ) {
     await this.applicationsRepository.update(id, updateApplicationDto);
     const updatedApplication = await this.applicationsRepository.findOne({
       where: {

@@ -20,8 +20,12 @@ export class Application extends BaseEntity {
   @Column({ nullable: true })
   applicationCategoryId: string;
 
-  @ManyToOne((_type) => ApplicationCategory, (applicationCategory) => applicationCategory.applications, {
-    eager: false,
-  })
+  @ManyToOne(
+    (_type) => ApplicationCategory,
+    (applicationCategory) => applicationCategory.applications,
+    {
+      eager: false,
+    },
+  )
   applicationCategory: ApplicationCategory[];
 }

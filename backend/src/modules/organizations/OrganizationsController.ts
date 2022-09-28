@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { GetOrganizationsFilterDto } from './dto/GetOrganizationsFilterDto';
 import { Logger } from '@nestjs/common';
 import { OrganizationsService } from './OrganizationsService';
@@ -25,14 +35,26 @@ export class OrganizationsController {
 
   @Post()
   createOrganization(@Body() createOrganizationDto: CreateOrganizationDto) {
-    this.logger.verbose(`Creating a new organization. Data: ${JSON.stringify(createOrganizationDto)}`);
+    this.logger.verbose(
+      `Creating a new organization. Data: ${JSON.stringify(
+        createOrganizationDto,
+      )}`,
+    );
     return this.organizationsService.createOrganization(createOrganizationDto);
   }
 
   @Patch('/:id')
-  updateOrganization(@Param('id') id: string, @Body() updateOrganizationDto: UpdateOrganizationDto) {
-    this.logger.verbose(`Update an organization. Data: ${JSON.stringify(updateOrganizationDto)}`);
-    return this.organizationsService.updateOrganization(id, updateOrganizationDto);
+  updateOrganization(
+    @Param('id') id: string,
+    @Body() updateOrganizationDto: UpdateOrganizationDto,
+  ) {
+    this.logger.verbose(
+      `Update an organization. Data: ${JSON.stringify(updateOrganizationDto)}`,
+    );
+    return this.organizationsService.updateOrganization(
+      id,
+      updateOrganizationDto,
+    );
   }
 
   @Delete('/:id')

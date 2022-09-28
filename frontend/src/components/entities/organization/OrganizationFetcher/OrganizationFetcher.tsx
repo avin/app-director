@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import { organizationByIdSelector } from '@/store/selectors';
-import EntityFetcher, { EntityFetcherRenderParams } from '@/components/common/EntityFetcher/EntityFetcher';
+import EntityFetcher, {
+  EntityFetcherRenderParams,
+} from '@/components/common/EntityFetcher/EntityFetcher';
 import { Organization } from '@/types';
 import { getOrganization } from '@/store/reducers/organizations';
 

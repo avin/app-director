@@ -17,7 +17,9 @@ const ViewHeader = ({ title, icon, controls, onClose }: Props) => {
     <div className={styles.viewHeader}>
       <div className={styles.left}>
         {icon && <Icon size={20} icon={icon} className={styles.icon} />}
-        <div className={styles.title}>{title && <h5 className={cn('bp4-heading')}>{title}</h5>}</div>
+        <div className={styles.title}>
+          {title && <h5 className={cn('bp4-heading')}>{title}</h5>}
+        </div>
       </div>
       <div className={styles.right}>
         <div className={styles.controls}>{controls}</div>
@@ -25,7 +27,11 @@ const ViewHeader = ({ title, icon, controls, onClose }: Props) => {
           {onClose && (
             <>
               {controls && <div className="bp4-navbar-divider" />}
-              <Button icon="cross" onClick={onClose} className={styles.closeButton} />
+              <Button
+                icon="cross"
+                onClick={onClose}
+                className={styles.closeButton}
+              />
             </>
           )}
         </div>

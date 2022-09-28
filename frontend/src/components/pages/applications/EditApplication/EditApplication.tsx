@@ -20,12 +20,18 @@ const EditApplication = ({}: Props) => {
 
   const handleSubmitForm = useCallback(async () => {
     await dispatch(updateApplication(application.id));
-    navigate(generatePath(config.routes.applications.view, { id: application.id }));
+    navigate(
+      generatePath(config.routes.applications.view, { id: application.id }),
+    );
   }, [dispatch, application, navigate]);
 
   return (
     <div>
-      <ViewHeader title={application.title} icon={config.defaultIcons.application} onClose={goBack} />
+      <ViewHeader
+        title={application.title}
+        icon={config.defaultIcons.application}
+        onClose={goBack}
+      />
       <div className="page-content">
         <ApplicationEditForm onSubmit={handleSubmitForm} />
       </div>

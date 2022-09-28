@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { GetApplicationsFilterDto } from './dto/GetApplicationsFilterDto';
 import { Logger } from '@nestjs/common';
 import { ApplicationsService } from './ApplicationsService';
@@ -25,13 +35,22 @@ export class ApplicationsController {
 
   @Post()
   createApplication(@Body() createApplicationDto: CreateApplicationDto) {
-    this.logger.verbose(`Creating a new application. Data: ${JSON.stringify(createApplicationDto)}`);
+    this.logger.verbose(
+      `Creating a new application. Data: ${JSON.stringify(
+        createApplicationDto,
+      )}`,
+    );
     return this.applicationsService.createApplication(createApplicationDto);
   }
 
   @Patch('/:id')
-  updateApplication(@Param('id') id: string, @Body() updateApplicationDto: UpdateApplicationDto) {
-    this.logger.verbose(`Update an application. Data: ${JSON.stringify(updateApplicationDto)}`);
+  updateApplication(
+    @Param('id') id: string,
+    @Body() updateApplicationDto: UpdateApplicationDto,
+  ) {
+    this.logger.verbose(
+      `Update an application. Data: ${JSON.stringify(updateApplicationDto)}`,
+    );
     return this.applicationsService.updateApplication(id, updateApplicationDto);
   }
 

@@ -17,12 +17,21 @@ const CreateStandCategory = ({}: Props) => {
 
   const handleSubmitForm = useCallback(async () => {
     const standCategory = await dispatch(createStandCategory());
-    navigate(generatePath(config.routes.standCategories.view, { id: standCategory.id }), { replace: true });
+    navigate(
+      generatePath(config.routes.standCategories.view, {
+        id: standCategory.id,
+      }),
+      { replace: true },
+    );
   }, [dispatch, navigate]);
 
   return (
     <div>
-      <ViewHeader icon={config.defaultIcons.standCategory} title="Добавление приложения" onClose={goBack} />
+      <ViewHeader
+        icon={config.defaultIcons.standCategory}
+        title="Добавление приложения"
+        onClose={goBack}
+      />
       <div className="page-content">
         <StandCategoryEditForm onSubmit={handleSubmitForm} />
       </div>

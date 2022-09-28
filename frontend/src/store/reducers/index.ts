@@ -1,10 +1,17 @@
-import { AnyAction, CombinedState, combineReducers, Reducer } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  CombinedState,
+  combineReducers,
+  Reducer,
+} from '@reduxjs/toolkit';
 import data, { DataState } from './data';
 import applications, { ApplicationsState } from './applications';
 import stands, { StandsState } from './stands';
 import organizations, { OrganizationsState } from './organizations';
 import ui, { UiState } from './ui';
-import applicationCategories, { ApplicationCategoriesState } from '@/store/reducers/applicationCategories';
+import applicationCategories, {
+  ApplicationCategoriesState,
+} from '@/store/reducers/applicationCategories';
 import standCategories, { StandCategoriesState } from './standCategories';
 
 export type RootState = CombinedState<{
@@ -27,7 +34,10 @@ const rootReducer = combineReducers({
   ui,
 });
 
-const resettableRootReducer: Reducer = (state: RootState, action: AnyAction) => {
+const resettableRootReducer: Reducer = (
+  state: RootState,
+  action: AnyAction,
+) => {
   if (action.type === 'store/reset') {
     return rootReducer(undefined, action);
   }

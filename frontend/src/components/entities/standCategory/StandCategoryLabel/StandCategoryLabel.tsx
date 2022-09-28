@@ -24,7 +24,13 @@ const StandCategoryCategoryLabel = ({ standCategoryId, linkable }: Props) => {
         let content = <span>SC: {entity.title}</span>;
         if (linkable) {
           content = (
-            <Link to={generatePath(config.routes.standCategories.view, { id: standCategoryId })}>{content}</Link>
+            <Link
+              to={generatePath(config.routes.standCategories.view, {
+                id: standCategoryId,
+              })}
+            >
+              {content}
+            </Link>
           );
         }
 

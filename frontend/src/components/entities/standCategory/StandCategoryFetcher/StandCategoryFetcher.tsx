@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react';
 import { standCategoryByIdSelector } from '@/store/selectors';
 import { getStandCategory } from '@/store/reducers/standCategories';
-import EntityFetcher, { EntityFetcherRenderParams } from '@/components/common/EntityFetcher/EntityFetcher';
+import EntityFetcher, {
+  EntityFetcherRenderParams,
+} from '@/components/common/EntityFetcher/EntityFetcher';
 import { StandCategory } from '@/types';
 
 interface Props {

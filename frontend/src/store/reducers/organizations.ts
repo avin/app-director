@@ -19,7 +19,10 @@ const slice = createSlice({
   name: 'organizations',
   initialState,
   reducers: {
-    setOrganizations: (state, action: PayloadAction<Record<string, Organization>>) => {
+    setOrganizations: (
+      state,
+      action: PayloadAction<Record<string, Organization>>,
+    ) => {
       state.entities = {
         ...state.entities,
         ...action.payload,
@@ -36,7 +39,9 @@ export const { setOrganizations, setOrganization } = slice.actions;
 
 export default slice.reducer;
 
-export function getOrganizations(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+export function getOrganizations(
+  filters: any = {},
+): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },
@@ -55,7 +60,9 @@ export function getOrganizations(filters: any = {}): AppThunkAction<Promise<{ id
   };
 }
 
-export function getOrganization(organizationId: string): AppThunkAction<Promise<Organization>> {
+export function getOrganization(
+  organizationId: string,
+): AppThunkAction<Promise<Organization>> {
   return async (dispatch, getState) => {
     const { data } = await dispatch(
       apiCall<Organization>({
@@ -71,7 +78,9 @@ export function getOrganization(organizationId: string): AppThunkAction<Promise<
   };
 }
 
-export function updateOrganization(organizationId: string): AppThunkAction<Promise<Organization>> {
+export function updateOrganization(
+  organizationId: string,
+): AppThunkAction<Promise<Organization>> {
   return async (dispatch, getState) => {
     const editOrganizationForm = getState().ui.forms[Form.EditOrganization];
 

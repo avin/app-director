@@ -8,12 +8,17 @@ export default () => {
   return (
     <MemoryRouter
       initialEntries={[
-        generatePath(config.routes.standCategories.edit, { id: '00000000-0000-0000-0000-000000000000' }),
+        generatePath(config.routes.standCategories.edit, {
+          id: '00000000-0000-0000-0000-000000000000',
+        }),
       ]}
     >
       <Routes>
         <Route element={<GeneralLayout />}>
-          <Route path={config.routes.standCategories.edit} element={<EditStandCategory />} />
+          <Route
+            path={config.routes.standCategories.edit}
+            element={<EditStandCategory />}
+          />
         </Route>
       </Routes>
     </MemoryRouter>

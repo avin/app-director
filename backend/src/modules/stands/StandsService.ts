@@ -21,13 +21,19 @@ export class StandsService {
   async getStands(filterDto: GetStandsFilterDto) {
     return getEntities(this.standsRepository, filterDto, (qb) => {
       if (filterDto.applicationId) {
-        qb.andWhere('entity.applicationId = :id', { id: filterDto.applicationId });
+        qb.andWhere('entity.applicationId = :id', {
+          id: filterDto.applicationId,
+        });
       }
       if (filterDto.organizationId) {
-        qb.andWhere('entity.organizationId = :id', { id: filterDto.organizationId });
+        qb.andWhere('entity.organizationId = :id', {
+          id: filterDto.organizationId,
+        });
       }
       if (filterDto.standCategoryId) {
-        qb.andWhere('entity.standCategoryId = :id', { id: filterDto.standCategoryId });
+        qb.andWhere('entity.standCategoryId = :id', {
+          id: filterDto.standCategoryId,
+        });
       }
 
       if (filterDto.search) {
@@ -36,7 +42,12 @@ export class StandsService {
           .innerJoinAndSelect('entity.standCategory', 'standCategory');
 
         qbSearchLike(qb, {
-          columns: ['entity.title', 'application.title', 'organization.title', 'standCategory.title'],
+          columns: [
+            'entity.title',
+            'application.title',
+            'organization.title',
+            'standCategory.title',
+          ],
           search: filterDto.search,
         });
       }

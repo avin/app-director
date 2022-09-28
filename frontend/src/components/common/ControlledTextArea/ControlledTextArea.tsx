@@ -11,7 +11,13 @@ interface Props<TFieldValues extends FieldValues> extends TextAreaProps {
   rules?: RegisterOptions;
 }
 
-const ControlledTextArea = <TFieldValues,>({ name, control, rules, className, ...props }: Props<TFieldValues>) => {
+const ControlledTextArea = <TFieldValues extends FieldValues>({
+  name,
+  control,
+  rules,
+  className,
+  ...props
+}: Props<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({
@@ -21,7 +27,12 @@ const ControlledTextArea = <TFieldValues,>({ name, control, rules, className, ..
   });
 
   return (
-    <TextArea {...props} className={cn(className, styles.textArea)} onChange={onChange} value={String(value || '')} />
+    <TextArea
+      {...props}
+      className={cn(className, styles.textArea)}
+      onChange={onChange}
+      value={String(value || '')}
+    />
   );
 };
 

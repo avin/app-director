@@ -23,7 +23,15 @@ const ApplicationLabel = ({ applicationId, linkable }: Props) => {
 
         let content = <span>A: {entity.title}</span>;
         if (linkable) {
-          content = <Link to={generatePath(config.routes.applications.view, { id: applicationId })}>{content}</Link>;
+          content = (
+            <Link
+              to={generatePath(config.routes.applications.view, {
+                id: applicationId,
+              })}
+            >
+              {content}
+            </Link>
+          );
         }
 
         return content;

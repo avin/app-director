@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react';
 import { applicationByIdSelector } from '@/store/selectors';
 import { getApplication } from '@/store/reducers/applications';
-import EntityFetcher, { EntityFetcherRenderParams } from '@/components/common/EntityFetcher/EntityFetcher';
+import EntityFetcher, {
+  EntityFetcherRenderParams,
+} from '@/components/common/EntityFetcher/EntityFetcher';
 import { Application } from '@/types';
 
 interface Props {

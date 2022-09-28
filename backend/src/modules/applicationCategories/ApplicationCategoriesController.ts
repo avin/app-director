@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { GetApplicationCategoriesFilterDto } from './dto/GetApplicationCategoriesFilterDto';
 import { Logger } from '@nestjs/common';
 import { ApplicationCategoriesService } from './ApplicationCategoriesService';
@@ -11,11 +21,17 @@ import { UpdateApplicationCategoryDto } from './dto/UpdateApplicationCategoryDto
 export class ApplicationCategoriesController {
   private logger = new Logger(ApplicationCategoriesController.name);
 
-  constructor(private applicationCategoriesService: ApplicationCategoriesService) {}
+  constructor(
+    private applicationCategoriesService: ApplicationCategoriesService,
+  ) {}
 
   @Get()
-  getApplicationCategories(@Query() filterDto: GetApplicationCategoriesFilterDto) {
-    return this.applicationCategoriesService.getApplicationCategories(filterDto);
+  getApplicationCategories(
+    @Query() filterDto: GetApplicationCategoriesFilterDto,
+  ) {
+    return this.applicationCategoriesService.getApplicationCategories(
+      filterDto,
+    );
   }
 
   @Get('/:id')
@@ -24,9 +40,17 @@ export class ApplicationCategoriesController {
   }
 
   @Post()
-  createApplicationCategory(@Body() createApplicationCategoryDto: CreateApplicationCategoryDto) {
-    this.logger.verbose(`Creating a new applicationCategory. Data: ${JSON.stringify(createApplicationCategoryDto)}`);
-    return this.applicationCategoriesService.createApplicationCategory(createApplicationCategoryDto);
+  createApplicationCategory(
+    @Body() createApplicationCategoryDto: CreateApplicationCategoryDto,
+  ) {
+    this.logger.verbose(
+      `Creating a new applicationCategory. Data: ${JSON.stringify(
+        createApplicationCategoryDto,
+      )}`,
+    );
+    return this.applicationCategoriesService.createApplicationCategory(
+      createApplicationCategoryDto,
+    );
   }
 
   @Patch('/:id')
@@ -34,8 +58,15 @@ export class ApplicationCategoriesController {
     @Param('id') id: string,
     @Body() updateApplicationCategoryDto: UpdateApplicationCategoryDto,
   ) {
-    this.logger.verbose(`Update an applicationCategory. Data: ${JSON.stringify(updateApplicationCategoryDto)}`);
-    return this.applicationCategoriesService.updateApplicationCategory(id, updateApplicationCategoryDto);
+    this.logger.verbose(
+      `Update an applicationCategory. Data: ${JSON.stringify(
+        updateApplicationCategoryDto,
+      )}`,
+    );
+    return this.applicationCategoriesService.updateApplicationCategory(
+      id,
+      updateApplicationCategoryDto,
+    );
   }
 
   @Delete('/:id')

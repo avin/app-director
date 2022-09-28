@@ -64,7 +64,9 @@ const Navigation = ({}: Props) => {
             id: 'applicationCategories',
             icon: config.defaultIcons.applicationCategory,
             label: 'Категории приложений',
-            isSelected: location.pathname.startsWith(config.routes.applicationCategories.$),
+            isSelected: location.pathname.startsWith(
+              config.routes.applicationCategories.$,
+            ),
             nodeData: {
               route: config.routes.applicationCategories.$,
             },
@@ -73,7 +75,9 @@ const Navigation = ({}: Props) => {
             id: 'standCategories',
             icon: config.defaultIcons.standCategory,
             label: 'Категории стендов',
-            isSelected: location.pathname.startsWith(config.routes.standCategories.$),
+            isSelected: location.pathname.startsWith(
+              config.routes.standCategories.$,
+            ),
             nodeData: {
               route: config.routes.standCategories.$,
             },
@@ -82,7 +86,9 @@ const Navigation = ({}: Props) => {
             id: 'users',
             icon: 'people',
             label: 'Пользователи',
-            isSelected: location.pathname.startsWith(config.routes.administration.users),
+            isSelected: location.pathname.startsWith(
+              config.routes.administration.users,
+            ),
             nodeData: {
               route: config.routes.administration.users,
             },
@@ -91,7 +97,9 @@ const Navigation = ({}: Props) => {
             id: 'history',
             icon: 'history',
             label: 'История действий',
-            isSelected: location.pathname.startsWith(config.routes.administration.log),
+            isSelected: location.pathname.startsWith(
+              config.routes.administration.log,
+            ),
             nodeData: {
               route: config.routes.administration.log,
             },

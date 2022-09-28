@@ -23,7 +23,9 @@ export const storeState: RootState = {
   },
   applicationCategories: {
     entities: (() => {
-      const entity = generateApplicationCategory({ id: '00000000-0000-0000-0000-000000000000' });
+      const entity = generateApplicationCategory({
+        id: '00000000-0000-0000-0000-000000000000',
+      });
       return {
         [entity.id]: entity,
       };
@@ -31,7 +33,9 @@ export const storeState: RootState = {
   },
   applications: {
     entities: (() => {
-      const entity = generateApplication({ id: '00000000-0000-0000-0000-000000000000' });
+      const entity = generateApplication({
+        id: '00000000-0000-0000-0000-000000000000',
+      });
       return {
         [entity.id]: entity,
       };
@@ -39,7 +43,9 @@ export const storeState: RootState = {
   },
   standCategories: {
     entities: (() => {
-      const entity = generateStandCategory({ id: '00000000-0000-0000-0000-000000000000' });
+      const entity = generateStandCategory({
+        id: '00000000-0000-0000-0000-000000000000',
+      });
       return {
         [entity.id]: entity,
       };
@@ -47,7 +53,9 @@ export const storeState: RootState = {
   },
   stands: {
     entities: (() => {
-      const entity = generateStand({ id: '00000000-0000-0000-0000-000000000000' });
+      const entity = generateStand({
+        id: '00000000-0000-0000-0000-000000000000',
+      });
       return {
         [entity.id]: entity,
       };
@@ -55,7 +63,9 @@ export const storeState: RootState = {
   },
   organizations: {
     entities: (() => {
-      const entity = generateOrganization({ id: '00000000-0000-0000-0000-000000000000' });
+      const entity = generateOrganization({
+        id: '00000000-0000-0000-0000-000000000000',
+      });
       return {
         [entity.id]: entity,
       };

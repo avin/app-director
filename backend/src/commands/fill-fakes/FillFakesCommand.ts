@@ -38,16 +38,39 @@ export class FillFakesCommand {
 
     await this.createAdminUser();
     await this.createSome(3, this.createRandomUser);
-    const applicationCategories = await this.createSome(2, this.createRandomApplicationCategory);
-    const standCategories = await this.createSome(3, this.createRandomStandCategory);
-    const organizations = await this.createSome(100, this.createRandomOrganization);
-    const applications = await this.createSome(20, this.createRandomApplication, applicationCategories);
-    await this.createSome(100, this.createRandomStand, standCategories, applications, organizations);
+    const applicationCategories = await this.createSome(
+      2,
+      this.createRandomApplicationCategory,
+    );
+    const standCategories = await this.createSome(
+      3,
+      this.createRandomStandCategory,
+    );
+    const organizations = await this.createSome(
+      100,
+      this.createRandomOrganization,
+    );
+    const applications = await this.createSome(
+      20,
+      this.createRandomApplication,
+      applicationCategories,
+    );
+    await this.createSome(
+      100,
+      this.createRandomStand,
+      standCategories,
+      applications,
+      organizations,
+    );
 
     console.info('Done!');
   }
 
-  async createSome<T extends (...args: any[]) => any>(count: number, createFunction: T, ...args: Parameters<T>) {
+  async createSome<T extends (...args: any[]) => any>(
+    count: number,
+    createFunction: T,
+    ...args: Parameters<T>
+  ) {
     const results = [];
     for (let i = 0; i < count; i++) {
       results.push(await createFunction.apply(this, args));
@@ -108,7 +131,11 @@ export class FillFakesCommand {
     });
   }
 
-  createRandomStand(standCategories: StandCategory[], applications: Application[], organizations: Organization[]) {
+  createRandomStand(
+    standCategories: StandCategory[],
+    applications: Application[],
+    organizations: Organization[],
+  ) {
     return this.standsService.createStand({
       title: faker.word.noun(),
       applicationId: sample(applications).id,

@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import cn from 'clsx';
 import styles from './EntitiesCatalogue.module.scss';
 import { Button, HTMLTable, Intent, Spinner } from '@blueprintjs/core';
@@ -56,12 +62,17 @@ const EntitiesCatalogue = <TEntity,>({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [entitiesIds, setEntitiesIds] = useState<string[]>([]);
   const [entitiesCount, setEntitiesCount] = useState<null | number>(null);
-  const [sorting, setSorting] = useState<{ columnId: string | undefined; direction: SortingDirection }>({
+  const [sorting, setSorting] = useState<{
+    columnId: string | undefined;
+    direction: SortingDirection;
+  }>({
     columnId: defaultSortingColumnId,
     direction: defaultSortingDirection,
   });
   const [searchParams] = useSearchParams();
-  const [searchValue, setSearchValue] = useState(searchParams.get('search') || '');
+  const [searchValue, setSearchValue] = useState(
+    searchParams.get('search') || '',
+  );
   const prevEntitiesIds = usePrevious(entitiesIds);
 
   // Highlight search substrings
@@ -71,7 +82,8 @@ const EntitiesCatalogue = <TEntity,>({
         if (!tableContainerElRef.current) {
           return;
         }
-        markInstanceRef.current = markInstanceRef.current || new Mark(tableContainerElRef.current);
+        markInstanceRef.current =
+          markInstanceRef.current || new Mark(tableContainerElRef.current);
         markInstanceRef.current.unmark({
           done: () => {
             if (markInstanceRef.current && searchValue) {
@@ -87,8 +99,14 @@ const EntitiesCatalogue = <TEntity,>({
   useEffect(() => {
     const parsed = queryString.parse(window.location.search);
     parsed.search = searchValue;
-    const queryResult = queryString.stringify(parsed, { skipEmptyString: true });
-    window.history.replaceState(null, '', `${window.location.pathname}?${queryResult}`.replace(/\?$/, ''));
+    const queryResult = queryString.stringify(parsed, {
+      skipEmptyString: true,
+    });
+    window.history.replaceState(
+      null,
+      '',
+      `${window.location.pathname}?${queryResult}`.replace(/\?$/, ''),
+    );
   }, [searchValue]);
 
   const entitiesFilter = useMemo(() => {
@@ -108,7 +126,8 @@ const EntitiesCatalogue = <TEntity,>({
       try {
         let limit: number | undefined;
         if (tableContainerElRef.current) {
-          limit = Math.floor(tableContainerElRef.current.clientHeight / 30) + 10;
+          limit =
+            Math.floor(tableContainerElRef.current.clientHeight / 30) + 10;
         }
 
         const { ids, count } = await getEntities({
@@ -149,7 +168,10 @@ const EntitiesCatalogue = <TEntity,>({
     if (!tableContainerEl) {
       return;
     }
-    if (tableContainerEl.scrollTop + tableContainerEl.clientHeight >= tableContainerEl.scrollHeight - 200) {
+    if (
+      tableContainerEl.scrollTop + tableContainerEl.clientHeight >=
+      tableContainerEl.scrollHeight - 200
+    ) {
       void loadMore();
     }
   }, [loadMore]);
@@ -161,29 +183,32 @@ const EntitiesCatalogue = <TEntity,>({
     };
   }, [handleScrollTableContainer]);
 
-  const handleClickTh = useCallback((e: React.MouseEvent<HTMLTableCellElement>) => {
-    const columnId = e.currentTarget.dataset.id as string;
-    const sortable = e.currentTarget.dataset.sortable as 'true' | 'false';
+  const handleClickTh = useCallback(
+    (e: React.MouseEvent<HTMLTableCellElement>) => {
+      const columnId = e.currentTarget.dataset.id as string;
+      const sortable = e.currentTarget.dataset.sortable as 'true' | 'false';
 
-    if (sortable === 'false') {
-      return;
-    }
-
-    setSorting((curr) => {
-      let direction: 'ASC' | 'DESC' = 'ASC';
-      if (curr.columnId === columnId) {
-        if (curr.direction === 'DESC') {
-          direction = 'ASC';
-        } else {
-          direction = 'DESC';
-        }
+      if (sortable === 'false') {
+        return;
       }
-      return {
-        columnId,
-        direction,
-      };
-    });
-  }, []);
+
+      setSorting((curr) => {
+        let direction: 'ASC' | 'DESC' = 'ASC';
+        if (curr.columnId === columnId) {
+          if (curr.direction === 'DESC') {
+            direction = 'ASC';
+          } else {
+            direction = 'DESC';
+          }
+        }
+        return {
+          columnId,
+          direction,
+        };
+      });
+    },
+    [],
+  );
 
   if (isDataFetchFailed) {
     return <div>Something wrong</div>;
@@ -210,19 +235,36 @@ const EntitiesCatalogue = <TEntity,>({
         {...viewHeaderProps}
       />
       <FitPage minHeight={100}>
-        <div className={styles.tableContainer} onScroll={handleScrollTableContainer} ref={tableContainerElRef}>
-          <HTMLTable striped bordered interactive condensed className={styles.table}>
+        <div
+          className={styles.tableContainer}
+          onScroll={handleScrollTableContainer}
+          ref={tableContainerElRef}
+        >
+          <HTMLTable
+            striped
+            bordered
+            interactive
+            condensed
+            className={styles.table}
+          >
             <thead>
               <tr>
                 {headColumns.map(({ label, id, sortable }) => (
-                  <th key={id} onClick={handleClickTh} data-id={id} data-sortable={String(sortable || false)}>
+                  <th
+                    key={id}
+                    onClick={handleClickTh}
+                    data-id={id}
+                    data-sortable={String(sortable || false)}
+                  >
                     {label}
                     {sortable && (
                       <SortIndicator
                         className={cn(styles.sortIndicator, {
                           [styles.active]: sorting.columnId === id,
                         })}
-                        direction={id === sorting.columnId ? sorting.direction : 'ASC'}
+                        direction={
+                          id === sorting.columnId ? sorting.direction : 'ASC'
+                        }
                       />
                     )}
                   </th>
@@ -244,7 +286,9 @@ const EntitiesCatalogue = <TEntity,>({
               {entitiesCount === 0 && (
                 <tr className={styles.notInteractive}>
                   <td colSpan={1000}>
-                    <div className={styles.noItemsTdContent}>Ничего не найдено</div>
+                    <div className={styles.noItemsTdContent}>
+                      Ничего не найдено
+                    </div>
                   </td>
                 </tr>
               )}

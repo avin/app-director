@@ -20,12 +20,20 @@ const EditApplicationCategory = ({}: Props) => {
 
   const handleSubmitForm = useCallback(async () => {
     await dispatch(updateApplicationCategory(applicationCategory.id));
-    navigate(generatePath(config.routes.applicationCategories.view, { id: applicationCategory.id }));
+    navigate(
+      generatePath(config.routes.applicationCategories.view, {
+        id: applicationCategory.id,
+      }),
+    );
   }, [dispatch, applicationCategory, navigate]);
 
   return (
     <div>
-      <ViewHeader title={applicationCategory.title} icon={config.defaultIcons.applicationCategory} onClose={goBack} />
+      <ViewHeader
+        title={applicationCategory.title}
+        icon={config.defaultIcons.applicationCategory}
+        onClose={goBack}
+      />
       <div className="page-content">
         <ApplicationCategoryEditForm onSubmit={handleSubmitForm} />
       </div>

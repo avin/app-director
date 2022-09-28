@@ -5,7 +5,9 @@ import { applicationByIdSelector } from '@/store/selectors';
 
 export const useApplicationByUrlParams = () => {
   const id = useParams().id as string;
-  const application = useSelector((state: RootState) => applicationByIdSelector(state, id));
+  const application = useSelector((state: RootState) =>
+    applicationByIdSelector(state, id),
+  );
 
   return application;
 };

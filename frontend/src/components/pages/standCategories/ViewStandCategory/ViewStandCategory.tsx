@@ -26,7 +26,10 @@ const ViewStandCategory = ({}: Props) => {
         onClose={goBack}
         controls={
           <>
-            <Link to={`/standCategories/${standCategory.id}/edit`} tabIndex={-1}>
+            <Link
+              to={`/standCategories/${standCategory.id}/edit`}
+              tabIndex={-1}
+            >
               <Button intent={Intent.PRIMARY} icon="edit">
                 Редактировать
               </Button>

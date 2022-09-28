@@ -5,7 +5,9 @@ import { standCategoryByIdSelector } from '@/store/selectors';
 
 export const useStandCategoryByUrlParams = () => {
   const id = useParams().id as string;
-  const application = useSelector((state: RootState) => standCategoryByIdSelector(state, id));
+  const application = useSelector((state: RootState) =>
+    standCategoryByIdSelector(state, id),
+  );
 
   return application;
 };

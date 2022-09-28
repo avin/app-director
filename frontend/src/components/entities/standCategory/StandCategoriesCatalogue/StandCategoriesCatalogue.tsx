@@ -3,7 +3,9 @@ import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { getStandCategories } from '@/store/reducers/standCategories';
 import { standCategoriesSelector } from '@/store/selectors';
-import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
+import EntitiesCatalogue, {
+  RowBuilderParams,
+} from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { StandCategory } from '@/types';
 import config from '@/config';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
@@ -41,7 +43,10 @@ const StandCategoryCategoriesCatalogue = ({
     });
   }, [columns]);
 
-  const handleClickRow = useHandleClickCatalogueRow(config.routes.standCategories.view, onClickRow);
+  const handleClickRow = useHandleClickCatalogueRow(
+    config.routes.standCategories.view,
+    onClickRow,
+  );
 
   const rowBuilder = useCallback(
     ({ id, entity }: RowBuilderParams<StandCategory>) => (

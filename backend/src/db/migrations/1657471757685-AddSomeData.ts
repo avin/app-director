@@ -4,7 +4,8 @@ import { Application } from '../../modules/applications/Application';
 export class AddSomeData1657471757685 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     /** application */
-    const applicationRepository = queryRunner.manager.getRepository(Application);
+    const applicationRepository =
+      queryRunner.manager.getRepository(Application);
 
     await applicationRepository.insert([
       { title: 'ApplicationName1', properties: { foo: 'bar1' } },
@@ -14,6 +15,10 @@ export class AddSomeData1657471757685 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.manager.createQueryBuilder().delete().from(Application).execute();
+    await queryRunner.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Application)
+      .execute();
   }
 }

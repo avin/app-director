@@ -13,8 +13,18 @@ const ApplicationCategoryRelations = ({}: Props) => {
 
   return (
     <div className={styles.relations}>
-      <Tabs id="TabsExample" onChange={handleTabChange} selectedTabId={selectedTabId} renderActiveTabPanelOnly large>
-        <Tab id="stands" title="Приложения" panel={<ApplicationCategoryApplications />} />
+      <Tabs
+        id="TabsExample"
+        onChange={handleTabChange}
+        selectedTabId={selectedTabId}
+        renderActiveTabPanelOnly
+        large
+      >
+        <Tab
+          id="stands"
+          title="Приложения"
+          panel={<ApplicationCategoryApplications />}
+        />
       </Tabs>
     </div>
   );

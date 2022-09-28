@@ -15,7 +15,11 @@ const FormErrorMessage = ({ message }: Props) => {
       className={styles.wrapper}
       // onExited={handleExited}
     >
-      <Callout icon="warning-sign" className={styles.callout} intent={Intent.DANGER}>
+      <Callout
+        icon="warning-sign"
+        className={styles.callout}
+        intent={Intent.DANGER}
+      >
         {message}
       </Callout>
     </WrappedUp>

@@ -1,5 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Dialog, Intent, TagInput, TagInputProps } from '@blueprintjs/core';
+import {
+  Button,
+  Dialog,
+  Intent,
+  TagInput,
+  TagInputProps,
+} from '@blueprintjs/core';
 import ApplicationLabel from '../ApplicationLabel/ApplicationLabel';
 import ApplicationsCatalogue from '@/components/entities/application/ApplicationsCatalogue/ApplicationsCatalogue';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
@@ -8,13 +14,19 @@ import styles from './ApplicationSelect.module.scss';
 import config from '@/config';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 
-interface Props<TFieldValues extends FieldValues> extends Omit<TagInputProps, 'values'> {
+interface Props<TFieldValues extends FieldValues>
+  extends Omit<TagInputProps, 'values'> {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
 }
 
-const ApplicationSelect = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
+const ApplicationSelect = <TFieldValues,>({
+  name,
+  control,
+  rules,
+  ...props
+}: Props<TFieldValues>) => {
   const [isOpenChooseDialog, setIsOpenChooseDialog] = useState(false);
 
   const {
@@ -55,10 +67,22 @@ const ApplicationSelect = <TFieldValues,>({ name, control, rules, ...props }: Pr
         leftIcon={config.defaultIcons.application}
         onChange={handleChange}
         placeholder="Выбрать приложение..."
-        rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
-        values={value ? [<ApplicationLabel applicationId={value as string} />] : []}
+        rightElement={
+          <Button
+            icon="more"
+            minimal={false}
+            onClick={openChooseDialog}
+            intent={Intent.PRIMARY}
+          />
+        }
+        values={
+          value ? [<ApplicationLabel applicationId={value as string} />] : []
+        }
       />
-      <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog}>
+      <ChooseEntityDialog
+        isOpen={isOpenChooseDialog}
+        onClose={closeChooseDialog}
+      >
         <ApplicationsCatalogue
           viewHeaderProps={{
             title: 'Выбрать приложение',

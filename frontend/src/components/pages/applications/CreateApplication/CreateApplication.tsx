@@ -17,12 +17,19 @@ const CreateApplication = ({}: Props) => {
 
   const handleSubmitForm = useCallback(async () => {
     const application = await dispatch(createApplication());
-    navigate(generatePath(config.routes.applications.view, { id: application.id }), { replace: true });
+    navigate(
+      generatePath(config.routes.applications.view, { id: application.id }),
+      { replace: true },
+    );
   }, [dispatch, navigate]);
 
   return (
     <div>
-      <ViewHeader icon={config.defaultIcons.application} title="Добавление приложения" onClose={goBack} />
+      <ViewHeader
+        icon={config.defaultIcons.application}
+        title="Добавление приложения"
+        onClose={goBack}
+      />
       <div className="page-content">
         <ApplicationEditForm onSubmit={handleSubmitForm} />
       </div>

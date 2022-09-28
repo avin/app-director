@@ -5,7 +5,9 @@ import { applicationCategoryByIdSelector } from '@/store/selectors';
 
 export const useApplicationCategoryByUrlParams = () => {
   const id = useParams().id as string;
-  const application = useSelector((state: RootState) => applicationCategoryByIdSelector(state, id));
+  const application = useSelector((state: RootState) =>
+    applicationCategoryByIdSelector(state, id),
+  );
 
   return application;
 };

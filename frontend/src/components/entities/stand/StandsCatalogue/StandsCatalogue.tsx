@@ -3,7 +3,9 @@ import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { standsSelector } from '@/store/selectors';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
-import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
+import EntitiesCatalogue, {
+  RowBuilderParams,
+} from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { Stand } from '@/types';
 import config from '@/config';
 import { getStands } from '@/store/reducers/stands';
@@ -13,7 +15,13 @@ import OrganizationLabel from '@/components/entities/organization/OrganizationLa
 import { useHandleClickCatalogueRow } from '@/utils/hooks/useHandleClickCatalogueRow';
 
 interface Props {
-  columns: ('standCategory' | 'title' | 'description' | 'application' | 'organization')[];
+  columns: (
+    | 'standCategory'
+    | 'title'
+    | 'description'
+    | 'application'
+    | 'organization'
+  )[];
   onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
   addEntityRoute?: string;
@@ -48,7 +56,10 @@ const StandsCatalogue = ({
     });
   }, [columns]);
 
-  const handleClickRow = useHandleClickCatalogueRow(config.routes.stands.view, onClickRow);
+  const handleClickRow = useHandleClickCatalogueRow(
+    config.routes.stands.view,
+    onClickRow,
+  );
 
   const rowBuilder = useCallback(
     ({ id, entity }: RowBuilderParams<Stand>) => (
@@ -58,7 +69,9 @@ const StandsCatalogue = ({
             case 'standCategory':
               return (
                 <td key="standCategory">
-                  <StandCategoryLabel standCategoryId={entity.standCategoryId} />
+                  <StandCategoryLabel
+                    standCategoryId={entity.standCategoryId}
+                  />
                 </td>
               );
             case 'title':
@@ -74,7 +87,9 @@ const StandsCatalogue = ({
             case 'organization':
               return (
                 <td key="organization">
-                  {entity.organizationId && <OrganizationLabel organizationId={entity.organizationId} />}
+                  {entity.organizationId && (
+                    <OrganizationLabel organizationId={entity.organizationId} />
+                  )}
                 </td>
               );
             default:
@@ -94,7 +109,9 @@ const StandsCatalogue = ({
             ...getEntitiesFilter,
             ...filter,
           },
-          (['organization', 'application', 'standCategory'] as const).filter((i) => columns.includes(i)),
+          (['organization', 'application', 'standCategory'] as const).filter(
+            (i) => columns.includes(i),
+          ),
         ),
       );
     },

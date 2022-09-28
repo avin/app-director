@@ -1,4 +1,6 @@
-export const getRelationIdsFromEntitiesArray = <TEntity extends { [K in keyof TEntity]: unknown }>(
+export const getRelationIdsFromEntitiesArray = <
+  TEntity extends { [K in keyof TEntity]: unknown },
+>(
   entities: TEntity[],
   relationEntityField: keyof TEntity,
 ): string[] => {

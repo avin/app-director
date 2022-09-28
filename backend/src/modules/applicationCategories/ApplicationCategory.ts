@@ -14,6 +14,10 @@ export class ApplicationCategory extends BaseEntity {
   })
   public properties: unknown;
 
-  @OneToMany((_type) => Application, (application) => application.applicationCategory, { eager: false })
+  @OneToMany(
+    (_type) => Application,
+    (application) => application.applicationCategory,
+    { eager: false },
+  )
   applications: Stand[];
 }

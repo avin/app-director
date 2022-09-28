@@ -19,7 +19,10 @@ const slice = createSlice({
   name: 'standCategories',
   initialState,
   reducers: {
-    setStandCategories: (state, action: PayloadAction<Record<string, StandCategory>>) => {
+    setStandCategories: (
+      state,
+      action: PayloadAction<Record<string, StandCategory>>,
+    ) => {
       state.entities = {
         ...state.entities,
         ...action.payload,
@@ -36,7 +39,9 @@ export const { setStandCategories, setStandCategory } = slice.actions;
 
 export default slice.reducer;
 
-export function getStandCategories(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+export function getStandCategories(
+  filters: any = {},
+): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },
@@ -55,7 +60,9 @@ export function getStandCategories(filters: any = {}): AppThunkAction<Promise<{ 
   };
 }
 
-export function getStandCategory(standCategoryId: string): AppThunkAction<Promise<StandCategory>> {
+export function getStandCategory(
+  standCategoryId: string,
+): AppThunkAction<Promise<StandCategory>> {
   return async (dispatch, getState) => {
     const { data } = await dispatch(
       apiCall<StandCategory>({
@@ -71,7 +78,9 @@ export function getStandCategory(standCategoryId: string): AppThunkAction<Promis
   };
 }
 
-export function updateStandCategory(standCategoryId: string): AppThunkAction<Promise<StandCategory>> {
+export function updateStandCategory(
+  standCategoryId: string,
+): AppThunkAction<Promise<StandCategory>> {
   return async (dispatch, getState) => {
     const editStandCategoryForm = getState().ui.forms[Form.EditStandCategory];
 

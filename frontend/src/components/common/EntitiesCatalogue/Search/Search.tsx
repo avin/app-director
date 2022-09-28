@@ -21,10 +21,13 @@ const Search = ({ onChange, defaultValue }: Props) => {
     onChangeDebounced(value);
   }, [onChangeDebounced, value]);
 
-  const handleSearchValue = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value;
-    setValue(value);
-  }, []);
+  const handleSearchValue = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.currentTarget.value;
+      setValue(value);
+    },
+    [],
+  );
 
   const handleClear = useCallback(() => {
     setValue('');
@@ -38,7 +41,16 @@ const Search = ({ onChange, defaultValue }: Props) => {
         onChange={handleSearchValue}
         value={value}
         fill
-        rightElement={value ? <Button icon="cross" onClick={handleClear} minimal intent={Intent.DANGER} /> : undefined}
+        rightElement={
+          value ? (
+            <Button
+              icon="cross"
+              onClick={handleClear}
+              minimal
+              intent={Intent.DANGER}
+            />
+          ) : undefined
+        }
       />
     </ControlGroup>
   );

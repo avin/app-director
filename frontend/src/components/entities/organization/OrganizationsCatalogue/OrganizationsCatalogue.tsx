@@ -3,7 +3,9 @@ import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch } from 'react-redux';
 import { organizationsSelector } from '@/store/selectors';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
-import EntitiesCatalogue, { RowBuilderParams } from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
+import EntitiesCatalogue, {
+  RowBuilderParams,
+} from '@/components/common/EntitiesCatalogue/EntitiesCatalogue';
 import { Organization } from '@/types';
 import config from '@/config';
 import { getOrganizations } from '@/store/reducers/organizations';
@@ -41,7 +43,10 @@ const OrganizationsCatalogue = ({
     });
   }, [columns]);
 
-  const handleClickRow = useHandleClickCatalogueRow(config.routes.organizations.view, onClickRow);
+  const handleClickRow = useHandleClickCatalogueRow(
+    config.routes.organizations.view,
+    onClickRow,
+  );
 
   const rowBuilder = useCallback(
     ({ id, entity }: RowBuilderParams<Organization>) => (

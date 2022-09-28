@@ -19,24 +19,33 @@ const slice = createSlice({
   name: 'applicationCategories',
   initialState,
   reducers: {
-    setApplicationCategories: (state, action: PayloadAction<Record<string, ApplicationCategory>>) => {
+    setApplicationCategories: (
+      state,
+      action: PayloadAction<Record<string, ApplicationCategory>>,
+    ) => {
       state.entities = {
         ...state.entities,
         ...action.payload,
       };
     },
-    setApplicationCategory: (state, action: PayloadAction<ApplicationCategory>) => {
+    setApplicationCategory: (
+      state,
+      action: PayloadAction<ApplicationCategory>,
+    ) => {
       const applicationCategory = action.payload;
       state.entities[applicationCategory.id] = applicationCategory;
     },
   },
 });
 
-export const { setApplicationCategories, setApplicationCategory } = slice.actions;
+export const { setApplicationCategories, setApplicationCategory } =
+  slice.actions;
 
 export default slice.reducer;
 
-export function getApplicationCategories(filters: any = {}): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
+export function getApplicationCategories(
+  filters: any = {},
+): AppThunkAction<Promise<{ ids: string[]; count: number }>> {
   return async (dispatch, getState) => {
     const {
       data: { items, count },
@@ -55,7 +64,9 @@ export function getApplicationCategories(filters: any = {}): AppThunkAction<Prom
   };
 }
 
-export function getApplicationCategory(applicationCategoryId: string): AppThunkAction<Promise<ApplicationCategory>> {
+export function getApplicationCategory(
+  applicationCategoryId: string,
+): AppThunkAction<Promise<ApplicationCategory>> {
   return async (dispatch, getState) => {
     const { data } = await dispatch(
       apiCall<ApplicationCategory>({
@@ -71,9 +82,12 @@ export function getApplicationCategory(applicationCategoryId: string): AppThunkA
   };
 }
 
-export function updateApplicationCategory(applicationCategoryId: string): AppThunkAction<Promise<ApplicationCategory>> {
+export function updateApplicationCategory(
+  applicationCategoryId: string,
+): AppThunkAction<Promise<ApplicationCategory>> {
   return async (dispatch, getState) => {
-    const editApplicationCategoryForm = getState().ui.forms[Form.EditApplicationCategory];
+    const editApplicationCategoryForm =
+      getState().ui.forms[Form.EditApplicationCategory];
 
     const { data } = await dispatch(
       apiCall<ApplicationCategory>({
@@ -93,9 +107,12 @@ export function updateApplicationCategory(applicationCategoryId: string): AppThu
   };
 }
 
-export function createApplicationCategory(): AppThunkAction<Promise<ApplicationCategory>> {
+export function createApplicationCategory(): AppThunkAction<
+  Promise<ApplicationCategory>
+> {
   return async (dispatch, getState) => {
-    const editApplicationCategoryForm = getState().ui.forms[Form.EditApplicationCategory];
+    const editApplicationCategoryForm =
+      getState().ui.forms[Form.EditApplicationCategory];
 
     const { data } = await dispatch(
       apiCall<ApplicationCategory>({

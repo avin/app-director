@@ -4,6 +4,7 @@
 
 import { capitalizeFirstLetter } from './utils/strings';
 import { IconName } from '@blueprintjs/icons';
+import { EntityConfig } from '@/types';
 
 export class Config {
   apiPrefix = '/api';
@@ -12,7 +13,7 @@ export class Config {
 
   pageLoadingElementId = 'page-loading';
 
-  entities = {
+  entities: Record<string, EntityConfig> = {
     application: {
       fields: [
         {
@@ -44,14 +45,6 @@ export class Config {
           required: false,
         },
       ],
-    },
-
-    organization: {
-      additionalFields: [],
-    },
-
-    stand: {
-      additionalFields: [],
     },
   };
 

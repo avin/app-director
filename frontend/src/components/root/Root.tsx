@@ -59,30 +59,66 @@ const Root = ({ store }: RootProps) => (
             <Route path={routes.monitoring} element={<MonitoringPage />} />
 
             {/* -------- Applications -------- */}
-            <Route path={routes.applications.$} element={<NavigateApplications />} />
-            <Route path={routes.applications.create} element={<CreateApplication />} />
+            <Route
+              path={routes.applications.$}
+              element={<NavigateApplications />}
+            />
+            <Route
+              path={routes.applications.create}
+              element={<CreateApplication />}
+            />
 
             <Route element={<ApplicationFetcherLayout />}>
-              <Route path={routes.applications.view} element={<ViewApplication />} />
-              <Route path={routes.applications.edit} element={<EditApplication />} />
+              <Route
+                path={routes.applications.view}
+                element={<ViewApplication />}
+              />
+              <Route
+                path={routes.applications.edit}
+                element={<EditApplication />}
+              />
             </Route>
 
             {/* -------- ApplicationCategories -------- */}
-            <Route path={routes.applicationCategories.$} element={<NavigateApplicationCategories />} />
-            <Route path={routes.applicationCategories.create} element={<CreateApplicationCategory />} />
+            <Route
+              path={routes.applicationCategories.$}
+              element={<NavigateApplicationCategories />}
+            />
+            <Route
+              path={routes.applicationCategories.create}
+              element={<CreateApplicationCategory />}
+            />
 
             <Route element={<ApplicationCategoryFetcherLayout />}>
-              <Route path={routes.applicationCategories.view} element={<ViewApplicationCategory />} />
-              <Route path={routes.applicationCategories.edit} element={<EditApplicationCategory />} />
+              <Route
+                path={routes.applicationCategories.view}
+                element={<ViewApplicationCategory />}
+              />
+              <Route
+                path={routes.applicationCategories.edit}
+                element={<EditApplicationCategory />}
+              />
             </Route>
 
             {/* -------- StandCategories -------- */}
-            <Route path={routes.standCategories.$} element={<NavigateStandCategories />} />
-            <Route path={routes.standCategories.create} element={<CreateStandCategory />} />
+            <Route
+              path={routes.standCategories.$}
+              element={<NavigateStandCategories />}
+            />
+            <Route
+              path={routes.standCategories.create}
+              element={<CreateStandCategory />}
+            />
 
             <Route element={<StandCategoryFetcherLayout />}>
-              <Route path={routes.standCategories.view} element={<ViewStandCategory />} />
-              <Route path={routes.standCategories.edit} element={<EditStandCategory />} />
+              <Route
+                path={routes.standCategories.view}
+                element={<ViewStandCategory />}
+              />
+              <Route
+                path={routes.standCategories.edit}
+                element={<EditStandCategory />}
+              />
             </Route>
 
             {/* -------- Stands -------- */}
@@ -95,12 +131,24 @@ const Root = ({ store }: RootProps) => (
             </Route>
 
             {/* -------- Organizations -------- */}
-            <Route path={routes.organizations.$} element={<NavigateOrganizations />} />
-            <Route path={routes.organizations.create} element={<CreateOrganization />} />
+            <Route
+              path={routes.organizations.$}
+              element={<NavigateOrganizations />}
+            />
+            <Route
+              path={routes.organizations.create}
+              element={<CreateOrganization />}
+            />
 
             <Route element={<OrganizationFetcherLayout />}>
-              <Route path={routes.organizations.view} element={<ViewOrganization />} />
-              <Route path={routes.organizations.edit} element={<EditOrganization />} />
+              <Route
+                path={routes.organizations.view}
+                element={<ViewOrganization />}
+              />
+              <Route
+                path={routes.organizations.edit}
+                element={<EditOrganization />}
+              />
             </Route>
 
             <Route path={routes.administration.users} element={<div />} />

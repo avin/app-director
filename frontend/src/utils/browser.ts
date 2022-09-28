@@ -12,7 +12,10 @@ export const hideTsErrorsInConsole = (): void => {
   // Скрывает TS ошибки в консоли браузера
   const oWarn = console.warn;
   console.warn = (...args) => {
-    if (typeof args[0] === 'string' && args[0].indexOf('TypeScript error') !== -1) {
+    if (
+      typeof args[0] === 'string' &&
+      args[0].indexOf('TypeScript error') !== -1
+    ) {
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

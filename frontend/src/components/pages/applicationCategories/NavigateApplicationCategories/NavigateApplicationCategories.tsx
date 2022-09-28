@@ -10,7 +10,11 @@ const NavigateApplicationCategories = ({}: Props) => {
 
   const handleClickRow = useCallback(
     (applicationCategoryId: string) => {
-      navigate(generatePath(config.routes.applicationCategories.view, { id: applicationCategoryId }));
+      navigate(
+        generatePath(config.routes.applicationCategories.view, {
+          id: applicationCategoryId,
+        }),
+      );
     },
     [navigate],
   );

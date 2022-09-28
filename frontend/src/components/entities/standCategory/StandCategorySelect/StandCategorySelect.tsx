@@ -8,13 +8,19 @@ import config from '@/config';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 import StandCategoryLabel from '../StandCategoryLabel/StandCategoryLabel';
 
-interface Props<TFieldValues extends FieldValues> extends Omit<TagInputProps, 'values'> {
+interface Props<TFieldValues extends FieldValues>
+  extends Omit<TagInputProps, 'values'> {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
 }
 
-const StandCategoryCategorySelect = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
+const StandCategoryCategorySelect = <TFieldValues,>({
+  name,
+  control,
+  rules,
+  ...props
+}: Props<TFieldValues>) => {
   const [isOpenChooseDialog, setIsOpenChooseDialog] = useState(false);
 
   const {
@@ -55,10 +61,24 @@ const StandCategoryCategorySelect = <TFieldValues,>({ name, control, rules, ...p
         leftIcon={config.defaultIcons.standCategory}
         onChange={handleChange}
         placeholder="Выбрать категорию стенда..."
-        rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
-        values={value ? [<StandCategoryLabel standCategoryId={value as string} />] : []}
+        rightElement={
+          <Button
+            icon="more"
+            minimal={false}
+            onClick={openChooseDialog}
+            intent={Intent.PRIMARY}
+          />
+        }
+        values={
+          value
+            ? [<StandCategoryLabel standCategoryId={value as string} />]
+            : []
+        }
       />
-      <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog}>
+      <ChooseEntityDialog
+        isOpen={isOpenChooseDialog}
+        onClose={closeChooseDialog}
+      >
         <StandCategoriesCatalogue
           viewHeaderProps={{
             title: 'Выбрать категорию стенда',

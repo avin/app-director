@@ -8,13 +8,19 @@ import config from '@/config';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 import ApplicationCategoryLabel from '../ApplicationCategoryLabel/ApplicationCategoryLabel';
 
-interface Props<TFieldValues extends FieldValues> extends Omit<TagInputProps, 'values'> {
+interface Props<TFieldValues extends FieldValues>
+  extends Omit<TagInputProps, 'values'> {
   name: Path<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: RegisterOptions;
 }
 
-const ApplicationCategoryCategorySelect = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
+const ApplicationCategoryCategorySelect = <TFieldValues,>({
+  name,
+  control,
+  rules,
+  ...props
+}: Props<TFieldValues>) => {
   const [isOpenChooseDialog, setIsOpenChooseDialog] = useState(false);
 
   const {
@@ -55,10 +61,28 @@ const ApplicationCategoryCategorySelect = <TFieldValues,>({ name, control, rules
         leftIcon={config.defaultIcons.applicationCategory}
         onChange={handleChange}
         placeholder="Выбрать категорию приложения..."
-        rightElement={<Button icon="more" minimal={false} onClick={openChooseDialog} intent={Intent.PRIMARY} />}
-        values={value ? [<ApplicationCategoryLabel applicationCategoryId={value as string} />] : []}
+        rightElement={
+          <Button
+            icon="more"
+            minimal={false}
+            onClick={openChooseDialog}
+            intent={Intent.PRIMARY}
+          />
+        }
+        values={
+          value
+            ? [
+                <ApplicationCategoryLabel
+                  applicationCategoryId={value as string}
+                />,
+              ]
+            : []
+        }
       />
-      <ChooseEntityDialog isOpen={isOpenChooseDialog} onClose={closeChooseDialog}>
+      <ChooseEntityDialog
+        isOpen={isOpenChooseDialog}
+        onClose={closeChooseDialog}
+      >
         <ApplicationCategoriesCatalogue
           viewHeaderProps={{
             title: 'Выбрать категорию приложения',

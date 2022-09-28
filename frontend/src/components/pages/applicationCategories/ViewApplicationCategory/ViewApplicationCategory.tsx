@@ -26,7 +26,10 @@ const ViewApplicationCategory = ({}: Props) => {
         onClose={goBack}
         controls={
           <>
-            <Link to={`/applicationCategories/${applicationCategory.id}/edit`} tabIndex={-1}>
+            <Link
+              to={`/applicationCategories/${applicationCategory.id}/edit`}
+              tabIndex={-1}
+            >
               <Button intent={Intent.PRIMARY} icon="edit">
                 Редактировать
               </Button>
@@ -51,7 +54,9 @@ const ViewApplicationCategory = ({}: Props) => {
           <div className={styles.rowTitle}>
             <h4>Описание</h4>
           </div>
-          <div className={styles.rowValue}>{applicationCategory.description}</div>
+          <div className={styles.rowValue}>
+            {applicationCategory.description}
+          </div>
         </div>
       </div>
 

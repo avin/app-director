@@ -1,4 +1,10 @@
-import { Application, ApplicationCategory, Organization, Stand, StandCategory } from '@/types';
+import {
+  Application,
+  ApplicationCategory,
+  Organization,
+  Stand,
+  StandCategory,
+} from '@/types';
 
 export const entityCommonProps = {
   id: '00000000-0000-0000-0000-000000000000',
@@ -7,7 +13,9 @@ export const entityCommonProps = {
   properties: null,
 };
 
-export const generateApplicationCategory = (props?: Partial<ApplicationCategory>) => {
+export const generateApplicationCategory = (
+  props?: Partial<ApplicationCategory>,
+) => {
   return {
     ...entityCommonProps,
     title: 'ApplicationCategory title',

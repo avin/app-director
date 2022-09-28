@@ -47,7 +47,10 @@ export class StandCategoriesService {
   }
 
   async getStandCategoryById(id: string) {
-    const found = await this.standCategoriesRepository.findOne({ where: { id }, loadRelationIds: true });
+    const found = await this.standCategoriesRepository.findOne({
+      where: { id },
+      loadRelationIds: true,
+    });
 
     if (!found) {
       throw new StandCategoryNotFoundException(id);
@@ -57,13 +60,18 @@ export class StandCategoriesService {
   }
 
   async createStandCategory(createStandCategoryDto: CreateStandCategoryDto) {
-    const standCategory = this.standCategoriesRepository.create(createStandCategoryDto);
+    const standCategory = this.standCategoriesRepository.create(
+      createStandCategoryDto,
+    );
 
     await this.standCategoriesRepository.save(standCategory);
     return standCategory;
   }
 
-  async updateStandCategory(id: string, updateStandCategoryDto: UpdateStandCategoryDto) {
+  async updateStandCategory(
+    id: string,
+    updateStandCategoryDto: UpdateStandCategoryDto,
+  ) {
     await this.standCategoriesRepository.update(id, updateStandCategoryDto);
     const updatedStandCategory = await this.standCategoriesRepository.findOne({
       where: {

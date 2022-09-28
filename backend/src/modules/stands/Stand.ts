@@ -24,12 +24,20 @@ export class Stand extends BaseEntity {
   @Column({ nullable: true })
   standCategoryId: string;
 
-  @ManyToOne((_type) => Application, (application) => application.stands, { eager: false })
+  @ManyToOne((_type) => Application, (application) => application.stands, {
+    eager: false,
+  })
   application: Application;
 
-  @ManyToOne((_type) => Organization, (organization) => organization.stands, { eager: false })
+  @ManyToOne((_type) => Organization, (organization) => organization.stands, {
+    eager: false,
+  })
   organization: Organization;
 
-  @ManyToOne((_type) => StandCategory, (standCategory) => standCategory.stands, { eager: false })
+  @ManyToOne(
+    (_type) => StandCategory,
+    (standCategory) => standCategory.stands,
+    { eager: false },
+  )
   standCategory: Organization;
 }

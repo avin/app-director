@@ -9,7 +9,12 @@ interface Props<TFieldValues extends FieldValues> extends InputGroupProps2 {
   rules?: RegisterOptions;
 }
 
-const ControlledTextInput = <TFieldValues,>({ name, control, rules, ...props }: Props<TFieldValues>) => {
+const ControlledTextInput = <TFieldValues extends FieldValues>({
+  name,
+  control,
+  rules,
+  ...props
+}: Props<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({
@@ -18,7 +23,14 @@ const ControlledTextInput = <TFieldValues,>({ name, control, rules, ...props }: 
     rules,
   });
 
-  return <InputGroup type="text" {...props} onChange={onChange} value={String(value || '')} />;
+  return (
+    <InputGroup
+      type="text"
+      {...props}
+      onChange={onChange}
+      value={String(value || '')}
+    />
+  );
 };
 
 export default ControlledTextInput;

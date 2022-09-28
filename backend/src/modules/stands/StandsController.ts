@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { GetStandsFilterDto } from './dto/GetStandsFilterDto';
 import { Logger } from '@nestjs/common';
 import { StandsService } from './StandsService';
@@ -25,13 +35,17 @@ export class StandsController {
 
   @Post()
   createStand(@Body() createStandDto: CreateStandDto) {
-    this.logger.verbose(`Creating a new stand. Data: ${JSON.stringify(createStandDto)}`);
+    this.logger.verbose(
+      `Creating a new stand. Data: ${JSON.stringify(createStandDto)}`,
+    );
     return this.standsService.createStand(createStandDto);
   }
 
   @Patch('/:id')
   updateStand(@Param('id') id: string, @Body() updateStandDto: UpdateStandDto) {
-    this.logger.verbose(`Update an stand. Data: ${JSON.stringify(updateStandDto)}`);
+    this.logger.verbose(
+      `Update an stand. Data: ${JSON.stringify(updateStandDto)}`,
+    );
     return this.standsService.updateStand(id, updateStandDto);
   }
 

@@ -86,7 +86,10 @@ const LogInPage = ({}: Props) => {
     <form onSubmit={handleFormSubmit} className={styles.form}>
       <FormErrorMessage message={errorMessage} />
 
-      <InputContainer label="Email" error={isSubmitted && errors.email?.message}>
+      <InputContainer
+        label="Email"
+        error={isSubmitted && errors.email?.message}
+      >
         <ControlledTextInput
           control={control}
           rules={requiredRules}
@@ -97,7 +100,10 @@ const LogInPage = ({}: Props) => {
         />
       </InputContainer>
 
-      <InputContainer label="Пароль" error={isSubmitted && errors.password?.message}>
+      <InputContainer
+        label="Пароль"
+        error={isSubmitted && errors.password?.message}
+      >
         <ControlledTextInput
           control={control}
           rules={requiredRules}
@@ -110,10 +116,19 @@ const LogInPage = ({}: Props) => {
 
       <div className={styles.controls}>
         <div>
-          <ControlledCheckbox control={control} name="remember" label="Запомнить меня" />
+          <ControlledCheckbox
+            control={control}
+            name="remember"
+            label="Запомнить меня"
+          />
         </div>
         <div>
-          <Button type="submit" intent={Intent.PRIMARY} loading={isInProgress} icon="unlock">
+          <Button
+            type="submit"
+            intent={Intent.PRIMARY}
+            loading={isInProgress}
+            icon="unlock"
+          >
             <span>Войти</span>
           </Button>
         </div>

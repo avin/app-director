@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 // import { AuthGuard } from '@nestjs/passport';
 import { GetUsersFilterDto } from './dto/GetUsersFilterDto';
 import { Logger } from '@nestjs/common';
@@ -26,13 +36,17 @@ export class UsersController {
 
   @Post()
   createUser(@Body() createUserDto: CreateUserDto) {
-    this.logger.verbose(`Creating a new user. Data: ${JSON.stringify(createUserDto)}`);
+    this.logger.verbose(
+      `Creating a new user. Data: ${JSON.stringify(createUserDto)}`,
+    );
     return this.usersService.createUser(createUserDto);
   }
 
   @Patch('/:id')
   updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    this.logger.verbose(`Update an user. Data: ${JSON.stringify(updateUserDto)}`);
+    this.logger.verbose(
+      `Update an user. Data: ${JSON.stringify(updateUserDto)}`,
+    );
     return this.usersService.updateUser(id, updateUserDto);
   }
 

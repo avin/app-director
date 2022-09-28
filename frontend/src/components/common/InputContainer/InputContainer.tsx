@@ -12,7 +12,14 @@ export interface InputContainerProps extends React.PropsWithChildren<{}> {
   className?: string;
 }
 
-const InputContainer = ({ label, labelInfo, error, subtext, className, children }: InputContainerProps) => {
+const InputContainer = ({
+  label,
+  labelInfo,
+  error,
+  subtext,
+  className,
+  children,
+}: InputContainerProps) => {
   const [id] = useState(nanoid());
 
   const childrenWithProps = React.Children.map(children, (child) => {
@@ -28,7 +35,11 @@ const InputContainer = ({ label, labelInfo, error, subtext, className, children 
   return (
     <FormGroup
       helperText={
-        <WrappedUp open={!!error} duration={200} className={styles.errorWrapper}>
+        <WrappedUp
+          open={!!error}
+          duration={200}
+          className={styles.errorWrapper}
+        >
           {error}
         </WrappedUp>
       }

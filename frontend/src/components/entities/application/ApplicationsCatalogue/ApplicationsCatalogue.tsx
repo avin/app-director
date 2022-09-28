@@ -34,7 +34,11 @@ const ApplicationsCatalogue = ({
     return columns.map((column): HeadColumn => {
       switch (column) {
         case 'applicationCategory':
-          return { id: 'applicationCategory', label: 'Категория', sortable: true };
+          return {
+            id: 'applicationCategory',
+            label: 'Категория',
+            sortable: true,
+          };
         case 'title':
           return { id: 'title', label: 'Название', sortable: true };
         case 'description':
@@ -47,7 +51,10 @@ const ApplicationsCatalogue = ({
     });
   }, [columns]);
 
-  const handleClickRow = useHandleClickCatalogueRow(config.routes.applications.view, onClickRow);
+  const handleClickRow = useHandleClickCatalogueRow(
+    config.routes.applications.view,
+    onClickRow,
+  );
 
   const rowBuilder = useCallback(
     ({ id, entity }: RowBuilderParams<Application>) => (
@@ -57,7 +64,9 @@ const ApplicationsCatalogue = ({
             case 'applicationCategory':
               return (
                 <td key="applicationCategory">
-                  <ApplicationCategoryLabel applicationCategoryId={entity.applicationCategoryId} />
+                  <ApplicationCategoryLabel
+                    applicationCategoryId={entity.applicationCategoryId}
+                  />
                 </td>
               );
             case 'title':

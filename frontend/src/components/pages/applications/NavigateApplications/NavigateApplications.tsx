@@ -10,7 +10,9 @@ const NavigateApplications = ({}: Props) => {
 
   const handleClickRow = useCallback(
     (applicationId: string) => {
-      navigate(generatePath(config.routes.applications.view, { id: applicationId }));
+      navigate(
+        generatePath(config.routes.applications.view, { id: applicationId }),
+      );
     },
     [navigate],
   );

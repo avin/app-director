@@ -15,7 +15,9 @@ const CreateOrganization = ({}: Props) => {
 
   const handleSubmitForm = useCallback(async () => {
     const organization = await dispatch(createOrganization());
-    navigate(generatePath(config.routes.organizations.view, { id: organization.id }));
+    navigate(
+      generatePath(config.routes.organizations.view, { id: organization.id }),
+    );
   }, [dispatch, navigate]);
 
   return (

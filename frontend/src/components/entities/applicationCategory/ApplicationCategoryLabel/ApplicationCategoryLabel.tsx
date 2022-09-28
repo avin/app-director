@@ -8,7 +8,10 @@ interface Props {
   linkable?: boolean;
 }
 
-const ApplicationCategoryCategoryLabel = ({ applicationCategoryId, linkable }: Props) => {
+const ApplicationCategoryCategoryLabel = ({
+  applicationCategoryId,
+  linkable,
+}: Props) => {
   return (
     <ApplicationCategoryFetcher
       applicationCategoryId={applicationCategoryId}
@@ -24,7 +27,11 @@ const ApplicationCategoryCategoryLabel = ({ applicationCategoryId, linkable }: P
         let content = <span>AC: {entity.title}</span>;
         if (linkable) {
           content = (
-            <Link to={generatePath(config.routes.applicationCategories.view, { id: applicationCategoryId })}>
+            <Link
+              to={generatePath(config.routes.applicationCategories.view, {
+                id: applicationCategoryId,
+              })}
+            >
               {content}
             </Link>
           );

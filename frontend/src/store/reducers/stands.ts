@@ -57,19 +57,40 @@ export function getStands(
 
     await Promise.all(
       [
-        ['organization', 'organizationId', 'organizations', getOrganizations] as const,
-        ['application', 'applicationId', 'applications', getApplications] as const,
-        ['standCategory', 'standCategoryId', 'standCategories', getStandCategories] as const,
-      ].reduce<Promise<unknown>[]>((acc, [relationName, relationIdKey, entityStoreKey, getRelationAction]) => {
-        if (withRelations.includes(relationName)) {
-          let ids = getRelationIdsFromEntitiesArray(items, relationIdKey);
-          ids = ids.filter((id) => !getState()[entityStoreKey].entities[id]);
-          if (ids.length) {
-            acc.push(dispatch(getRelationAction({ ids })));
+        [
+          'organization',
+          'organizationId',
+          'organizations',
+          getOrganizations,
+        ] as const,
+        [
+          'application',
+          'applicationId',
+          'applications',
+          getApplications,
+        ] as const,
+        [
+          'standCategory',
+          'standCategoryId',
+          'standCategories',
+          getStandCategories,
+        ] as const,
+      ].reduce<Promise<unknown>[]>(
+        (
+          acc,
+          [relationName, relationIdKey, entityStoreKey, getRelationAction],
+        ) => {
+          if (withRelations.includes(relationName)) {
+            let ids = getRelationIdsFromEntitiesArray(items, relationIdKey);
+            ids = ids.filter((id) => !getState()[entityStoreKey].entities[id]);
+            if (ids.length) {
+              acc.push(dispatch(getRelationAction({ ids })));
+            }
           }
-        }
-        return acc;
-      }, []),
+          return acc;
+        },
+        [],
+      ),
     );
 
     return {

@@ -22,7 +22,10 @@ module.exports = {
     'spaced-comment': ['warn', 'always', { markers: ['/'] }],
     curly: ['error', 'all'],
     'no-unused-vars': [1, { args: 'none', ignoreRestSiblings: true }],
-    '@typescript-eslint/no-unused-vars': [1, { args: 'none', ignoreRestSiblings: true }],
+    '@typescript-eslint/no-unused-vars': [
+      1,
+      { args: 'none', ignoreRestSiblings: true },
+    ],
     'no-underscore-dangle': [
       1,
       {
@@ -69,7 +72,10 @@ module.exports = {
     ],
 
     // 'react/static-property-placement': 0,
-    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'react/jsx-filename-extension': [
+      'error',
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
     // 'react/forbid-prop-types': 0,
     'react/require-default-props': 0,
     // 'react/jsx-wrap-multilines': ['error', { declaration: false }],

@@ -9,7 +9,10 @@ export default () => {
     <MemoryRouter initialEntries={[config.routes.standCategories.create]}>
       <Routes>
         <Route element={<GeneralLayout />}>
-          <Route path={config.routes.standCategories.create} element={<CreateStandCategory />} />
+          <Route
+            path={config.routes.standCategories.create}
+            element={<CreateStandCategory />}
+          />
         </Route>
       </Routes>
     </MemoryRouter>

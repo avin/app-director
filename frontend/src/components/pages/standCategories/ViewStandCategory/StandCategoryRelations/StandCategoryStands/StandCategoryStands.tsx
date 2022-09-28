@@ -13,7 +13,13 @@ const StandCategoryStands = ({}: Props) => {
       viewHeaderProps={{
         title: `Стенды категории [${standCategory.title}]`,
       }}
-      columns={['standCategory', 'title', 'description', 'application', 'organization']}
+      columns={[
+        'standCategory',
+        'title',
+        'description',
+        'application',
+        'organization',
+      ]}
       addEntityRoute={`${config.routes.stands.create}?standCategoryId=${standCategory.id}`}
       getEntitiesFilter={{
         standCategoryId: standCategory.id,
