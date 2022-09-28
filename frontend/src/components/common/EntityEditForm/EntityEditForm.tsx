@@ -88,7 +88,7 @@ const EntityEditForm = ({ name, onSubmit, fields, defaultValues }: Props) => {
           case 'relationSelect': {
             const relation = field.relation;
             if (!relation) {
-              return null;
+              throw new Error('no relation object');
             }
             const SelectComponent = (() => {
               switch (relation.relationTo) {
@@ -101,12 +101,9 @@ const EntityEditForm = ({ name, onSubmit, fields, defaultValues }: Props) => {
                 case 'standCategory':
                   return StandCategorySelect;
                 default:
-                  return null;
+                  throw new Error('unknown relationTo');
               }
             })();
-            if (!SelectComponent) {
-              return null;
-            }
             return (
               <InputContainer
                 key={field.name}

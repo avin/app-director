@@ -2,7 +2,7 @@
  * App config
  */
 
-import { capitalizeFirstLetter } from './utils/strings';
+import { capitalizeFirstLetter, pluralize } from './utils/strings';
 import { IconName } from '@blueprintjs/icons';
 import { EntityConfig } from '@/types';
 
@@ -194,33 +194,35 @@ export class Config {
   } {
     const { apiPrefix } = this;
 
-    const getEntityApiMethods = (singularName: string, pluralName: string) => {
-      const singularNameWithUpperLetter = capitalizeFirstLetter(singularName);
-      const pluralNameWithUpperLetter = capitalizeFirstLetter(pluralName);
+    const getEntityApiMethods = (entityType: string) => {
+      const pluralEntityType = pluralize(entityType);
+      const entityTypeWithUpperLetter = capitalizeFirstLetter(entityType);
+      const pluralEntityTypeWithUpperLetter =
+        capitalizeFirstLetter(pluralEntityType);
 
       return {
-        [`get${pluralNameWithUpperLetter}`]: {
-          url: `${apiPrefix}/${pluralName}`,
+        [`get${pluralEntityTypeWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralEntityType}`,
           method: 'GET',
         },
 
-        [`get${singularNameWithUpperLetter}`]: {
-          url: `${apiPrefix}/${pluralName}/:id`,
+        [`get${entityTypeWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralEntityType}/:id`,
           method: 'GET',
         },
 
-        [`create${singularNameWithUpperLetter}`]: {
-          url: `${apiPrefix}/${pluralName}`,
+        [`create${entityTypeWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralEntityType}`,
           method: 'POST',
         },
 
-        [`update${singularNameWithUpperLetter}`]: {
-          url: `${apiPrefix}/${pluralName}/:id`,
+        [`update${entityTypeWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralEntityType}/:id`,
           method: 'PATCH',
         },
 
-        [`delete${singularNameWithUpperLetter}`]: {
-          url: `${apiPrefix}/${pluralName}/:id`,
+        [`delete${entityTypeWithUpperLetter}`]: {
+          url: `${apiPrefix}/${pluralEntityType}/:id`,
           method: 'DELETE',
         },
       };
@@ -251,12 +253,12 @@ export class Config {
 
       // ------- Entities -------
 
-      ...getEntityApiMethods('application', 'applications'),
-      ...getEntityApiMethods('applicationCategory', 'applicationCategories'),
-      ...getEntityApiMethods('standCategory', 'standCategories'),
-      ...getEntityApiMethods('stand', 'stands'),
-      ...getEntityApiMethods('organization', 'organizations'),
-      ...getEntityApiMethods('user', 'users'),
+      ...getEntityApiMethods('application'),
+      ...getEntityApiMethods('applicationCategory'),
+      ...getEntityApiMethods('standCategory'),
+      ...getEntityApiMethods('stand'),
+      ...getEntityApiMethods('organization'),
+      ...getEntityApiMethods('user'),
     };
   }
 
