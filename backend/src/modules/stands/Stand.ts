@@ -9,12 +9,6 @@ export class Stand extends BaseEntity {
   @Column()
   title: string;
 
-  @Column({ nullable: true })
-  description: string;
-
-  @Column({ nullable: true })
-  note: string;
-
   @Column({
     type: 'jsonb',
     nullable: true,

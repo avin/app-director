@@ -11,7 +11,7 @@ export class GetOrganizationsFilterDto extends PaginationParams {
   ids?: string[];
 
   @IsOptional()
-  orderBy: 'title' | 'description' | 'createdAt' | 'updatedAt' | 'standsCount' = 'title';
+  orderBy: 'title' | 'createdAt' | 'updatedAt' | 'standsCount' = 'title';
 
   @IsOptional()
   @ValidateIf((o) => !!o.orderBy)

@@ -5,12 +5,6 @@ export class CreateApplicationDto {
   title: string;
 
   @IsOptional()
-  description?: string;
-
-  @IsOptional()
-  note?: string;
-
-  @IsOptional()
   properties?: Record<string, unknown>;
 
   @IsString()

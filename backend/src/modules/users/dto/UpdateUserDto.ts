@@ -6,10 +6,6 @@ export class UpdateUserDto {
   @IsOptional()
   password?: string;
 
-  @IsString()
-  @IsOptional()
-  description?: string;
-
   @IsOptional()
   properties?: Record<string, unknown>;
 }

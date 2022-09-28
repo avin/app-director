@@ -9,7 +9,4 @@ export class CreateUserDto {
 
   @IsOptional()
   fullName?: string;
-
-  @IsOptional()
-  description?: string;
 }

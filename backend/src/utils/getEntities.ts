@@ -18,12 +18,6 @@ export const getEntities = async <
 ) => {
   const qb = repository.createQueryBuilder('entity');
 
-  // if (filterDto.search) {
-  //   qb.andWhere('(LOWER(entity.title) LIKE LOWER(:search) OR LOWER(entity.description) LIKE LOWER(:search))', {
-  //     search: `%${filterDto.search}%`,
-  //   });
-  // }
-
   if (filterDto.ids) {
     qb.andWhere('entity.id IN (:...ids)', { ids: filterDto.ids });
   }

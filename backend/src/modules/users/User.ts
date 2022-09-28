@@ -15,9 +15,6 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   fullName: string;
 
-  @Column({ nullable: true })
-  description: string;
-
   @Column({
     type: 'enum',
     enum: Role,

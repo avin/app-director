@@ -7,9 +7,9 @@ export class AddSomeData1657471757685 implements MigrationInterface {
     const applicationRepository = queryRunner.manager.getRepository(Application);
 
     await applicationRepository.insert([
-      { title: 'ApplicationName1', description: 'ApplicationDescription1', properties: { foo: 'bar1' } },
-      { title: 'ApplicationName2', description: 'ApplicationDescription2', properties: { foo: 'bar2' } },
-      { title: 'ApplicationName3', description: 'ApplicationDescription3', properties: { foo: 'bar3' } },
+      { title: 'ApplicationName1', properties: { foo: 'bar1' } },
+      { title: 'ApplicationName2', properties: { foo: 'bar2' } },
+      { title: 'ApplicationName3', properties: { foo: 'bar3' } },
     ]);
   }
 

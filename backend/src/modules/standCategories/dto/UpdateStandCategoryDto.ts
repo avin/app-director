@@ -6,14 +6,6 @@ export class UpdateStandCategoryDto {
   @IsOptional()
   title?: string;
 
-  @IsString()
-  @IsOptional()
-  description?: string;
-
-  @IsString()
-  @IsOptional()
-  note?: string;
-
   @IsOptional()
   properties?: Record<string, unknown>;
 }

@@ -18,13 +18,31 @@ export class Config {
         {
           name: 'applicationCategoryId',
           type: 'relation-select',
-          props: {
-            foo: 1,
+          relation: {
+            relationTo: 'applicationCategory',
+            single: true,
           },
+          label: 'Категория приложения',
+          required: true,
         },
-        { name: 'title', type: 'text', props: {} },
-        { name: 'description', type: 'text', props: {} },
-        { name: 'notes', type: 'text', props: {} },
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Название',
+          required: true,
+        },
+        {
+          name: 'properties.description',
+          type: 'text',
+          label: 'Описание',
+          required: false,
+        },
+        {
+          name: 'properties.notes',
+          type: 'markdown',
+          label: 'Заметки',
+          required: false,
+        },
       ],
     },
 

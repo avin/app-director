@@ -74,39 +74,49 @@ export class FillFakesCommand {
   createRandomStandCategory() {
     return this.standCategoriesService.createStandCategory({
       title: faker.lorem.word(),
-      description: faker.lorem.sentence(3),
+      properties: {
+        description: faker.lorem.sentence(3),
+      },
     });
   }
 
   createRandomApplicationCategory() {
     return this.applicationCategoriesService.createApplicationCategory({
       title: faker.lorem.word(),
-      description: faker.lorem.sentence(3),
+      properties: {
+        description: faker.lorem.sentence(3),
+      },
     });
   }
 
   createRandomOrganization() {
     return this.organizationsService.createOrganization({
-      title: faker.company.companyName(),
-      description: faker.lorem.sentence(),
+      title: faker.company.name(),
+      properties: {
+        description: faker.lorem.sentence(),
+      },
     });
   }
 
   createRandomApplication(applicationCategories: ApplicationCategory[]) {
     return this.applicationsService.createApplication({
-      title: faker.company.companyName(),
-      description: faker.lorem.sentence(),
+      title: faker.company.name(),
       applicationCategoryId: sample(applicationCategories).id,
+      properties: {
+        description: faker.lorem.sentence(),
+      },
     });
   }
 
   createRandomStand(standCategories: StandCategory[], applications: Application[], organizations: Organization[]) {
     return this.standsService.createStand({
       title: faker.word.noun(),
-      description: faker.lorem.sentence(),
       applicationId: sample(applications).id,
       organizationId: sample(organizations).id,
       standCategoryId: sample(standCategories).id,
+      properties: {
+        description: faker.lorem.sentence(),
+      },
     });
   }
 }

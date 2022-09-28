@@ -8,14 +8,6 @@ export class UpdateStandDto {
 
   @IsString()
   @IsOptional()
-  description?: string;
-
-  @IsString()
-  @IsOptional()
-  note?: string;
-
-  @IsString()
-  @IsOptional()
   applicationId?: string;
 
   @IsString()

@@ -38,11 +38,6 @@ export class Initialize1652628959891 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'description',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
             name: 'properties',
             type: 'jsonb',
             isNullable: true,
@@ -62,16 +57,6 @@ export class Initialize1652628959891 implements MigrationInterface {
             name: 'title',
             type: 'varchar',
             isNullable: false,
-          },
-          {
-            name: 'description',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'alias',
-            type: 'varchar',
-            isNullable: true,
           },
           {
             name: 'properties',
@@ -106,11 +91,6 @@ export class Initialize1652628959891 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'description',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
             name: 'role',
             type: 'varchar',
             isNullable: true,
@@ -135,11 +115,6 @@ export class Initialize1652628959891 implements MigrationInterface {
             name: 'title',
             type: 'varchar',
             isNullable: false,
-          },
-          {
-            name: 'description',
-            type: 'varchar',
-            isNullable: true,
           },
           {
             name: 'alias',
@@ -182,66 +157,9 @@ export class Initialize1652628959891 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'description',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
             name: 'properties',
             type: 'jsonb',
             isNullable: true,
-          },
-        ],
-      }),
-      false,
-    );
-
-    /** inspector */
-    await queryRunner.createTable(
-      new Table({
-        name: 'inspector',
-        columns: [
-          ...commonColumns,
-          {
-            name: 'standId',
-            type: 'uuid',
-            isNullable: false,
-          },
-          {
-            name: 'properties',
-            type: 'jsonb',
-            isNullable: true,
-          },
-        ],
-      }),
-      false,
-    );
-
-    /** check */
-    await queryRunner.createTable(
-      new Table({
-        name: 'check',
-        columns: [
-          ...commonColumns,
-          {
-            name: 'inspectorId',
-            type: 'uuid',
-            isNullable: false,
-          },
-          {
-            name: 'checksCount',
-            type: 'int4',
-            default: 0,
-            isNullable: false,
-          },
-          {
-            name: 'result',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'successful',
-            type: 'bool',
           },
         ],
       }),
@@ -255,7 +173,5 @@ export class Initialize1652628959891 implements MigrationInterface {
     await queryRunner.dropTable('user');
     await queryRunner.dropTable('standCategory');
     await queryRunner.dropTable('stand');
-    await queryRunner.dropTable('inspector');
-    await queryRunner.dropTable('check');
   }
 }

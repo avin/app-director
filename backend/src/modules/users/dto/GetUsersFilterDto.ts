@@ -11,8 +11,8 @@ export class GetUsersFilterDto extends PaginationParams {
   ids?: string[];
 
   @IsOptional()
-  @IsIn(['email', 'fullName', 'description', 'createdAt', 'updatedAt'])
-  orderBy: 'email' | 'fullName' | 'description' | 'createdAt' | 'updatedAt' = 'email';
+  @IsIn(['email', 'fullName', 'createdAt', 'updatedAt'])
+  orderBy: 'email' | 'fullName' | 'createdAt' | 'updatedAt' = 'email';
 
   @IsOptional()
   @ValidateIf((o) => !!o.orderBy)

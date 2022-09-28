@@ -36,20 +36,13 @@ export class StandsService {
           .innerJoinAndSelect('entity.standCategory', 'standCategory');
 
         qbSearchLike(qb, {
-          columns: [
-            'entity.title',
-            'entity.description',
-            'application.title',
-            'organization.title',
-            'standCategory.title',
-          ],
+          columns: ['entity.title', 'application.title', 'organization.title', 'standCategory.title'],
           search: filterDto.search,
         });
       }
 
       switch (filterDto.orderBy) {
         case 'title':
-        case 'description':
         case 'createdAt':
         case 'updatedAt':
           qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);

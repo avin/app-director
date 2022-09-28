@@ -30,7 +30,6 @@ export class UsersService {
       switch (filterDto.orderBy) {
         case 'email':
         case 'fullName':
-        case 'description':
         case 'createdAt':
         case 'updatedAt':
           qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);

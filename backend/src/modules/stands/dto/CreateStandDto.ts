@@ -6,13 +6,6 @@ export class CreateStandDto {
   title: string;
 
   @IsString()
-  @IsOptional()
-  description?: string;
-
-  @IsOptional()
-  note?: string;
-
-  @IsString()
   standCategoryId: string;
 
   @IsString()
