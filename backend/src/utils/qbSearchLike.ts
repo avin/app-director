@@ -1,6 +1,7 @@
 import { SelectQueryBuilder } from 'typeorm';
+import { ObjectLiteral } from 'typeorm/common/ObjectLiteral';
 
-export const qbSearchLike = <TEntity>(
+export const qbSearchLike = <TEntity extends ObjectLiteral>(
   qb: SelectQueryBuilder<TEntity>,
   { columns, search }: { columns: string[]; search: string },
 ) => {

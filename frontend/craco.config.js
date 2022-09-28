@@ -13,7 +13,7 @@ module.exports = {
       _.set(webpackConfig, ['resolve', 'alias', '@'], path.resolve(__dirname, `${paths.appSrc}/`));
 
       const htmlWebpackPluginInstance = webpackConfig.plugins.find(
-        webpackPlugin => webpackPlugin instanceof HtmlWebpackPlugin
+        (webpackPlugin) => webpackPlugin instanceof HtmlWebpackPlugin,
       );
       if (htmlWebpackPluginInstance) {
         htmlWebpackPluginInstance.userOptions.inject = false;

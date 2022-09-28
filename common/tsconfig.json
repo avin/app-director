@@ -63,7 +63,7 @@
     // "emitDecoratorMetadata": true,
 
     "jsx": "react-jsx",
-    "newLine": "lf",
+    "newLine": "lf"
   },
   "exclude": ["node_modules", "./src/**/__tests__/*"],
   "include": ["./src/**/*.ts"]

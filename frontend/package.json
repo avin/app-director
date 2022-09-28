@@ -9,10 +9,7 @@
     "cosmos": "cross-env FAST_REFRESH=false cosmos",
     "check-types": "tsc",
     "lint": "eslint src/**/*.{js,ts,tsx}",
-    "stylelint": "stylelint src/**/*.scss",
-    "lint:fix": "npm run lint -- --fix",
-    "stylelint:fix": "npm run stylelint -- --fix",
-    "prettier": "prettier --write \"**/*.{ts,tsx,js,json,css,scss,md}\""
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@blueprintjs/core": "^4.3.1",
@@ -90,18 +87,14 @@
   "homepage": ".",
   "lint-staged": {
     "src/**/*.{js,ts,tsx}": [
-      "prettier --write",
       "suppress-exit-code eslint --fix"
     ],
-    "{additional,scripts}/**/*.{js,ts,tsx,json,md}": [
-      "prettier --write"
-    ],
-    "src/**/*.{css,scss}": [
-      "prettier --write",
-      "suppress-exit-code stylelint --fix"
+    "*": [
+      "prettier --write --ignore-unknown"
     ]
   },
   "volta": {
-    "node": "16.13.2"
+    "node": "16.13.2",
+    "yarn": "1.22.19"
   }
 }

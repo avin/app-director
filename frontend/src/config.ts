@@ -12,6 +12,31 @@ export class Config {
 
   pageLoadingElementId = 'page-loading';
 
+  entities = {
+    application: {
+      fields: [
+        {
+          name: 'applicationCategoryId',
+          type: 'relation-select',
+          props: {
+            foo: 1,
+          },
+        },
+        { name: 'title', type: 'text', props: {} },
+        { name: 'description', type: 'text', props: {} },
+        { name: 'notes', type: 'text', props: {} },
+      ],
+    },
+
+    organization: {
+      additionalFields: [],
+    },
+
+    stand: {
+      additionalFields: [],
+    },
+  };
+
   defaultIcons: Record<string, IconName> = {
     application: 'application',
     applicationCategory: 'applications',

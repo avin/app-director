@@ -14,5 +14,9 @@
     "src/**/*.{js,ts,tsx}": [
       "prettier --write"
     ]
+  },
+  "volta": {
+    "node": "16.13.2",
+    "yarn": "1.22.19"
   }
 }

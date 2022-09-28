@@ -1,7 +1,8 @@
 import { Repository, SelectQueryBuilder } from 'typeorm';
+import { ObjectLiteral } from 'typeorm/common/ObjectLiteral';
 
 export const getEntities = async <
-  TEntity,
+  TEntity extends ObjectLiteral,
   TFilterDto extends {
     limit?: number;
     offset?: number;
