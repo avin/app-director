@@ -13,7 +13,6 @@ const ApplicationStands = ({}: Props) => {
       viewHeaderProps={{
         title: `Стенды приложения [${application.title}]`,
       }}
-      columns={['standCategory', 'title', 'description', 'organization']}
       addEntityRoute={`${config.routes.stands.create}?standCategoryId=${application.id}`}
       getEntitiesFilter={{
         applicationId: application.id,

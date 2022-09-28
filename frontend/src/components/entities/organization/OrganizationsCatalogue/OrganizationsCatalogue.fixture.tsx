@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 export default () => {
   return (
     <MemoryRouter>
-      <OrganizationsCatalogue columns={['title', 'description']} />
+      <OrganizationsCatalogue />
     </MemoryRouter>
   );
 };

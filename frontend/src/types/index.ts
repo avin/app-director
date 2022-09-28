@@ -2,111 +2,116 @@ import { Role } from '@/constants/role';
 
 export type SortingDirection = 'ASC' | 'DESC';
 
-export type ApiError = {
+export interface ApiError {
   statusCode: number;
   message: string;
   error: string;
-};
+}
 
-export type LogInFormInputs = {
+export interface LogInFormInputs {
   email: string;
   password: string;
   save: boolean;
-};
+}
 
-export type CommonEntityProps = {
+export interface CommonEntityProps {
   id: string;
   createdAt: string;
   updatedAt: string;
-};
+}
 
-export type Organization = CommonEntityProps & {
+export interface Organization extends CommonEntityProps {
   title: string;
   description: string;
   properties: Record<string, unknown> | null;
   stands: string[];
-};
+}
 
-export type Application = CommonEntityProps & {
+export interface Application extends CommonEntityProps {
   title: string;
   description: string | null;
   properties: Record<string, unknown> | null;
   stands: string[];
   applicationCategoryId: string;
-};
+}
 
-export type ApplicationCategory = CommonEntityProps & {
+export interface ApplicationCategory extends CommonEntityProps {
   title: string;
   description: string | null;
   properties: Record<string, unknown> | null;
   applications: string[];
-};
+}
 
-export type StandCategory = CommonEntityProps & {
+export interface StandCategory extends CommonEntityProps {
   title: string;
   description: string | null;
   properties: Record<string, unknown> | null;
   stands: string[];
-};
+}
 
-export type Stand = CommonEntityProps & {
+export interface Stand extends CommonEntityProps {
   title: string;
   description: string | null;
   properties: Record<string, unknown> | null;
   standCategoryId: string;
   applicationId: string;
   organizationId: string | null;
-};
+}
 
-export type User = {
+export interface User {
   id: string;
   email: string;
   fullName: string | null;
   description: string | null;
   role: Role;
   properties: Record<string, unknown>;
-};
+}
 
-export type LogInResponse = {
+export interface LogInResponse {
   accessToken: string;
   user: User;
-};
+}
 
-export type GetApplicationsResponse = {
+export interface GetApplicationsResponse {
   items: Application[];
   count: number;
-};
+}
 
-export type GetApplicationCategoriesResponse = {
+export interface GetApplicationCategoriesResponse {
   items: ApplicationCategory[];
   count: number;
-};
+}
 
-export type GetStandsResponse = {
+export interface GetStandsResponse {
   items: Stand[];
   count: number;
-};
+}
 
-export type GetStandCategoriesResponse = {
+export interface GetStandCategoriesResponse {
   items: StandCategory[];
   count: number;
-};
+}
 
-export type GetOrganizationsResponse = {
+export interface GetOrganizationsResponse {
   items: Organization[];
   count: number;
-};
+}
+
+export interface CatalogueColumnConfig {
+  [k: string]: any;
+}
 
 export type FieldType = 'text' | 'relationSelect' | 'markdown';
 
-export type FieldConfig = {
-  name: string;
+export interface FieldConfig {
+  id: string;
   type: FieldType;
   label: string;
   required: boolean;
   [k: string]: any;
-};
+}
 
-export type EntityConfig = {
+export interface EntityConfig {
   fields: FieldConfig[];
-};
+  catalogueColumns: CatalogueColumnConfig[];
+}

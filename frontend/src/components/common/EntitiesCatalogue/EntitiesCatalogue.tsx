@@ -1,4 +1,5 @@
 import React, {
+  SyntheticEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -10,7 +11,6 @@ import styles from './EntitiesCatalogue.module.scss';
 import { Button, HTMLTable, Intent, Spinner } from '@blueprintjs/core';
 import { AppThunkDispatch } from '@/store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/reducers';
 import { Link, useSearchParams } from 'react-router-dom';
 import ViewHeader from '@/components/common/ViewHeader/ViewHeader';
 import FitPage from '../FitPage/FitPage';
@@ -20,40 +20,67 @@ import Search from '@/components/common/EntitiesCatalogue/Search/Search';
 import queryString from 'query-string';
 import Mark from 'mark.js';
 import { usePrevious } from '@/utils/hooks/usePrevious';
+import config from '@/config';
+import { useHandleClickCatalogueRow } from '@/utils/hooks/useHandleClickCatalogueRow';
+import { getApplications } from '@/store/reducers/applications';
+import ApplicationCategoryLabel from '@/components/entities/applicationCategory/ApplicationCategoryLabel/ApplicationCategoryLabel';
+import { get } from 'lodash-es';
+import ApplicationLabel from '@/components/entities/application/ApplicationLabel/ApplicationLabel';
+import OrganizationLabel from '@/components/entities/organization/OrganizationLabel/OrganizationLabel';
+import StandCategoryLabel from '@/components/entities/standCategory/StandCategoryLabel/StandCategoryLabel';
+import {
+  applicationCategoriesSelector,
+  applicationsSelector,
+  organizationsSelector,
+  standCategoriesSelector,
+  standsSelector,
+} from '@/store/selectors';
+import { pluralize } from '@/utils/strings';
+import { getApplicationCategories } from '@/store/reducers/applicationCategories';
+import { getOrganizations } from '@/store/reducers/organizations';
+import { getStandCategories } from '@/store/reducers/standCategories';
+import { getStands } from '@/store/reducers/stands';
 
-export type RowBuilderParams<TEntity> = {
-  id: string;
-  entity: TEntity;
-};
-export type HeadColumn = {
-  id: string;
-  label: React.ReactNode;
-  sortable?: boolean;
-};
-
-interface Props<TEntity> {
-  addEntityRoute?: string;
-  headColumns: HeadColumn[];
-  rowBuilder: (params: RowBuilderParams<TEntity>) => React.ReactNode;
-  getEntities: (filter: any) => Promise<{ ids: string[]; count: number }>;
-  entitiesSelector: (state: RootState) => Record<string, TEntity>;
-  onClose?: () => void;
+interface Props {
+  entityType: string;
+  onClickRow?: (id: string, e?: SyntheticEvent<HTMLTableRowElement>) => void;
   viewHeaderProps?: Partial<$ElementProps<typeof ViewHeader>>;
-  defaultSortingColumnId?: string;
   defaultSortingDirection?: SortingDirection;
+  getEntitiesFilter?: any;
+  addEntityRoute?: string;
 }
 
-const EntitiesCatalogue = <TEntity,>({
-  addEntityRoute,
-  headColumns,
-  rowBuilder,
-  getEntities,
-  entitiesSelector,
-  onClose,
+const EntitiesCatalogue = ({
+  entityType,
+  onClickRow,
   viewHeaderProps,
-  defaultSortingColumnId,
   defaultSortingDirection = 'ASC',
-}: Props<TEntity>) => {
+  getEntitiesFilter,
+  addEntityRoute,
+}: Props) => {
+  const catalogueColumns = config.entities[entityType].catalogueColumns;
+
+  if (!catalogueColumns) {
+    throw new Error(`catalogueColumns not defined for ${entityType}`);
+  }
+
+  const entitiesSelector = useMemo(() => {
+    switch (entityType) {
+      case 'application':
+        return applicationsSelector;
+      case 'applicationCategory':
+        return applicationCategoriesSelector;
+      case 'organization':
+        return organizationsSelector;
+      case 'standCategory':
+        return standCategoriesSelector;
+      case 'stand':
+        return standsSelector;
+      default:
+        throw new Error(`no entitiesSelector for ${entityType}`);
+    }
+  }, [entityType]);
+
   const dispatch: AppThunkDispatch = useDispatch();
   const [isDataFetchFailed, setIsDataFetchFailed] = useState(false);
   const entities = useSelector(entitiesSelector);
@@ -66,7 +93,7 @@ const EntitiesCatalogue = <TEntity,>({
     columnId: string | undefined;
     direction: SortingDirection;
   }>({
-    columnId: defaultSortingColumnId,
+    columnId: catalogueColumns[0]?.id,
     direction: defaultSortingDirection,
   });
   const [searchParams] = useSearchParams();
@@ -120,6 +147,45 @@ const EntitiesCatalogue = <TEntity,>({
       }),
     };
   }, [searchValue, sorting.columnId, sorting.direction]);
+
+  const getEntities = useCallback(
+    async (filter: any) => {
+      const getEntitiesFunc = (() => {
+        switch (entityType) {
+          case 'application':
+            return getApplications;
+          case 'applicationCategory':
+            return getApplicationCategories;
+          case 'organization':
+            return getOrganizations;
+          case 'standCategory':
+            return getStandCategories;
+          case 'stand':
+            return getStands;
+          default:
+            throw new Error(`no getEntities function for ${entityType}'`);
+        }
+      })();
+
+      const relations = catalogueColumns.reduce((acc, column) => {
+        if (column.type === 'relation') {
+          acc.push(column.relation.relationTo);
+        }
+        return acc;
+      }, []);
+
+      return dispatch(
+        getEntitiesFunc(
+          {
+            ...getEntitiesFilter,
+            ...filter,
+          },
+          relations,
+        ),
+      );
+    },
+    [catalogueColumns, dispatch, entityType, getEntitiesFilter],
+  );
 
   useEffect(() => {
     void (async () => {
@@ -210,6 +276,11 @@ const EntitiesCatalogue = <TEntity,>({
     [],
   );
 
+  const handleClickRow = useHandleClickCatalogueRow(
+    config.routes[pluralize(entityType)].view,
+    onClickRow,
+  );
+
   if (isDataFetchFailed) {
     return <div>Something wrong</div>;
   }
@@ -223,15 +294,17 @@ const EntitiesCatalogue = <TEntity,>({
 
             <div className="bp4-navbar-divider" />
 
-            {addEntityRoute && (
-              <Link to={addEntityRoute} tabIndex={-1}>
-                <Button intent={Intent.PRIMARY} icon="plus">
-                  Добавить
-                </Button>
-              </Link>
-            )}
+            <Link
+              to={addEntityRoute || config.routes[pluralize(entityType)].create}
+              tabIndex={-1}
+            >
+              <Button intent={Intent.PRIMARY} icon="plus">
+                Добавить
+              </Button>
+            </Link>
           </>
         }
+        icon={config.defaultIcons[entityType]}
         {...viewHeaderProps}
       />
       <FitPage minHeight={100}>
@@ -249,7 +322,7 @@ const EntitiesCatalogue = <TEntity,>({
           >
             <thead>
               <tr>
-                {headColumns.map(({ label, id, sortable }) => (
+                {catalogueColumns.map(({ label, id, sortable }) => (
                   <th
                     key={id}
                     onClick={handleClickTh}
@@ -294,12 +367,74 @@ const EntitiesCatalogue = <TEntity,>({
               )}
 
               {!!entitiesCount &&
-                entitiesIds.map((id) =>
-                  rowBuilder({
-                    id,
-                    entity: entities[id],
-                  }),
-                )}
+                entitiesIds.map((id) => {
+                  const entity = entities[id];
+
+                  return (
+                    <tr key={id} onClick={handleClickRow} data-id={id}>
+                      {catalogueColumns.map((column) => {
+                        const content = (() => {
+                          switch (column.type) {
+                            case 'text':
+                              return get(entity, column.text.of);
+                            case 'relation':
+                              const relation = column.relation;
+                              if (!relation) {
+                                throw new Error('no relation object');
+                              }
+
+                              const relationId = get(
+                                entity,
+                                column.id,
+                              ) as string;
+
+                              if (!relationId) {
+                                return null;
+                              }
+
+                              switch (relation.relationTo) {
+                                case 'application':
+                                  return (
+                                    <ApplicationLabel
+                                      applicationId={relationId}
+                                      linkable
+                                    />
+                                  );
+                                case 'organization':
+                                  return (
+                                    <OrganizationLabel
+                                      organizationId={relationId}
+                                      linkable
+                                    />
+                                  );
+                                case 'applicationCategory':
+                                  return (
+                                    <ApplicationCategoryLabel
+                                      applicationCategoryId={relationId}
+                                      linkable
+                                    />
+                                  );
+                                case 'standCategory':
+                                  return (
+                                    <StandCategoryLabel
+                                      standCategoryId={relationId}
+                                      linkable
+                                    />
+                                  );
+                                default:
+                                  throw new Error('unknown relationTo');
+                              }
+                            case 'count':
+                              return entity[column.count.of].length;
+                            default:
+                              throw new Error(`unknown column type`);
+                          }
+                        })();
+                        return <td key={column.id}>{content}</td>;
+                      })}
+                    </tr>
+                  );
+                })}
             </tbody>
           </HTMLTable>
         </div>

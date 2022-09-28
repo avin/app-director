@@ -84,7 +84,6 @@ const StandCategoryCategorySelect = <TFieldValues,>({
             title: 'Выбрать категорию стенда',
             onClose: closeChooseDialog,
           }}
-          columns={['title', 'description', 'standsCount']}
           onClickRow={handleClickCatalogueRow}
         />
       </ChooseEntityDialog>

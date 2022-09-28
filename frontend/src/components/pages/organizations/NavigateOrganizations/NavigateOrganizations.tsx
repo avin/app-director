@@ -17,12 +17,7 @@ const NavigateOrganizations = ({}: Props) => {
     [navigate],
   );
 
-  return (
-    <OrganizationsCatalogue
-      columns={['title', 'description', 'standsCount']}
-      onClickRow={handleClickRow}
-    />
-  );
+  return <OrganizationsCatalogue onClickRow={handleClickRow} />;
 };
 
 export default NavigateOrganizations;

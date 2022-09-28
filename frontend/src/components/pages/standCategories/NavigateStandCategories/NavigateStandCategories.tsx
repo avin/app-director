@@ -19,12 +19,7 @@ const NavigateStandCategories = ({}: Props) => {
     [navigate],
   );
 
-  return (
-    <StandCategoriesCatalogue
-      columns={['title', 'description', 'standsCount']}
-      onClickRow={handleClickRow}
-    />
-  );
+  return <StandCategoriesCatalogue onClickRow={handleClickRow} />;
 };
 
 export default NavigateStandCategories;

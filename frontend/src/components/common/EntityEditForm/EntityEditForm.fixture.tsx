@@ -3,7 +3,7 @@ import EntityEditForm from './EntityEditForm';
 
 const getRelationField = (relationTo: string) => {
   return {
-    name: `relationSelectField${relationTo}`,
+    id: `relationSelectField${relationTo}`,
     type: 'relationSelect',
     label: `RelationSelect field (${relationTo})`,
     relation: {
@@ -16,13 +16,13 @@ const getRelationField = (relationTo: string) => {
 
 const fields = [
   {
-    name: 'textField',
+    id: 'textField',
     type: 'text',
     label: 'Text field',
     required: false,
   } as const,
   {
-    name: 'markdownField',
+    id: 'markdownField',
     type: 'markdown',
     label: 'Markdown field',
     required: false,

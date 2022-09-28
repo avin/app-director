@@ -60,7 +60,7 @@ const ViewEntity = ({ entity, entityType, additionalContent }: Props) => {
           const valueContent = (() => {
             switch (field.type) {
               case 'text': {
-                return get(entity, field.name) as string;
+                return get(entity, field.id) as string;
               }
               case 'relationSelect': {
                 const relation = field.relation;
@@ -68,7 +68,7 @@ const ViewEntity = ({ entity, entityType, additionalContent }: Props) => {
                   throw new Error('no relation object');
                 }
 
-                const relationId = get(entity, field.name) as string;
+                const relationId = get(entity, field.id) as string;
 
                 if (!relationId) {
                   return null;
@@ -107,7 +107,7 @@ const ViewEntity = ({ entity, entityType, additionalContent }: Props) => {
           })();
 
           return (
-            <div className={styles.row} key={field.name}>
+            <div className={styles.row} key={field.id}>
               <div className={styles.rowTitle}>
                 <h4>{field.label}</h4>
               </div>

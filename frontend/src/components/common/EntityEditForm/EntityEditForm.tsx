@@ -41,6 +41,8 @@ const EntityEditForm = ({ name, onSubmit, fields, defaultValues }: Props) => {
         return;
       }
 
+      console.log(1, name);
+
       dispatch(setFormState({ formName: name, formState: data }));
 
       try {
@@ -77,11 +79,11 @@ const EntityEditForm = ({ name, onSubmit, fields, defaultValues }: Props) => {
           case 'text': {
             return (
               <InputContainer
-                key={field.name}
+                key={field.id}
                 label={field.label}
-                error={isSubmitted && errors[field.name]?.message}
+                error={isSubmitted && errors[field.id]?.message}
               >
-                <ControlledTextInput name={field.name} control={control} />
+                <ControlledTextInput name={field.id} control={control} />
               </InputContainer>
             );
           }
@@ -106,11 +108,11 @@ const EntityEditForm = ({ name, onSubmit, fields, defaultValues }: Props) => {
             })();
             return (
               <InputContainer
-                key={field.name}
+                key={field.id}
                 label={field.label}
-                error={isSubmitted && errors[field.name]?.message}
+                error={isSubmitted && errors[field.id]?.message}
               >
-                <SelectComponent name={field.name} control={control} />
+                <SelectComponent name={field.id} control={control} />
               </InputContainer>
             );
           }

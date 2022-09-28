@@ -17,7 +17,7 @@ export class Config {
     application: {
       fields: [
         {
-          name: 'applicationCategoryId',
+          id: 'applicationCategoryId',
           type: 'relationSelect',
           relation: {
             relationTo: 'applicationCategory',
@@ -27,77 +27,203 @@ export class Config {
           required: true,
         },
         {
-          name: 'title',
+          id: 'title',
           type: 'text',
           label: 'Название',
           required: true,
         },
         {
-          name: 'properties.description',
+          id: 'properties.description',
           type: 'text',
           label: 'Описание',
           required: false,
         },
         {
-          name: 'properties.notes',
+          id: 'properties.notes',
           type: 'markdown',
           label: 'Заметки',
           required: false,
+        },
+      ],
+      catalogueColumns: [
+        {
+          id: 'applicationCategory',
+          type: 'relation',
+          label: 'Категория',
+          sortable: true,
+          relation: {
+            relationTo: 'applicationCategory',
+            single: true,
+          },
+        },
+        {
+          id: 'title',
+          type: 'text',
+          text: {
+            of: 'title',
+          },
+          label: 'Название',
+          sortable: true,
+        },
+        {
+          id: 'description',
+          type: 'text',
+          text: {
+            of: 'properties.description',
+          },
+          label: 'Описание',
+          sortable: true,
+        },
+        {
+          id: 'standsCount',
+          type: 'count',
+          count: {
+            of: 'stands',
+          },
+          label: 'Стенды',
+          sortable: true,
         },
       ],
     },
     applicationCategory: {
       fields: [
         {
-          name: 'title',
+          id: 'title',
           type: 'text',
           label: 'Название',
           required: true,
         },
         {
-          name: 'properties.description',
+          id: 'properties.description',
           type: 'text',
           label: 'Описание',
           required: false,
+        },
+      ],
+      catalogueColumns: [
+        {
+          id: 'title',
+          type: 'text',
+          text: {
+            of: 'title',
+          },
+          label: 'Название',
+          sortable: true,
+        },
+        {
+          id: 'description',
+          type: 'text',
+          text: {
+            of: 'properties.description',
+          },
+          label: 'Описание',
+          sortable: true,
+        },
+        {
+          id: 'applicationsCount',
+          type: 'count',
+          count: {
+            of: 'applications',
+          },
+          label: 'Приложения',
+          sortable: true,
         },
       ],
     },
     organization: {
       fields: [
         {
-          name: 'title',
+          id: 'title',
           type: 'text',
           label: 'Название',
           required: true,
         },
         {
-          name: 'properties.description',
+          id: 'properties.description',
           type: 'text',
           label: 'Описание',
           required: false,
+        },
+      ],
+      catalogueColumns: [
+        {
+          id: 'title',
+          type: 'text',
+          text: {
+            of: 'title',
+          },
+          label: 'Название',
+          sortable: true,
+        },
+        {
+          id: 'description',
+          type: 'text',
+          text: {
+            of: 'properties.description',
+          },
+          label: 'Описание',
+          sortable: true,
+        },
+        {
+          id: 'standsCount',
+          type: 'count',
+          count: {
+            of: 'stands',
+          },
+          label: 'Стенды',
+          sortable: true,
         },
       ],
     },
     standCategory: {
       fields: [
         {
-          name: 'title',
+          id: 'title',
           type: 'text',
           label: 'Название',
           required: true,
         },
         {
-          name: 'properties.description',
+          id: 'properties.description',
           type: 'text',
           label: 'Описание',
           required: false,
+        },
+      ],
+      catalogueColumns: [
+        {
+          id: 'title',
+          type: 'text',
+          text: {
+            of: 'title',
+          },
+          label: 'Название',
+          sortable: true,
+        },
+        {
+          id: 'description',
+          type: 'text',
+          text: {
+            of: 'properties.description',
+          },
+          label: 'Описание',
+          sortable: true,
+        },
+        {
+          id: 'standsCount',
+          type: 'count',
+          count: {
+            of: 'stands',
+          },
+          label: 'Стенды',
+          sortable: true,
         },
       ],
     },
     stand: {
       fields: [
         {
-          name: 'standCategoryId',
+          id: 'standCategoryId',
           type: 'relationSelect',
           relation: {
             relationTo: 'standCategory',
@@ -107,19 +233,19 @@ export class Config {
           required: true,
         },
         {
-          name: 'title',
+          id: 'title',
           type: 'text',
           label: 'Название',
           required: true,
         },
         {
-          name: 'properties.description',
+          id: 'properties.description',
           type: 'text',
           label: 'Описание',
           required: false,
         },
         {
-          name: 'applicationId',
+          id: 'applicationId',
           type: 'relationSelect',
           relation: {
             relationTo: 'application',
@@ -129,7 +255,7 @@ export class Config {
           required: true,
         },
         {
-          name: 'organizationId',
+          id: 'organizationId',
           type: 'relationSelect',
           relation: {
             relationTo: 'organization',
@@ -137,6 +263,46 @@ export class Config {
           },
           label: 'Организация',
           required: true,
+        },
+      ],
+      catalogueColumns: [
+        {
+          id: 'title',
+          type: 'text',
+          text: {
+            of: 'title',
+          },
+          label: 'Название',
+          sortable: true,
+        },
+        {
+          id: 'description',
+          type: 'text',
+          text: {
+            of: 'properties.description',
+          },
+          label: 'Описание',
+          sortable: true,
+        },
+        {
+          id: 'application',
+          type: 'relation',
+          label: 'Приложение',
+          sortable: true,
+          relation: {
+            relationTo: 'application',
+            single: true,
+          },
+        },
+        {
+          id: 'organization',
+          type: 'relation',
+          label: 'Организация',
+          sortable: true,
+          relation: {
+            relationTo: 'organization',
+            single: true,
+          },
         },
       ],
     },

@@ -17,7 +17,7 @@ const ApplicationCategoryEditForm = ({ onSubmit }: Props) => {
 
   return (
     <EntityEditForm
-      name={Form.EditApplication}
+      name={Form.EditApplicationCategory}
       onSubmit={onSubmit}
       fields={fields}
       defaultValues={defaultValues}

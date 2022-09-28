@@ -4,17 +4,7 @@ import StandsCatalogue from '@/components/entities/stand/StandsCatalogue/StandsC
 interface Props {}
 
 const NavigateStands = ({}: Props) => {
-  return (
-    <StandsCatalogue
-      columns={[
-        'standCategory',
-        'title',
-        'description',
-        'application',
-        'organization',
-      ]}
-    />
-  );
+  return <StandsCatalogue />;
 };
 
 export default NavigateStands;

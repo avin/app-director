@@ -17,7 +17,7 @@ const StandEditForm = ({ onSubmit }: Props) => {
 
   return (
     <EntityEditForm
-      name={Form.EditApplication}
+      name={Form.EditStand}
       onSubmit={onSubmit}
       fields={fields}
       defaultValues={defaultValues}

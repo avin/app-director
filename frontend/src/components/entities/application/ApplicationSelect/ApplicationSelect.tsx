@@ -1,16 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import {
-  Button,
-  Dialog,
-  Intent,
-  TagInput,
-  TagInputProps,
-} from '@blueprintjs/core';
+import { Button, Intent, TagInput, TagInputProps } from '@blueprintjs/core';
 import ApplicationLabel from '../ApplicationLabel/ApplicationLabel';
 import ApplicationsCatalogue from '@/components/entities/application/ApplicationsCatalogue/ApplicationsCatalogue';
 import { FieldValues, Path } from 'react-hook-form/dist/types';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
-import styles from './ApplicationSelect.module.scss';
 import config from '@/config';
 import ChooseEntityDialog from '@/components/common/ChooseEntityDialog/ChooseEntityDialog';
 
@@ -21,7 +14,7 @@ interface Props<TFieldValues extends FieldValues>
   rules?: RegisterOptions;
 }
 
-const ApplicationSelect = <TFieldValues,>({
+const ApplicationSelect = <TFieldValues extends FieldValues>({
   name,
   control,
   rules,
@@ -88,7 +81,6 @@ const ApplicationSelect = <TFieldValues,>({
             title: 'Выбрать приложение',
             onClose: closeChooseDialog,
           }}
-          columns={['title', 'description', 'standsCount']}
           onClickRow={handleClickCatalogueRow}
         />
       </ChooseEntityDialog>

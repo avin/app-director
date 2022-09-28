@@ -8,7 +8,7 @@ export const useEntityFormDefaultValues = (
 ) => {
   return useMemo(() => {
     return fields.reduce((acc, field) => {
-      set(acc, field.name, get(entity, field.name));
+      set(acc, field.id, get(entity, field.id));
       return acc;
     }, {});
   }, [entity, fields]);

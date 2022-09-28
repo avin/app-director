@@ -15,7 +15,7 @@ interface Props<TFieldValues extends FieldValues>
   rules?: RegisterOptions;
 }
 
-const ApplicationCategoryCategorySelect = <TFieldValues,>({
+const ApplicationCategoryCategorySelect = <TFieldValues extends FieldValues>({
   name,
   control,
   rules,
@@ -88,7 +88,6 @@ const ApplicationCategoryCategorySelect = <TFieldValues,>({
             title: 'Выбрать категорию приложения',
             onClose: closeChooseDialog,
           }}
-          columns={['title', 'description', 'applicationsCount']}
           onClickRow={handleClickCatalogueRow}
         />
       </ChooseEntityDialog>

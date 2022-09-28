@@ -83,10 +83,7 @@ const OrganizationSelect = <TFieldValues,>({
         onClose={closeChooseDialog}
         title="Выбрать организацию"
       >
-        <OrganizationsCatalogue
-          columns={['title', 'description', 'standsCount']}
-          onClickRow={handleClickCatalogueRow}
-        />
+        <OrganizationsCatalogue onClickRow={handleClickCatalogueRow} />
       </ChooseEntityDialog>
     </>
   );

@@ -17,7 +17,7 @@ const OrganizationEditForm = ({ onSubmit }: Props) => {
 
   return (
     <EntityEditForm
-      name={Form.EditApplication}
+      name={Form.EditOrganization}
       onSubmit={onSubmit}
       fields={fields}
       defaultValues={defaultValues}

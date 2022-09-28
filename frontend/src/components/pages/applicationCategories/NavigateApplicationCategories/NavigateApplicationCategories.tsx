@@ -19,12 +19,7 @@ const NavigateApplicationCategories = ({}: Props) => {
     [navigate],
   );
 
-  return (
-    <ApplicationCategoriesCatalogue
-      columns={['title', 'description', 'applicationsCount']}
-      onClickRow={handleClickRow}
-    />
-  );
+  return <ApplicationCategoriesCatalogue onClickRow={handleClickRow} />;
 };
 
 export default NavigateApplicationCategories;
