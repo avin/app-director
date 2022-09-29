@@ -36,11 +36,11 @@ export class StandsService {
         });
       }
 
-      if (filterDto.search) {
-        qb.innerJoinAndSelect('entity.application', 'application')
-          .innerJoinAndSelect('entity.organization', 'organization')
-          .innerJoinAndSelect('entity.standCategory', 'standCategory');
+      qb.innerJoinAndSelect('entity.application', 'application')
+        .innerJoinAndSelect('entity.organization', 'organization')
+        .innerJoinAndSelect('entity.standCategory', 'standCategory');
 
+      if (filterDto.search) {
         qbSearchLike(qb, {
           columns: [
             'entity.title',
@@ -59,22 +59,13 @@ export class StandsService {
           qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
           break;
         case 'standCategory':
-          qb.leftJoinAndSelect('entity.standCategory', 'standCategory').orderBy(
-            'standCategory.title',
-            filterDto.orderDirection,
-          );
+          qb.orderBy('standCategory.title', filterDto.orderDirection);
           break;
         case 'application':
-          qb.leftJoinAndSelect('entity.application', 'application').orderBy(
-            'application.title',
-            filterDto.orderDirection,
-          );
+          qb.orderBy('application.title', filterDto.orderDirection);
           break;
         case 'organization':
-          qb.leftJoinAndSelect('entity.organization', 'organization').orderBy(
-            'organization.title',
-            filterDto.orderDirection,
-          );
+          qb.orderBy('organization.title', filterDto.orderDirection);
           break;
       }
     });

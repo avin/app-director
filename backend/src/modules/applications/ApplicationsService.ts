@@ -27,12 +27,12 @@ export class ApplicationsService {
         });
       }
 
-      if (filterDto.search) {
-        qb.innerJoinAndSelect(
-          'entity.applicationCategory',
-          'applicationCategory',
-        );
+      qb.innerJoinAndSelect(
+        'entity.applicationCategory',
+        'applicationCategory',
+      );
 
+      if (filterDto.search) {
         qbSearchLike(qb, {
           columns: ['entity.title', 'applicationCategory.title'],
           search: filterDto.search,
@@ -46,10 +46,7 @@ export class ApplicationsService {
           qb.orderBy(`entity.${filterDto.orderBy}`, filterDto.orderDirection);
           break;
         case 'applicationCategory':
-          qb.leftJoinAndSelect(
-            'entity.applicationCategory',
-            'applicationCategory',
-          ).orderBy('applicationCategory.title', filterDto.orderDirection);
+          qb.orderBy('applicationCategory.title', filterDto.orderDirection);
           break;
         case 'standsCount':
           qb.addSelect((subQuery) => {
