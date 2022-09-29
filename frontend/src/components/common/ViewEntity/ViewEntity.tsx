@@ -11,6 +11,7 @@ import OrganizationLabel from '@/components/entities/organization/OrganizationLa
 import ApplicationLabel from '@/components/entities/application/ApplicationLabel/ApplicationLabel';
 import ApplicationCategoryLabel from '@/components/entities/applicationCategory/ApplicationCategoryLabel/ApplicationCategoryLabel';
 import StandCategoryLabel from '@/components/entities/standCategory/StandCategoryLabel/StandCategoryLabel';
+import ColorViewer from '../ColorViewer/ColorViewer';
 
 interface Props {
   entity: any;
@@ -61,6 +62,10 @@ const ViewEntity = ({ entity, entityType, additionalContent }: Props) => {
             switch (field.type) {
               case 'text': {
                 return get(entity, field.id) as string;
+              }
+              case 'color': {
+                const value = get(entity, field.id) as string;
+                return <ColorViewer value={value} />;
               }
               case 'relationSelect': {
                 const relation = field.relation;

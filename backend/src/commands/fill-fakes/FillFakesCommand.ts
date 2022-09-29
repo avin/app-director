@@ -99,6 +99,8 @@ export class FillFakesCommand {
       title: faker.lorem.word(),
       properties: {
         description: faker.lorem.sentence(3),
+        tagBackgroundColor: '#111111',
+        tagTextColor: '#eeeeee',
       },
     });
   }
@@ -108,6 +110,8 @@ export class FillFakesCommand {
       title: faker.lorem.word(),
       properties: {
         description: faker.lorem.sentence(3),
+        tagBackgroundColor: '#111111',
+        tagTextColor: '#eeeeee',
       },
     });
   }

@@ -1,0 +1,19 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.container {
+  display: flex;
+  align-items: center;
+  & > * + * {
+    margin-left: 4px;
+  }
+}
+
+.colorBlock {
+  width: 18px;
+  height: 18px;
+  border: 1px solid black;
+}
+
+.valueText {
+}

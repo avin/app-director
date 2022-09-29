@@ -99,6 +99,20 @@ export class Config {
           label: 'Описание',
           required: false,
         },
+        {
+          id: 'properties.tagBackgroundColor',
+          type: 'color',
+          label: 'Цвет фона у тега',
+          required: true,
+          defaultValue: '#111111',
+        },
+        {
+          id: 'properties.tagTextColor',
+          type: 'color',
+          label: 'Цвет текста у тега',
+          required: true,
+          defaultValue: '#eeeeee',
+        },
       ],
       catalogueColumns: [
         {
@@ -188,6 +202,20 @@ export class Config {
           type: 'text',
           label: 'Описание',
           required: false,
+        },
+        {
+          id: 'properties.tagBackgroundColor',
+          type: 'color',
+          label: 'Цвет фона у тега',
+          required: true,
+          defaultValue: '#111111',
+        },
+        {
+          id: 'properties.tagTextColor',
+          type: 'color',
+          label: 'Цвет текста у тега',
+          required: true,
+          defaultValue: '#eeeeee',
         },
       ],
       catalogueColumns: [

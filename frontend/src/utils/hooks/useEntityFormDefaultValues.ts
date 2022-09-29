@@ -9,9 +9,11 @@ export const useEntityFormDefaultValues = (
 ): Record<string, any> => {
   return useMemo(() => {
     let result = fields.reduce((acc, field) => {
-      set(acc, field.id, get(entity, field.id));
+      set(acc, field.id, get(entity, field.id, field.defaultValue));
       return acc;
     }, {});
+
+    console.log(result);
 
     const queryParamsDefaultValuesStr = getUrlQueryParam('defaultValues');
     if (queryParamsDefaultValuesStr) {

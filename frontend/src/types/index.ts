@@ -101,7 +101,7 @@ export interface CatalogueColumnConfig {
   [k: string]: any;
 }
 
-export type FieldType = 'text' | 'relationSelect' | 'markdown';
+export type FieldType = 'text' | 'color' | 'relationSelect' | 'markdown';
 
 export interface FieldConfig {
   id: string;

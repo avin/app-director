@@ -13,6 +13,7 @@ import { FieldConfig } from '@/types';
 import OrganizationSelect from '@/components/entities/organization/OrganizationSelect/OrganizationSelect';
 import StandCategorySelect from '@/components/entities/standCategory/StandCategorySelect/StandCategorySelect';
 import ApplicationSelect from '@/components/entities/application/ApplicationSelect/ApplicationSelect';
+import ControlledColorPicker from '@/components/common/ControlledColorPicker/ControlledColorPicker';
 
 interface Props {
   name: string;
@@ -40,8 +41,6 @@ const EntityEditForm = ({ name, onSubmit, fields, defaultValues }: Props) => {
       if (isInProgress) {
         return;
       }
-
-      console.log(1, name);
 
       dispatch(setFormState({ formName: name, formState: data }));
 
@@ -75,50 +74,51 @@ const EntityEditForm = ({ name, onSubmit, fields, defaultValues }: Props) => {
       <FormErrorMessage message={errorMessage} />
 
       {fields.map((field) => {
-        switch (field.type) {
-          case 'text': {
-            return (
-              <InputContainer
-                key={field.id}
-                label={field.label}
-                error={isSubmitted && errors[field.id]?.message}
-              >
-                <ControlledTextInput name={field.id} control={control} />
-              </InputContainer>
-            );
-          }
-          case 'relationSelect': {
-            const relation = field.relation;
-            if (!relation) {
-              throw new Error('no relation object');
+        const content = (() => {
+          switch (field.type) {
+            case 'text': {
+              return <ControlledTextInput name={field.id} control={control} />;
             }
-            const SelectComponent = (() => {
-              switch (relation.relationTo) {
-                case 'application':
-                  return ApplicationSelect;
-                case 'organization':
-                  return OrganizationSelect;
-                case 'applicationCategory':
-                  return ApplicationCategorySelect;
-                case 'standCategory':
-                  return StandCategorySelect;
-                default:
-                  throw new Error('unknown relationTo');
+            case 'color': {
+              return (
+                <ControlledColorPicker name={field.id} control={control} />
+              );
+            }
+            case 'relationSelect': {
+              const relation = field.relation;
+              if (!relation) {
+                throw new Error('no relation object');
               }
-            })();
-            return (
-              <InputContainer
-                key={field.id}
-                label={field.label}
-                error={isSubmitted && errors[field.id]?.message}
-              >
-                <SelectComponent name={field.id} control={control} />
-              </InputContainer>
-            );
+              const SelectComponent = (() => {
+                switch (relation.relationTo) {
+                  case 'application':
+                    return ApplicationSelect;
+                  case 'organization':
+                    return OrganizationSelect;
+                  case 'applicationCategory':
+                    return ApplicationCategorySelect;
+                  case 'standCategory':
+                    return StandCategorySelect;
+                  default:
+                    throw new Error('unknown relationTo');
+                }
+              })();
+              return <SelectComponent name={field.id} control={control} />;
+            }
+            default:
+              return null;
           }
-          default:
-            return null;
-        }
+        })();
+
+        return (
+          <InputContainer
+            key={field.id}
+            label={field.label}
+            error={isSubmitted && errors[field.id]?.message}
+          >
+            {content || '??'}
+          </InputContainer>
+        );
       })}
 
       <div className={styles.controls}>
