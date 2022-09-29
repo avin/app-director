@@ -2,6 +2,7 @@ import React from 'react';
 import config from '@/config';
 import StandsCatalogue from '@/components/entities/stand/StandsCatalogue/StandsCatalogue';
 import { useApplicationByUrlParams } from '@/utils/hooks/useApplicationByUrlParams';
+import { defaultValuesQueryParam } from '@/utils/strings';
 
 interface Props {}
 
@@ -13,7 +14,9 @@ const ApplicationStands = ({}: Props) => {
       viewHeaderProps={{
         title: `Стенды приложения [${application.title}]`,
       }}
-      addEntityRoute={`${config.routes.stands.create}?standCategoryId=${application.id}`}
+      addEntityRoute={`${config.routes.stands.create}?${defaultValuesQueryParam(
+        { applicationId: application.id },
+      )}`}
       getEntitiesFilter={{
         applicationId: application.id,
       }}

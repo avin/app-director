@@ -2,6 +2,7 @@ import React from 'react';
 import config from '@/config';
 import { useApplicationCategoryByUrlParams } from '@/utils/hooks/useApplicationCategoryByUrlParams';
 import ApplicationsCatalogue from '@/components/entities/application/ApplicationsCatalogue/ApplicationsCatalogue';
+import { defaultValuesQueryParam } from '@/utils/strings';
 
 interface Props {}
 
@@ -13,7 +14,11 @@ const ApplicationCategoryApplications = ({}: Props) => {
       viewHeaderProps={{
         title: `Приложения категории [${applicationCategory.title}]`,
       }}
-      addEntityRoute={`${config.routes.stands.create}?standCategoryId=${applicationCategory.id}`}
+      addEntityRoute={`${
+        config.routes.applications.create
+      }?${defaultValuesQueryParam({
+        applicationCategoryId: applicationCategory.id,
+      })}`}
       getEntitiesFilter={{
         applicationCategoryId: applicationCategory.id,
       }}
