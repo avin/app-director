@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  prepare:
+    build:
+      context: ./
+      dockerfile: './Dockerfile'
+    volumes:
+      - ../:/app
+      - ./run-build.sh:/app/run-build.sh
+    command: sh ./run-build.sh

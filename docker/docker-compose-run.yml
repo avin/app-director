@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: app-director__web-server
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:26080:80"
+    networks:
+      - corp
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ../frontend/build:/usr/share/nginx/html
+
+  backend-db:
+    container_name: app-director__backend-db
+    image: postgres
+    hostname: backend-db
+    restart: always
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pguser
+      POSTGRES_DB: app-director
+    volumes:
+      - backend-db-volume:/var/lib/postgresql
+    networks:
+      - corp
+
+
+  backend-api:
+    container_name: app-director__backend-api
+    hostname: backend-api
+    depends_on:
+      - backend-db
+    build:
+      context: ./
+      dockerfile: './Dockerfile'
+    networks:
+      - corp
+    restart: on-failure
+    volumes:
+      - ../:/app
+      - ./back-env.stage.prod:/app/backend/.env.stage.prod
+      - ./run-backend.sh:/app/run-backend.sh
+    command: sh ./run-backend.sh
+
+volumes:
+  backend-db-volume:
+
+networks:
+  corp:
